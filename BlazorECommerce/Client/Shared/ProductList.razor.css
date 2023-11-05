@@ -1,8 +1,8 @@
-﻿media-img {
-    max-height: 500px;
-    max-width: 500px;
+﻿.media-img {
+    max-height: 200px;
+    max-width: 200px;
     border-radius: 6px;
-    margin: 0 10px 10px 10px;
+    margin: 10px;
     transition: transform .2s;
 }
 
@@ -11,23 +11,10 @@
     }
 
 .media-img-wrapper {
-   max-width: 500px;
-   max-height: 500px;
-    text-align: center;
+   width: 200px;
+   text-align: center;
 }
 
-.media{
-    display: flex;
-    align-items: flex-start;
-}
-
-.media-body{
-    flex: 1;
-}
-
-.price {
-    color: green;
-}
 
 @media (max-width: 1023.98px){
      .media{
