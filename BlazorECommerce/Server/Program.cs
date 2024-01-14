@@ -1,8 +1,14 @@
 global using Microsoft.EntityFrameworkCore;
-using BlazorECommerce.Server.Data;
-using BlazorECommerce.Server.Services.CategoryService;
-using BlazorECommerce.Server.Services.ProductService;
+global using BlazorECommerce.Server.Data;
+global using BlazorECommerce.Server.Services.AuthService;
+global using BlazorECommerce.Server.Services.CartService;
+global using BlazorECommerce.Server.Services.CategoryService;
+global using BlazorECommerce.Server.Services.OrderService;
+global using BlazorECommerce.Server.Services.ProductService;
+using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.ResponseCompression;
+using Microsoft.IdentityModel.Tokens;
+using BlazorECommerce.Server.Services.PaymentService;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -21,6 +27,25 @@ builder.Services.AddSwaggerGen();
 
 builder.Services.AddScoped<IProductService, ProductService>();
 builder.Services.AddScoped<ICategoryService, CategoryService>();
+builder.Services.AddScoped<ICartService, CartService>();
+builder.Services.AddScoped<IAuthService, AuthService>();
+builder.Services.AddScoped<IOrderService, OrderService>();
+builder.Services.AddScoped<IPaymentService, PaymentService>();
+builder.Services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
+    .AddJwtBearer(options =>
+    {
+        options.TokenValidationParameters = new TokenValidationParameters
+        {
+            ValidateIssuerSigningKey = true,
+            IssuerSigningKey =
+                new SymmetricSecurityKey(System.Text.Encoding.UTF8
+                .GetBytes(builder.Configuration.GetSection("AppSettings:Token").Value)),
+            ValidateIssuer = false,
+            ValidateAudience = false
+        };
+    });
+builder.Services.AddHttpContextAccessor();
+
 
 var app = builder.Build();
 app.UseSwaggerUI();
@@ -44,6 +69,8 @@ app.UseBlazorFrameworkFiles();
 app.UseStaticFiles();
 
 app.UseRouting();
+app.UseAuthentication();
+app.UseAuthorization();
 
 
 app.MapRazorPages();

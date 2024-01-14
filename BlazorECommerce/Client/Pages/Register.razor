@@ -1,0 +1,50 @@
+﻿@page "/register"
+@using BlazorECommerce.Client.Services.AuthService;
+@inject IAuthService AuthService;
+
+<PageTitle>Registration</PageTitle>
+
+<EditForm Model="user" OnValidSubmit="@HandleRegistration">
+    <DataAnnotationsValidator></DataAnnotationsValidator>
+    <div class="mb-3">
+        <label for="email">Email</label>
+        <InputText id="email" @bind-Value="user.Email" class="form-control"></InputText>
+        <ValidationMessage For="@(() => user.Email)"></ValidationMessage>
+    </div>
+    <div class="mb-3">
+        <label for="password">Password</label>
+        <InputText id="email" @bind-Value="user.Password" class="form-control" typeof="password"></InputText>
+        <ValidationMessage For="@(() => user.Password)"></ValidationMessage>
+
+    </div>
+    <div class="mb-3">
+        <label for="confirmPassword">ConfirmPassword</label>
+        <InputText id="email" @bind-Value="user.ConfirmPassword" class="form-control" typeof="password"></InputText>
+        <ValidationMessage For="@(() => user.ConfirmPassword)"></ValidationMessage>
+    </div>
+
+    <button type="submit" class="btn btn-primary">Register</button>
+    <div class="@messageCssClass">
+        <span>@message</span>
+    </div>
+    <ValidationSummary></ValidationSummary>
+</EditForm>
+
+@code {
+    UserRegister user = new UserRegister();
+    string message = string.Empty;
+    string messageCssClass = string.Empty;
+
+    async Task HandleRegistration()
+    {
+        var result = await AuthService.Register(user);
+        message = result.Message;
+        if (!result.Success)
+        {
+            messageCssClass = "text-danger";
+        } else
+        {
+            messageCssClass = "text-success";
+        }
+    }
+}
