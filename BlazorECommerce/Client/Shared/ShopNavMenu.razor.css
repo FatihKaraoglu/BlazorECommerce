@@ -1,3 +1,20 @@
+.sidebar {
+    position: fixed;
+    display: flex;
+    flex-direction: column;
+    flex-wrap: wrap;
+    justify-content: flex-start;
+    align-content: flex-start;
+    top: 0;
+    left: 0;
+    height: 100%;
+    width: 100%; /* Adjust width as needed */
+    background-color: #f8f9fa;
+    overflow-x: hidden;
+    transition: width 0.2s;
+    z-index: 1000; /* Ensure it stays on top */
+}
+
 .navbar-toggler {
     color: rgba(255, 255, 255, 0.1);
 }
@@ -19,9 +36,20 @@
 }
 
 .nav-item {
-    font-size: 0.9rem;
-    padding-bottom: 0.5rem;
-    padding-top: 0.5rem;
+    display: block;
+    padding: 10px 20px;
+}
+
+.toggle-button {
+    background: none;
+    border: none;
+    color: #333;
+    font-size: 24px;
+    cursor: pointer;
+    margin: 10px;
+    padding: 0;
+    outline: none;
+    align-self: center;
 }
 
     .nav-item ::deep a {
@@ -44,21 +72,14 @@
 }
 
 .flex-nav{
+    display: flex;
     flex-direction: column;
+    width: 100%
 }
 
-@media (min-width: 641px) {
-    .navbar-toggler, navbar-toggler-wrapper {
-        display: none;
-    }
-
-    .flex-nav {
-        flex-direction: row;
-        display: flex;
-    }
-
-    .collapse {
-        /* Never collapse the sidebar for wide screens */
-        display: block;
-    }
+.sidebar.collapsed .nav-item {
+    display: none;
 }
+
+
+

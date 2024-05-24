@@ -1,20 +1,67 @@
-﻿@inherits LayoutComponentBase
+﻿@inject ICategoryService CategoryService
+@inherits LayoutComponentBase
 
 <div class="page">
     <main>
-        <div class="top-row px-2">
-            <HomeButton></HomeButton>
-            <Search></Search>
-            <UserButton></UserButton>
-            <CartCounter></CartCounter>
-        </div>
+        <div class="main">
+            <div class="sidebar @NavMenuCssClass">
+                <nav class="flex-nav">
+                    <div class="nav-item px-2">
+                        <span>
+                            Shop
+                        </span>
+                    </div>
+                    <div class="nav-item px-2">
+                        <NavLink class="nav-link" href="" Match="NavLinkMatch.All">
+                            Home
+                        </NavLink>
+                    </div>
+                    @foreach (var category in CategoryService.Categories)
+                    {
+                        <div class="nav-item px-2">
+                            <NavLink class="nav-link" href="@category.Url">
+                                @category.Name
+                            </NavLink>
+                        </div>
+                    }
+                </nav>
+            </div>
 
-        <div class="nav-menu">
-            <ShopNavMenu />
-        </div>
+            <div class="content-area">
+                <div class="nav-bar-top">
+                    <button class="toggle-button" @onclick="ToggleNavMenu">
+                        ☰
+                    </button>
+                    <Search></Search>
+                    <UserButton></UserButton>
+                    <CartCounter></CartCounter>
+                </div>
 
-        <article class="content px-2">
-            @Body
-        </article>
+
+
+                <article class="content px-2">
+                    @Body
+                </article>
+            </div>
+          
+        </div>
+      
     </main>
 </div>
+
+@code{
+    private bool collapseNavMenu = true;
+
+    private string? NavMenuCssClass => collapseNavMenu ? "collapsed" : "expanded";
+
+    private void ToggleNavMenu()
+    {
+        collapseNavMenu = !collapseNavMenu;
+    }
+
+    protected override async Task OnInitializedAsync()
+    {
+        await CategoryService.GetCategories();
+        collapseNavMenu = true;
+    }
+}
