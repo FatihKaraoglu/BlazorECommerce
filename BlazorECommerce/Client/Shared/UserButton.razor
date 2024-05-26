@@ -2,29 +2,28 @@
 @inject AuthenticationStateProvider AuthenticationStateProvider;
 @inject NavigationManager NavigationManager;
 @inject ICartService CartService;
-<div class="dropdown">
-    <button @onclick="ToggleUserMenu"
-            @onfocusout="HideUserMenu"
-            class="btn btn-secondary dropdown-toggle user-button">
-            <i class="oi oi-person"</i> 
-    </button>
-    <div class="dropdown-menu dropdown-menu-right @UserMenuCssClass">
-        <Microsoft.AspNetCore.Components.Authorization.AuthorizeView>
-            <Authorized>
-                <a href="profile" class="dropdown-item">Profile</a>
-                <a href="orders" class="dropdown-item">Orders</a>
-                <hr />
-                <button class="dropdown-item" @onclick="Logout">Logout</button>
-            </Authorized>
-            <NotAuthorized>
-                <a href="login?returnUrl=@NavigationManager.ToBaseRelativePath(NavigationManager.Uri)" class="dropdown-item">Login</a>
-                <a href="register" class="dropdown-item">Register</a>
-            </NotAuthorized>
-        </Microsoft.AspNetCore.Components.Authorization.AuthorizeView>
-       
-    </div>
+<li class="main-nav-list-link dropdown">
+        <a @onclick="ToggleUserMenu"
+           @onfocusout="HideUserMenu"
+           class="dropdown-toggle user-button">
+            <i class="oi oi-person"</i>
+        </a>
+        <div class="dropdown-menu dropdown-menu-right @UserMenuCssClass">
+            <Microsoft.AspNetCore.Components.Authorization.AuthorizeView>
+                <Authorized>
+                    <a href="profile" class="dropdown-item">Profile</a>
+                    <a href="orders" class="dropdown-item">Orders</a>
+                    <hr />
+                    <button class="dropdown-item" @onclick="Logout">Logout</button>
+                </Authorized>
+                <NotAuthorized>
+                    <a href="login?returnUrl=@NavigationManager.ToBaseRelativePath(NavigationManager.Uri)" class="dropdown-item">Login</a>
+                    <a href="register" class="dropdown-item">Register</a>
+                </NotAuthorized>
+            </Microsoft.AspNetCore.Components.Authorization.AuthorizeView>
 
-</div>
+        </div>
+</li>
 
 @code {
     private bool showUserMenu = false;

@@ -11,13 +11,46 @@
     width: 100%
 }
 
-.nav-bar-top {
+/*Navigation*/
+
+.header {
     display: flex;
+    /*Height for sticky header*/
+    height: 5.2rem;
+    width: 100%;
+    flex-wrap: wrap;
     justify-content: center;
-    align-items: center;
-    flex-wrap: nowrap;
-    background-color: #999999;
 }
+
+
+.main-nav {
+    width: 100%;
+    height: 100%;
+    margin: 1.2rem 2.8rem;
+    border-bottom: 2px solid #DDDDDD;
+}
+
+
+.main-nav-list {
+    height: 100%;
+    list-style: none;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 3.2rem;
+}
+
+
+.main-nav-link:link,
+.main-nav-link:visited {
+    display: inline-block;
+    text-decoration: none;
+    color: #333;
+    font-weight: 500;
+    font-size: 1.8rem;
+    transition: all 0.3s;
+}
+
 
 .sidebar {
     display: flex;
@@ -54,9 +87,18 @@
     top: -2px;
 }
 
+.nav-icon{
+    align-self: center;
+    font-size: 24px;
+}
+
 .nav-item {
-    display: block;
+    display: flex;
     padding: 10px 20px;
+    flex-wrap: wrap;
+    flex-direction: row;
+    gap: 1rem;
+    align-content: center;
 }
 
 .toggle-button {
@@ -91,17 +133,19 @@
     font-size: 1.6rem;
 }
 
-    .nav-item ::deep a.active {
-        background-color: rgba(255,255,255,0.25);
-        color: white;
-    }
+.nav-item ::deep a.active {
+    background-color: #e2e8f0;
+    color: #333;
+}
 
-    .nav-item ::deep a:hover {
-        background-color: rgba(255,255,255,0.1);
-        color: white;
-    }
+.nav-item ::deep a:hover {
+    background-color: #e2e8f0;
+    color: #333;
+}
 
 .flex-nav {
+    margin-left: 1.4rem;
+    margin-right: 1.4rem;
     display: flex;
     flex-direction: column;
     width: 100%
@@ -112,11 +156,43 @@
 }
 
 .sidebar.collapsed {
-    width: 50px;
+    width: 0px;
 }
 
 .sidebar.expanded{
-    width: 120px;
+    width: 150px;
+}
+
+.sidebar-header{
+    margin: 1rem;
+}
+
+.right-nav{
+    display: flex;
+    flex-wrap: wrap;
+    flex-direction: row;
+    gap: 0.5rem;
+
+}
+
+.nav-btn {
+    padding: 0.8rem 1.8rem;
+}
+
+.signin-btn {
+    background-color: #404040;
+    border-radius: 12px;
+    color: white;
+}
+.shop-heading{
+    position: absolute;
+    left: 50%;
+    transform: translate(-50%; 0);
+}
+
+.shop-heading-link{
+    text-decoration: none;
+    color: black;
 }
 
 

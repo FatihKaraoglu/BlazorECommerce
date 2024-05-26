@@ -5,20 +5,23 @@
     <main>
         <div class="main">
             <div class="sidebar @NavMenuCssClass">
+
                 <nav class="flex-nav">
                     <div class="nav-item px-2">
-                        <span>
+                        <span class="sidebar-header">
                             Shop
                         </span>
                     </div>
-                    <div class="nav-item px-2">
+                    <div class="nav-item px-2 flex-nav-item">
+                        <i class="nav-icon bi bi-house"></i>
                         <NavLink class="nav-link" href="" Match="NavLinkMatch.All">
                             Home
                         </NavLink>
                     </div>
                     @foreach (var category in CategoryService.Categories)
                     {
-                        <div class="nav-item px-2">
+                        <div class="nav-item px-2 flex-nav-item">
+                            <i class="nav-icon @category.Icon"></i>
                             <NavLink class="nav-link" href="@category.Url">
                                 @category.Name
                             </NavLink>
@@ -27,25 +30,44 @@
                 </nav>
             </div>
 
-            <div class="content-area">
-                <div class="nav-bar-top">
-                    <button class="toggle-button" @onclick="ToggleNavMenu">
-                        ☰
-                    </button>
-                    <Search></Search>
-                    <UserButton></UserButton>
-                    <CartCounter></CartCounter>
+            <div class="header">
+                <div class="main-nav">
+                    <ul class="main-nav-list">
+                        <li>
+                            <button class="toggle-button" @onclick="ToggleNavMenu">
+                                ☰
+                            </button>
+                        </li>
+
+                        <li class="shop-heading">
+                            <h1>
+                                <a href="#" class="shop-heading-link">
+                                    BookNook
+                                </a>
+                               
+                            </h1>
+                        </li>
+
+                        <li class="right-nav">
+                            <Search></Search>
+                            <div class="nav-btn login-btn">
+                                Log in
+                            </div>
+
+                            <div class="nav-btn signin-btn">
+                                Sign In
+                            </div>
+                        </li>
+
+                    </ul>
                 </div>
-
-
 
                 <article class="content px-2">
                     @Body
                 </article>
             </div>
-          
-        </div>
-      
+            </div>
+            
     </main>
 </div>
 

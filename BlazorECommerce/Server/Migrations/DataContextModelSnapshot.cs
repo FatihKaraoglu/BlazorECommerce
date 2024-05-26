@@ -49,6 +49,10 @@ namespace BlazorECommerce.Server.Migrations
 
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
 
+                    b.Property<string>("Icon")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
                     b.Property<string>("Name")
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
@@ -65,20 +69,100 @@ namespace BlazorECommerce.Server.Migrations
                         new
                         {
                             Id = 1,
-                            Name = "Books",
-                            Url = "books"
+                            Icon = "bi bi-rocket",
+                            Name = "Science-Fiction",
+                            Url = "science-fiction"
                         },
                         new
                         {
                             Id = 2,
-                            Name = "Movies",
-                            Url = "movies"
+                            Icon = "bi bi-magic",
+                            Name = "Fantasy",
+                            Url = "fantasy"
                         },
                         new
                         {
                             Id = 3,
-                            Name = "Video Games",
-                            Url = "video-games"
+                            Icon = "bi bi-heart-arrow",
+                            Name = "Romance",
+                            Url = "romance"
+                        },
+                        new
+                        {
+                            Id = 4,
+                            Icon = "bi bi-lightning",
+                            Name = "Thriller",
+                            Url = "thriller"
+                        },
+                        new
+                        {
+                            Id = 5,
+                            Icon = "bi bi-person-badge",
+                            Name = "Biography",
+                            Url = "biography"
+                        },
+                        new
+                        {
+                            Id = 6,
+                            Icon = "bi bi-balloon",
+                            Name = "Children",
+                            Url = "children"
+                        },
+                        new
+                        {
+                            Id = 7,
+                            Icon = "bi bi-journal-richtext",
+                            Name = "Classic",
+                            Url = "classic"
+                        },
+                        new
+                        {
+                            Id = 8,
+                            Icon = "bi bi-egg-fried",
+                            Name = "Cooking",
+                            Url = "cooking"
+                        },
+                        new
+                        {
+                            Id = 9,
+                            Icon = "bi bi-heart-pulse",
+                            Name = "Health & Fitness",
+                            Url = "health-fitness"
+                        },
+                        new
+                        {
+                            Id = 10,
+                            Icon = "bi bi-brush",
+                            Name = "Art",
+                            Url = "art"
+                        },
+                        new
+                        {
+                            Id = 11,
+                            Icon = "bi bi-lightbulb",
+                            Name = "Science",
+                            Url = "science"
+                        },
+                        new
+                        {
+                            Id = 12,
+                            Icon = "bi bi-walking",
+                            Name = "Sport",
+                            Url = "sport"
+                        },
+                        new
+                        {
+                            Id = 13,
+                            Icon = "bi bi-emoji-dizzy",
+                            Name = "Horror",
+                            Url = "horror"
+                        },
+                        new
+                        {
+                            Id = 14,
+                            Icon = "bi bi-patch-check",
+                            Name = "Self-Help",
+                            Url = "self-help"
                         });
                 });
 
@@ -165,102 +249,435 @@ namespace BlazorECommerce.Server.Migrations
                     b.HasData(
                         new
                         {
+                            Id = 48,
+                            CategoryId = 1,
+                            Description = "Dune is a science fiction novel by American author Frank Herbert, originally published in 1965.",
+                            Featured = true,
+                            ImageUrl = "https://upload.wikimedia.org/wikipedia/en/a/a8/Dune_1965_First_Edition.jpg",
+                            Title = "Dune"
+                        },
+                        new
+                        {
                             Id = 1,
                             CategoryId = 1,
-                            Description = "The Hitchhiker's Guide to the Galaxy[note 1] (sometimes referred to as HG2G,[1] HHGTTG,[2] H2G2,[3] or tHGttG) is a comedy science fiction franchise created by Douglas Adams. Originally a 1978 radio comedy broadcast on BBC Radio 4, it was later adapted to other formats, including stage shows, novels, comic books, a 1981 TV series, a 1984 text-based computer game, and 2005 feature film.",
-                            Featured = true,
-                            ImageUrl = "https://upload.wikimedia.org/wikipedia/en/b/bd/H2G2_UK_front_cover.jpg",
-                            Title = "The Hitchhiker's Guide to the Galaxy"
+                            Description = "Neuromancer is a science fiction novel by American-Canadian writer William Gibson, published in 1984.",
+                            Featured = false,
+                            ImageUrl = "https://upload.wikimedia.org/wikipedia/en/4/4b/Neuromancer_%28Book%29.jpg",
+                            Title = "Neuromancer"
                         },
                         new
                         {
                             Id = 2,
                             CategoryId = 1,
-                            Description = "Ready Player One is a 2011 science fiction novel, and the debut novel of American author Ernest Cline. The story, set in a dystopia in 2045, follows protagonist Wade Watts on his search for an Easter egg in a worldwide virtual reality game, the discovery of which would lead him to inherit the game creator's fortune. Cline sold the rights to publish the novel in June 2010, in a bidding war to the Crown Publishing Group (a division of Random House).[1] The book was published on August 16, 2011.[2] An audiobook was released the same day; it was narrated by Wil Wheaton, who was mentioned briefly in one of the chapters.[3][4]Ch. 20 In 2012, the book received an Alex Award from the Young Adult Library Services Association division of the American Library Association[5] and won the 2011 Prometheus Award.[6]",
+                            Description = "Snow Crash is a science fiction novel by American writer Neal Stephenson, published in 1992.",
                             Featured = false,
-                            ImageUrl = "https://upload.wikimedia.org/wikipedia/en/a/a4/Ready_Player_One_cover.jpg",
-                            Title = "Ready Player One"
+                            ImageUrl = "https://upload.wikimedia.org/wikipedia/en/d/d5/Snowcrash.jpg",
+                            Title = "Snow Crash"
                         },
                         new
                         {
                             Id = 3,
                             CategoryId = 1,
-                            Description = "Nineteen Eighty-Four (also stylised as 1984) is a dystopian social science fiction novel and cautionary tale written by English writer George Orwell. It was published on 8 June 1949 by Secker & Warburg as Orwell's ninth and final book completed in his lifetime. Thematically, it centres on the consequences of totalitarianism, mass surveillance and repressive regimentation of people and behaviours within society.[2][3] Orwell, a democratic socialist, modelled the totalitarian government in the novel after Stalinist Russia and Nazi Germany.[2][3][4] More broadly, the novel examines the role of truth and facts within politics and the ways in which they are manipulated.",
+                            Description = "Foundation is a science fiction novel by American writer Isaac Asimov, first published in 1951.",
                             Featured = false,
-                            ImageUrl = "https://upload.wikimedia.org/wikipedia/en/5/51/1984_first_edition_cover.jpg",
-                            Title = "Nineteen Eighty-Four"
+                            ImageUrl = "https://upload.wikimedia.org/wikipedia/en/2/25/Foundation_gnome.jpg",
+                            Title = "Foundation"
                         },
                         new
                         {
                             Id = 4,
-                            CategoryId = 2,
-                            Description = "The Matrix is a 1999 science fiction action film written and directed by the Wachowskis, and produced by Joel Silver. Starring Keanu Reeves, Laurence Fishburne, Carrie-Anne Moss, Hugo Weaving, and Joe Pantoliano, and as the first installment in the Matrix franchise, it depicts a dystopian future in which humanity is unknowingly trapped inside a simulated reality, the Matrix, which intelligent machines have created to distract humans while using their bodies as an energy source. When computer programmer Thomas Anderson, under the hacker alias \"Neo\", uncovers the truth, he \"is drawn into a rebellion against the machines\" along with other people who have been freed from the Matrix.",
+                            CategoryId = 1,
+                            Description = "Brave New World is a dystopian social science fiction novel by English author Aldous Huxley, published in 1932.",
                             Featured = false,
-                            ImageUrl = "https://upload.wikimedia.org/wikipedia/en/c/c1/The_Matrix_Poster.jpg",
-                            Title = "The Matrix"
+                            ImageUrl = "https://upload.wikimedia.org/wikipedia/en/6/62/BraveNewWorld_FirstEdition.jpg",
+                            Title = "Brave New World"
                         },
                         new
                         {
                             Id = 5,
-                            CategoryId = 2,
-                            Description = "Back to the Future is a 1985 American science fiction film directed by Robert Zemeckis. Written by Zemeckis and Bob Gale, it stars Michael J. Fox, Christopher Lloyd, Lea Thompson, Crispin Glover, and Thomas F. Wilson. Set in 1985, the story follows Marty McFly (Fox), a teenager accidentally sent back to 1955 in a time-traveling DeLorean automobile built by his eccentric scientist friend Doctor Emmett \"Doc\" Brown (Lloyd). Trapped in the past, Marty inadvertently prevents his future parents' meeting—threatening his very existence—and is forced to reconcile the pair and somehow get back to the future.",
-                            Featured = true,
-                            ImageUrl = "https://upload.wikimedia.org/wikipedia/en/d/d2/Back_to_the_Future.jpg",
-                            Title = "Back to the Future"
+                            CategoryId = 1,
+                            Description = "Hyperion is a science fiction novel by American author Dan Simmons, published in 1989.",
+                            Featured = false,
+                            ImageUrl = "https://upload.wikimedia.org/wikipedia/en/a/a1/Hyperion_cover.jpg",
+                            Title = "Hyperion"
                         },
                         new
                         {
                             Id = 6,
-                            CategoryId = 2,
-                            Description = "Toy Story is a 1995 American computer-animated comedy film produced by Pixar Animation Studios and released by Walt Disney Pictures. The first installment in the Toy Story franchise, it was the first entirely computer-animated feature film, as well as the first feature film from Pixar. The film was directed by John Lasseter (in his feature directorial debut), and written by Joss Whedon, Andrew Stanton, Joel Cohen, and Alec Sokolow from a story by Lasseter, Stanton, Pete Docter, and Joe Ranft. The film features music by Randy Newman, was produced by Bonnie Arnold and Ralph Guggenheim, and was executive-produced by Steve Jobs and Edwin Catmull. The film features the voices of Tom Hanks, Tim Allen, Don Rickles, Wallace Shawn, John Ratzenberger, Jim Varney, Annie Potts, R. Lee Ermey, John Morris, Laurie Metcalf, and Erik von Detten. Taking place in a world where anthropomorphic toys come to life when humans are not present, the plot focuses on the relationship between an old-fashioned pull-string cowboy doll named Woody and an astronaut action figure, Buzz Lightyear, as they evolve from rivals competing for the affections of their owner, Andy Davis, to friends who work together to be reunited with Andy after being separated from him.",
-                            Featured = true,
-                            ImageUrl = "https://upload.wikimedia.org/wikipedia/en/1/13/Toy_Story.jpg",
-                            Title = "Toy Story"
+                            CategoryId = 1,
+                            Description = "Ender's Game is a 1985 military science fiction novel by American author Orson Scott Card.",
+                            Featured = false,
+                            ImageUrl = "https://upload.wikimedia.org/wikipedia/en/9/95/Ender%27s_Game_cover_ISBN_0312932081.jpg",
+                            Title = "Ender's Game"
                         },
                         new
                         {
                             Id = 7,
-                            CategoryId = 3,
-                            Description = "Half-Life 2 is a 2004 first-person shooter game developed and published by Valve. Like the original Half-Life, it combines shooting, puzzles, and storytelling, and adds features such as vehicles and physics-based gameplay.",
+                            CategoryId = 1,
+                            Description = "The Martian is a 2011 science fiction novel written by Andy Weir.",
                             Featured = false,
-                            ImageUrl = "https://upload.wikimedia.org/wikipedia/en/2/25/Half-Life_2_cover.jpg",
-                            Title = "Half-Life 2"
+                            ImageUrl = "https://upload.wikimedia.org/wikipedia/en/c/c3/The_Martian_2014.jpg",
+                            Title = "The Martian"
                         },
                         new
                         {
                             Id = 8,
-                            CategoryId = 3,
-                            Description = "Diablo II is an action role-playing hack-and-slash computer video game developed by Blizzard North and published by Blizzard Entertainment in 2000 for Microsoft Windows, Classic Mac OS, and macOS.",
-                            Featured = true,
-                            ImageUrl = "https://upload.wikimedia.org/wikipedia/en/d/d5/Diablo_II_Coverart.png",
-                            Title = "Diablo II"
+                            CategoryId = 1,
+                            Description = "The Left Hand of Darkness is a science fiction novel by U.S. writer Ursula K. Le Guin, published in 1969.",
+                            Featured = false,
+                            ImageUrl = "https://upload.wikimedia.org/wikipedia/en/2/29/TheLeftHandOfDarkness1stEd.jpg",
+                            Title = "The Left Hand of Darkness"
                         },
                         new
                         {
                             Id = 9,
-                            CategoryId = 3,
-                            Description = "Day of the Tentacle, also known as Maniac Mansion II: Day of the Tentacle, is a 1993 graphic adventure game developed and published by LucasArts. It is the sequel to the 1987 game Maniac Mansion.",
+                            CategoryId = 1,
+                            Description = "Stranger in a Strange Land is a 1961 science fiction novel by American author Robert A. Heinlein.",
                             Featured = false,
-                            ImageUrl = "https://upload.wikimedia.org/wikipedia/en/7/79/Day_of_the_Tentacle_artwork.jpg",
-                            Title = "Day of the Tentacle"
+                            ImageUrl = "https://upload.wikimedia.org/wikipedia/en/8/84/StrangerInaStrangeLand_Cover.jpg",
+                            Title = "Stranger in a Strange Land"
                         },
                         new
                         {
                             Id = 10,
-                            CategoryId = 3,
-                            Description = "The Xbox is a home video game console and the first installment in the Xbox series of video game consoles manufactured by Microsoft.",
+                            CategoryId = 1,
+                            Description = "Do Androids Dream of Electric Sheep? is a science fiction novel by American writer Philip K. Dick, published in 1968.",
                             Featured = false,
-                            ImageUrl = "https://upload.wikimedia.org/wikipedia/commons/4/43/Xbox-console.jpg",
-                            Title = "Xbox"
+                            ImageUrl = "https://upload.wikimedia.org/wikipedia/en/e/ee/DoAndroidsDream.png",
+                            Title = "Do Androids Dream of Electric Sheep?"
                         },
                         new
                         {
                             Id = 11,
-                            CategoryId = 3,
-                            Description = "The Super Nintendo Entertainment System (SNES), also known as the Super NES or Super Nintendo, is a 16-bit home video game console developed by Nintendo that was released in 1990 in Japan and South Korea.",
+                            CategoryId = 1,
+                            Description = "The Road is a 2006 novel by American writer Cormac McCarthy. It is a post-apocalyptic story of a father and his young son.",
                             Featured = false,
-                            ImageUrl = "https://upload.wikimedia.org/wikipedia/commons/e/ee/Nintendo-Super-Famicom-Set-FL.jpg",
-                            Title = "Super Nintendo Entertainment System"
+                            ImageUrl = "https://upload.wikimedia.org/wikipedia/en/6/6b/The-road.jpg",
+                            Title = "The Road"
+                        },
+                        new
+                        {
+                            Id = 12,
+                            CategoryId = 1,
+                            Description = "The Hunger Games is a 2008 dystopian novel by the American writer Suzanne Collins.",
+                            Featured = false,
+                            ImageUrl = "https://upload.wikimedia.org/wikipedia/en/d/dc/The_Hunger_Games.jpg",
+                            Title = "The Hunger Games"
+                        },
+                        new
+                        {
+                            Id = 13,
+                            CategoryId = 1,
+                            Description = "Ready Player Two is a 2020 science fiction novel by American author Ernest Cline.",
+                            Featured = false,
+                            ImageUrl = "https://upload.wikimedia.org/wikipedia/en/a/a4/Ready_Player_Two.jpg",
+                            Title = "Ready Player Two"
+                        },
+                        new
+                        {
+                            Id = 14,
+                            CategoryId = 1,
+                            Description = "Fahrenheit 451 is a 1953 dystopian novel by American writer Ray Bradbury.",
+                            Featured = false,
+                            ImageUrl = "https://upload.wikimedia.org/wikipedia/en/d/db/Fahrenheit_451_1st_ed_cover.jpg",
+                            Title = "Fahrenheit 451"
+                        },
+                        new
+                        {
+                            Id = 15,
+                            CategoryId = 1,
+                            Description = "The Handmaid's Tale is a dystopian novel by Canadian author Margaret Atwood, published in 1985.",
+                            Featured = false,
+                            ImageUrl = "https://upload.wikimedia.org/wikipedia/en/b/ba/TheHandmaidsTale.jpg",
+                            Title = "The Handmaid's Tale"
+                        },
+                        new
+                        {
+                            Id = 16,
+                            CategoryId = 1,
+                            Description = "Altered Carbon is a 2002 science fiction novel by the English author Richard K. Morgan.",
+                            Featured = false,
+                            ImageUrl = "https://upload.wikimedia.org/wikipedia/en/b/b5/Altered_Carbon_%28cover%29.jpg",
+                            Title = "Altered Carbon"
+                        },
+                        new
+                        {
+                            Id = 17,
+                            CategoryId = 1,
+                            Description = "Leviathan Wakes is a science fiction novel by James S. A. Corey, the first book in The Expanse series.",
+                            Featured = false,
+                            ImageUrl = "https://upload.wikimedia.org/wikipedia/en/0/03/Leviathan_Wakes.jpg",
+                            Title = "The Expanse: Leviathan Wakes"
+                        },
+                        new
+                        {
+                            Id = 18,
+                            CategoryId = 1,
+                            Description = "The Hobbit, or There and Back Again is a children's fantasy novel by English author J. R. R. Tolkien.",
+                            Featured = true,
+                            ImageUrl = "https://upload.wikimedia.org/wikipedia/en/4/4a/TheHobbit_FirstEdition.jpg",
+                            Title = "The Hobbit"
+                        },
+                        new
+                        {
+                            Id = 19,
+                            CategoryId = 1,
+                            Description = "A Game of Thrones is the first novel in A Song of Ice and Fire, a series of fantasy novels by American author George R. R. Martin.",
+                            Featured = false,
+                            ImageUrl = "https://upload.wikimedia.org/wikipedia/en/9/93/AGameOfThrones.jpg",
+                            Title = "A Game of Thrones"
+                        },
+                        new
+                        {
+                            Id = 20,
+                            CategoryId = 1,
+                            Description = "Harry Potter and the Philosopher's Stone is a fantasy novel written by British author J.K. Rowling.",
+                            Featured = false,
+                            ImageUrl = "https://upload.wikimedia.org/wikipedia/en/6/6b/Harry_Potter_and_the_Philosopher%27s_Stone_Book_Cover.jpg",
+                            Title = "Harry Potter and the Philosopher's Stone"
+                        },
+                        new
+                        {
+                            Id = 21,
+                            CategoryId = 1,
+                            Description = "The Name of the Wind is a heroic fantasy novel written by American author Patrick Rothfuss.",
+                            Featured = false,
+                            ImageUrl = "https://upload.wikimedia.org/wikipedia/en/0/00/TheNameoftheWind_cover.jpg",
+                            Title = "The Name of the Wind"
+                        },
+                        new
+                        {
+                            Id = 22,
+                            CategoryId = 1,
+                            Description = "The Way of Kings is an epic fantasy novel written by American author Brandon Sanderson.",
+                            Featured = false,
+                            ImageUrl = "https://upload.wikimedia.org/wikipedia/en/8/81/TheWayOfKings.png",
+                            Title = "The Way of Kings"
+                        },
+                        new
+                        {
+                            Id = 23,
+                            CategoryId = 1,
+                            Description = "Mistborn: The Final Empire is a fantasy novel written by American author Brandon Sanderson.",
+                            Featured = false,
+                            ImageUrl = "https://upload.wikimedia.org/wikipedia/en/6/6d/Mistborn-cover.jpg",
+                            Title = "Mistborn: The Final Empire"
+                        },
+                        new
+                        {
+                            Id = 24,
+                            CategoryId = 1,
+                            Description = "The Lies of Locke Lamora is a fantasy novel by American writer Scott Lynch.",
+                            Featured = false,
+                            ImageUrl = "https://upload.wikimedia.org/wikipedia/en/4/4c/The_Lies_of_Locke_Lamora.jpg",
+                            Title = "The Lies of Locke Lamora"
+                        },
+                        new
+                        {
+                            Id = 25,
+                            CategoryId = 1,
+                            Description = "Uprooted is a fantasy novel written by Naomi Novik.",
+                            Featured = false,
+                            ImageUrl = "https://upload.wikimedia.org/wikipedia/en/a/a7/Uprooted_book_cover.jpg",
+                            Title = "Uprooted"
+                        },
+                        new
+                        {
+                            Id = 26,
+                            CategoryId = 1,
+                            Description = "Circe is a 2018 novel by American writer Madeline Miller.",
+                            Featured = false,
+                            ImageUrl = "https://upload.wikimedia.org/wikipedia/en/4/4b/Circe-novel.jpg",
+                            Title = "Circe"
+                        },
+                        new
+                        {
+                            Id = 27,
+                            CategoryId = 1,
+                            Description = "The Night Circus is a fantasy novel by Erin Morgenstern.",
+                            Featured = false,
+                            ImageUrl = "https://upload.wikimedia.org/wikipedia/en/3/35/TheNightCircus.jpg",
+                            Title = "The Night Circus"
+                        },
+                        new
+                        {
+                            Id = 28,
+                            CategoryId = 2,
+                            Description = "Pride and Prejudice is a romantic novel by Jane Austen, first published in 1813.",
+                            Featured = true,
+                            ImageUrl = "https://upload.wikimedia.org/wikipedia/commons/thumb/8/8e/PrideAndPrejudiceTitlePage.jpg/800px-PrideAndPrejudiceTitlePage.jpg",
+                            Title = "Pride and Prejudice"
+                        },
+                        new
+                        {
+                            Id = 29,
+                            CategoryId = 2,
+                            Description = "Jane Eyre is a novel by English writer Charlotte Brontë, published under the pen name 'Currer Bell'.",
+                            Featured = false,
+                            ImageUrl = "https://upload.wikimedia.org/wikipedia/commons/thumb/3/32/Jane_Eyre_title_page.jpg/800px-Jane_Eyre_title_page.jpg",
+                            Title = "Jane Eyre"
+                        },
+                        new
+                        {
+                            Id = 30,
+                            CategoryId = 2,
+                            Description = "Gone with the Wind is a novel by American writer Margaret Mitchell, first published in 1936.",
+                            Featured = false,
+                            ImageUrl = "https://upload.wikimedia.org/wikipedia/en/6/6b/Gone_with_the_Wind_cover.jpg",
+                            Title = "Gone with the Wind"
+                        },
+                        new
+                        {
+                            Id = 31,
+                            CategoryId = 2,
+                            Description = "Wuthering Heights is a novel by Emily Brontë, published in 1847 under her pseudonym 'Ellis Bell'.",
+                            Featured = false,
+                            ImageUrl = "https://upload.wikimedia.org/wikipedia/commons/6/6e/Wuthering_Heights_first_edition.jpg",
+                            Title = "Wuthering Heights"
+                        },
+                        new
+                        {
+                            Id = 32,
+                            CategoryId = 2,
+                            Description = "Anna Karenina is a novel by the Russian author Leo Tolstoy, first published in book form in 1878.",
+                            Featured = false,
+                            ImageUrl = "https://upload.wikimedia.org/wikipedia/commons/d/d4/AnnaKareninaTitlePage.jpg",
+                            Title = "Anna Karenina"
+                        },
+                        new
+                        {
+                            Id = 33,
+                            CategoryId = 2,
+                            Description = "Outlander is a series of historical romance science fiction novels by American author Diana Gabaldon.",
+                            Featured = false,
+                            ImageUrl = "https://upload.wikimedia.org/wikipedia/en/3/3c/Outlander-1991.jpg",
+                            Title = "Outlander"
+                        },
+                        new
+                        {
+                            Id = 34,
+                            CategoryId = 2,
+                            Description = "The Notebook is a 1996 romantic novel by American novelist Nicholas Sparks.",
+                            Featured = false,
+                            ImageUrl = "https://upload.wikimedia.org/wikipedia/en/8/8c/TheNotebook.jpg",
+                            Title = "The Notebook"
+                        },
+                        new
+                        {
+                            Id = 35,
+                            CategoryId = 2,
+                            Description = "Me Before You is a romance novel written by Jojo Moyes.",
+                            Featured = false,
+                            ImageUrl = "https://upload.wikimedia.org/wikipedia/en/f/fd/Me_Before_You.jpg",
+                            Title = "Me Before You"
+                        },
+                        new
+                        {
+                            Id = 36,
+                            CategoryId = 2,
+                            Description = "The Fault in Our Stars is a novel by John Green.",
+                            Featured = false,
+                            ImageUrl = "https://upload.wikimedia.org/wikipedia/en/a/a9/The_Fault_in_Our_Stars.jpg",
+                            Title = "The Fault in Our Stars"
+                        },
+                        new
+                        {
+                            Id = 37,
+                            CategoryId = 2,
+                            Description = "Rebecca is a Gothic novel by English author Dame Daphne du Maurier.",
+                            Featured = false,
+                            ImageUrl = "https://upload.wikimedia.org/wikipedia/en/f/f5/Rebecca_first_edition.jpg",
+                            Title = "Rebecca"
+                        },
+                        new
+                        {
+                            Id = 38,
+                            CategoryId = 3,
+                            Description = "The Da Vinci Code is a mystery thriller novel by Dan Brown.",
+                            Featured = true,
+                            ImageUrl = "https://upload.wikimedia.org/wikipedia/en/6/6b/DaVinciCode.jpg",
+                            Title = "The Da Vinci Code"
+                        },
+                        new
+                        {
+                            Id = 39,
+                            CategoryId = 3,
+                            Description = "Gone Girl is a thriller novel by the writer Gillian Flynn.",
+                            Featured = false,
+                            ImageUrl = "https://upload.wikimedia.org/wikipedia/en/0/05/Gone_Girl_Poster.jpg",
+                            Title = "Gone Girl"
+                        },
+                        new
+                        {
+                            Id = 40,
+                            CategoryId = 3,
+                            Description = "The Girl with the Dragon Tattoo is a psychological thriller novel by Swedish author Stieg Larsson.",
+                            Featured = false,
+                            ImageUrl = "https://upload.wikimedia.org/wikipedia/en/a/ae/M%C3%A4n_som_hatar_kvinnor.jpg",
+                            Title = "The Girl with the Dragon Tattoo"
+                        },
+                        new
+                        {
+                            Id = 41,
+                            CategoryId = 3,
+                            Description = "The Silent Patient is a 2019 psychological thriller novel written by British-Cypriot author Alex Michaelides.",
+                            Featured = false,
+                            ImageUrl = "https://upload.wikimedia.org/wikipedia/en/b/ba/The_Silent_Patient_%28Alex_Michaelides%29.png",
+                            Title = "The Silent Patient"
+                        },
+                        new
+                        {
+                            Id = 42,
+                            CategoryId = 3,
+                            Description = "The Woman in the Window is a psychological thriller novel by American author A. J. Finn.",
+                            Featured = false,
+                            ImageUrl = "https://upload.wikimedia.org/wikipedia/en/a/a0/The_Woman_in_the_Window_%28Finn_novel%29.jpg",
+                            Title = "The Woman in the Window"
+                        },
+                        new
+                        {
+                            Id = 43,
+                            CategoryId = 3,
+                            Description = "Big Little Lies is a 2014 novel written by Liane Moriarty.",
+                            Featured = false,
+                            ImageUrl = "https://upload.wikimedia.org/wikipedia/en/5/52/Big_Little_Lies.jpg",
+                            Title = "Big Little Lies"
+                        },
+                        new
+                        {
+                            Id = 44,
+                            CategoryId = 3,
+                            Description = "The Girl on the Train is a 2015 psychological thriller novel by British author Paula Hawkins.",
+                            Featured = false,
+                            ImageUrl = "https://upload.wikimedia.org/wikipedia/en/a/a8/The_Girl_on_the_Train_2015.jpg",
+                            Title = "The Girl on the Train"
+                        },
+                        new
+                        {
+                            Id = 45,
+                            CategoryId = 3,
+                            Description = "Sharp Objects is the debut novel by American author Gillian Flynn.",
+                            Featured = false,
+                            ImageUrl = "https://upload.wikimedia.org/wikipedia/en/3/32/Sharp_Objects_%28Flynn_novel%29.jpg",
+                            Title = "Sharp Objects"
+                        },
+                        new
+                        {
+                            Id = 46,
+                            CategoryId = 3,
+                            Description = "The Girl with a Clock for a Heart is a 2014 novel by Peter Swanson.",
+                            Featured = false,
+                            ImageUrl = "https://upload.wikimedia.org/wikipedia/en/0/0f/The_Girl_with_a_Clock_for_a_Heart.jpg",
+                            Title = "The Girl with a Clock for a Heart"
+                        },
+                        new
+                        {
+                            Id = 47,
+                            CategoryId = 3,
+                            Description = "In the Woods is a 2007 mystery novel by Tana French.",
+                            Featured = false,
+                            ImageUrl = "https://upload.wikimedia.org/wikipedia/en/4/42/In_the_Woods_%28French_novel%29.jpg",
+                            Title = "In the Woods"
                         });
                 });
 

@@ -1,15 +1,27 @@
-﻿.show-menu{
+﻿.show-menu {
     display: block;
+    margin-top: 3.6rem;
 }
 
-.user-button{
-    margin-left: .5em;
+.user-button {
+    display: inline-block;
+    color: #333333;
 }
 
-.top-row a{
+.main-nav-list-link {
+    height: 100%;
+    border-radius: 5px;
+    padding: 0.3rem 2.4rem;
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    align-content: center;
+}
+
+.top-row a {
     margin-left: 0;
 }
 
-.dropdown-item:hover{
-    background-color: white;
+.dropdown-item:hover {
+    background-color: #e2e8f0;
 }

@@ -1,10 +1,30 @@
-﻿.cart-btn {
-    display: inline-block;
+﻿.counter-link:visited,
+.counter-link:link{
     text-decoration: none;
-    font-size: 2rem;
-    padding: 1rem 1.6rem;
-    border-radius: 1rem;
-    font-weight: 600;
-    transition: all 0.3s;
-    background-color: 
+    color: #333333;
+}
+
+.counter-li{
+    display: flex;
+    color: white;
+    border-radius: 5px;
+    padding: 0.3rem 2.4rem;
+    height: 100%;
+}
+
+.main-nav-list-link {
+    height: 100%;
+}
+
+.oi-cart{
+    color: #333333
+}
+
+.counter{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+    gap: 0.4rem;
+    height: 100%;
 }

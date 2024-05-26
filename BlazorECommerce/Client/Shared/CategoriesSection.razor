@@ -1,0 +1,33 @@
+﻿@inject ICategoryService CategoryService
+@inject NavigationManager Navigation
+
+<div class="category-section">
+    <h2 class="heading-secondary">
+        Find yours at BookNook!
+        Over 5 Millions Books, E-Books and Audiobooks to buy or download here.
+    </h2>
+
+    <div class="media-scroller snaps-inline">
+        @foreach (var category in CategoryService.Categories)
+        {
+            <div class="category" @onclick="() => NavigateToCategory(category.Url)">
+                <i class="category-icon @category.Icon"></i>
+                <span class="category-name">
+                    @category.Name
+                </span>
+            </div>
+        }
+    </div>
+</div>
+
+@code {
+    protected override async Task OnInitializedAsync()
+    {
+        await CategoryService.GetCategories();
+    }
+
+    private void NavigateToCategory(string categoryUrl)
+    {
+        Navigation.NavigateTo(categoryUrl);
+    }
+}

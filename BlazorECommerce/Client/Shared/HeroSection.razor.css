@@ -1,0 +1,50 @@
+﻿.hero {
+    max-width: 130rem;
+    margin: 0 auto;
+    padding: 0 3.2rem;
+    display: grid;
+    gap: 9.6rem;
+    grid-template-columns: 1fr 1fr;
+    align-items: center;
+}
+
+.hero-description {
+    font-size: 1.6rem;
+    line-height: 1.6;
+    margin-bottom: 2.8rem;
+}
+
+.heading-primary{
+    margin-bottom: 2.4rem;
+}
+
+
+.hero-img {
+    width: 100%;
+    border-radius: 24px;
+}
+
+.btn {
+    padding: 0.8rem 1.8rem;
+}
+
+    .btn:link,
+    .btn:visited {
+        display: inline-block;
+        text-decoration: none;
+        font-size: 1.4rem;
+        padding: 0.8rem 2.4rem;
+        border-radius: 1rem;
+        font-weight: 600;
+        transition: all 0.3s;
+    }
+
+    .btn:hover,
+    .btn:active {
+        background-color: #666666;
+    }
+
+.btn--full {
+    background-color: #404040;
+    color: white;
+}

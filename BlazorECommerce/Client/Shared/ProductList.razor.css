@@ -4,6 +4,7 @@
     border-radius: 6px;
     margin: 10px;
     transition: transform .2s;
+    aspect-ratio: 2/3;
 }
 
     .media-img:hover{
@@ -18,6 +19,23 @@
 .page-selection{
     margin-right: 15px;
     margin-bottom: 30px;
+}
+
+.product-container {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    flex-direction: column;
+    border: 2px solid #BABABA;
+    border-radius: 12px;
+    padding: 2.4rem;
+    flex-grow: 1;
+}
+
+.product-list{
+    display: grid;
+    grid-template-columns: repeat(6, 1fr);
+    gap: 2rem;
 }
 
 @media (max-width: 1023.98px){

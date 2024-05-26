@@ -4,10 +4,11 @@
 @inject IProductService ProductService
 
 
-<PageTitle>My Shop</PageTitle>
+<PageTitle>Book Nook</PageTitle>
 @if(SearchText == null && CategoryUrl == null)
 {
-    <FeaturedProducts></FeaturedProducts>
+    <HeroSection></HeroSection>
+    <CategoriesSection></CategoriesSection>
 } else
 {
     <ProductList></ProductList>

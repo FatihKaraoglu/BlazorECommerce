@@ -1,0 +1,10 @@
+﻿.input-group{
+    width: 24rem;
+    border-radius: 12px;
+}
+
+    .input-group > .form-control {
+        background-color: #EEEEEE;
+        color: #6D6D6D;
+        border-radius: 12px;
+    }
