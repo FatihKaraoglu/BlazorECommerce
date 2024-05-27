@@ -33,13 +33,13 @@
             <div class="header">
                 <div class="main-nav">
                     <ul class="main-nav-list">
-                        <li>
+                        <li class="nav-element">
                             <button class="toggle-button" @onclick="ToggleNavMenu">
                                 ☰
                             </button>
                         </li>
 
-                        <li class="shop-heading">
+                        <li class="shop-heading nav-element">
                             <h1>
                                 <a href="#" class="shop-heading-link">
                                     BookNook
@@ -48,15 +48,18 @@
                             </h1>
                         </li>
 
-                        <li class="right-nav">
-                            <Search></Search>
-                            <div class="nav-btn login-btn">
-                                Log in
-                            </div>
+                        <li class="right-nav nav-element">
+                            <div class="right-nav-section">
+                                <Search></Search>
+                                <div class="nav-btn login-btn">
+                                    Log in
+                                </div>
 
-                            <div class="nav-btn signin-btn">
-                                Sign In
+                                <div class="nav-btn signin-btn">
+                                    Sign In
+                                </div>
                             </div>
+                            
                         </li>
 
                     </ul>

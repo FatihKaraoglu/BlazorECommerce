@@ -1,22 +1,124 @@
 ﻿@using BlazorECommerce.Shared;
 @inject IProductService ProductService
+@inject NavigationManager NavigationManager
 
 @if(ProductService.Products == null || ProductService.Products.Count == 0)
 {
     <span>@ProductService.Message</span>
 } else
 {
-    <div class="product-list">
-        @foreach(var product in ProductService.Products)
-        {
-            <div class="product-container">
-                <img class="media-img" src="@product.ImageUrl" alt="@product.Title" />
-                <h5>
-                    @product.Title
-                </h5>
+
+    <div class="product-list-layout">
+        <div class="filter">
+            <div class="section">
+                <div class="heading-container" @onclick="ToggleSection">
+                    <h4 class="section-heading">
+                        Theme
+                    </h4>
+
+                    <i class="bi bi-caret-down filter-icon"></i>
+                </div>
+              
+                <div class="section-content" >
+                    <div class="checkbox-container">
+                        <div class="checkbox-item">
+                            <input type="checkbox" id="sci-fi" name="sci-fi">
+                            <label for="sci-fi">Science Fiction</label><br>
+                        </div>
+                        <div class="checkbox-item">
+                            <input type="checkbox" id="sci-fi" name="sci-fi">
+                            <label for="sci-fi">Science Fiction</label><br>
+                        </div>
+                        <div class="checkbox-item">
+                            <input type="checkbox" id="sci-fi" name="sci-fi">
+                            <label for="sci-fi">Science Fiction</label><br>
+                        </div>
+
+                    </div>
+                </div>
             </div>
-        } 
+
+            <div class="section">
+                <div class="heading-container" @onclick="ToggleSection">
+                    <h4 class="section-heading">
+                        Author
+                    </h4>
+
+                    <i class="bi bi-caret-down filter-icon"></i>
+                </div>
+
+                <div class="section-content">
+                    <div class="checkbox-container">
+                        <div class="checkbox-item">
+                            <input type="checkbox" id="sci-fi" name="sci-fi">
+                            <label for="sci-fi">Science Fiction</label><br>
+                        </div>
+                        <div class="checkbox-item">
+                            <input type="checkbox" id="sci-fi" name="sci-fi">
+                            <label for="sci-fi">Science Fiction</label><br>
+                        </div>
+                        <div class="checkbox-item">
+                            <input type="checkbox" id="sci-fi" name="sci-fi">
+                            <label for="sci-fi">Science Fiction</label><br>
+                        </div>
+
+                    </div>
+                </div>
+            </div>
+
+            <div class="section">
+                <div class="heading-container" @onclick="ToggleSection">
+                    <h4 class="section-heading">
+                        Release
+                    </h4>
+
+                    <i class="bi bi-caret-down filter-icon"></i>
+                </div>
+
+                <div class="section-content">
+                    <div class="checkbox-container">
+                        <div class="checkbox-item">
+                            <input type="checkbox" id="sci-fi" name="sci-fi">
+                            <label for="sci-fi">Science Fiction</label><br>
+                        </div>
+                        <div class="checkbox-item">
+                            <input type="checkbox" id="sci-fi" name="sci-fi">
+                            <label for="sci-fi">Science Fiction</label><br>
+                        </div>
+                        <div class="checkbox-item">
+                            <input type="checkbox" id="sci-fi" name="sci-fi">
+                            <label for="sci-fi">Science Fiction</label><br>
+                        </div>
+
+                    </div>
+                </div>
+            </div>
+
+
+        </div>
+        <div class="products">
+            <h2 class="products-heading">@Parameter</h2>
+            <div class="product-list">     
+                @foreach (var product in ProductService.Products)
+                {
+                    <div class="product-container">
+                        <img class="media-img" src="@product.ImageUrl" alt="@product.Title" />
+                        <div class="product-info">
+                            <h5 class="product-heading">
+                                @product.Title
+                            </h5>
+                            <span class="price">
+                                @GetPriceText(product);
+                            </span>
+                         </div>
+                       
+                    </div>
+                }
+            </div>
+        </div>
+        
     </div>
+    
   @*  <ul class="list-unstyled">
         @foreach (var product in ProductService.Products)
         {
@@ -52,10 +154,16 @@
 }
 
 @code {
+    [Inject]
+    private IJSRuntime JSRuntime { get; set; }
+
+    private string Parameter { get; set; }
+
 
     protected override void OnInitialized()
     {
         ProductService.ProductsChanged += StateHasChanged;
+        
     }
 
     public void OnDispose()
@@ -68,13 +176,25 @@
         var variants = product.Variants;
         if(variants.Count == 0)
         {
-            return string.Empty;
+            return "No Price";
         } else if (variants.Count == 1) 
         {
-            return $"{variants[0].Price}";
+            return $"${variants[0].Price}";
         }
         decimal minPrice = variants.Min(v => v.Price);
         return $"Starting at ${minPrice}";
+    }
+
+    private async Task ToggleSection()
+    {
+        await JSRuntime.InvokeVoidAsync("toggleSection");
+    }
+
+    private string GetParameterFromUrl()
+    {
+        var uri = NavigationManager.ToAbsoluteUri(NavigationManager.Uri);
+        var parameter = uri.Segments.LastOrDefault(); // Assuming the parameter is the last segment of the URL
+        return parameter;
     }
 
 }

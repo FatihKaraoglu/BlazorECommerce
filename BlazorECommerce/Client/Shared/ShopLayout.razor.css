@@ -2,12 +2,12 @@
     width: 100%
 }
 
-.main{
+.main {
     width: 100%;
     display: flex;
 }
 
-.content-area{
+.content-area {
     width: 100%
 }
 
@@ -36,9 +36,24 @@
     list-style: none;
     display: flex;
     align-items: center;
-    justify-content: space-between;
+    justify-content: center;
     gap: 3.2rem;
 }
+
+.nav-element {
+    flex: 1;
+    display: flex;
+    justify-content: center;
+}
+
+    .nav-element:last-child > div {
+        margin-left: auto;
+    }
+
+    .nav-element:first-child > button{
+        margin-right: auto;
+    }
+
 
 
 .main-nav-link:link,
@@ -87,7 +102,7 @@
     top: -2px;
 }
 
-.nav-icon{
+.nav-icon {
     align-self: center;
     font-size: 24px;
 }
@@ -151,7 +166,14 @@
     width: 100%
 }
 
-.sidebar.collapsed .nav-item{
+.center-nav {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-grow: 1; /* Ensures the center nav takes up remaining space */
+}
+
+.sidebar.collapsed .nav-item {
     display: none;
 }
 
@@ -159,20 +181,26 @@
     width: 0px;
 }
 
-.sidebar.expanded{
-    width: 150px;
+.sidebar.expanded {
+    width: 240px;
 }
 
-.sidebar-header{
+.sidebar-header {
     margin: 1rem;
 }
 
-.right-nav{
+.right-nav {
     display: flex;
     flex-wrap: wrap;
     flex-direction: row;
     gap: 0.5rem;
+}
 
+.right-nav-section {
+    display: flex;
+    flex-wrap: wrap;
+    flex-direction: row;
+    gap: 0.5rem;
 }
 
 .nav-btn {
@@ -184,15 +212,8 @@
     border-radius: 12px;
     color: white;
 }
-.shop-heading{
-    position: absolute;
-    left: 50%;
-    transform: translate(-50%; 0);
-}
 
-.shop-heading-link{
+.shop-heading-link {
     text-decoration: none;
     color: black;
 }
-
-
