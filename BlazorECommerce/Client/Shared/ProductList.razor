@@ -101,7 +101,7 @@
             <div class="product-list">     
                 @foreach (var product in ProductService.Products)
                 {
-                    <div class="product-container">
+                    <div class="product-container" @onclick="(x => NavigateToProduct(product.Id))">
                         <img class="media-img" src="@product.ImageUrl" alt="@product.Title" />
                         <div class="product-info">
                             <h5 class="product-heading">
@@ -163,7 +163,7 @@
     protected override void OnInitialized()
     {
         ProductService.ProductsChanged += StateHasChanged;
-        
+
     }
 
     public void OnDispose()
@@ -195,6 +195,11 @@
         var uri = NavigationManager.ToAbsoluteUri(NavigationManager.Uri);
         var parameter = uri.Segments.LastOrDefault(); // Assuming the parameter is the last segment of the URL
         return parameter;
+    }
+
+    public void NavigateToProduct(int productId)
+    {
+        NavigationManager.NavigateTo($"/product/{productId}");
     }
 
 }

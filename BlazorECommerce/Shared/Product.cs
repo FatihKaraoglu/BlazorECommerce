@@ -1,4 +1,5 @@
-﻿using System;
+﻿using BlazorECommerce.Shared.DTO;
+using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations.Schema;
 using System.Linq;
@@ -13,9 +14,10 @@ namespace BlazorECommerce.Shared
         public string Title { get; set; } = string.Empty;
         public string Description { get; set; } = string.Empty;
         public string ImageUrl { get; set; } = string.Empty;
-        public Category? Category { get; set; }
-        public int CategoryId { get; set; }
         public bool Featured { get; set; } = false;
         public List<ProductVariant> Variants { get; set; } = new List<ProductVariant>();
+        //public string Theme { get; set; } = string.Empty;
+        //public Author? Author { get; set; }
+        //public int AuthorId { get; set; }
     }
 }

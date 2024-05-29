@@ -56,10 +56,25 @@ namespace BlazorECommerce.Server.Services.ProductService
 
         public async Task<ServiceResponse<List<Product>>> GetProductsByCategory(string categoryUrl)
         {
-            var response = new ServiceResponse<List<Product>>
+            var response = new ServiceResponse<List<Product>>();
+
+            // Find the category by URL
+            var category = await _context.Categories.FirstOrDefaultAsync(c => c.Url.ToLower() == categoryUrl.ToLower());
+
+            if (category != null)
             {
-                Data = await _context.Products.Where(p => p.Category.Url.ToLower().Equals(categoryUrl.ToLower())).Include(p => p.Variants).ToListAsync()
-            };
+                // Retrieve all products associated with the found category
+                response.Data = await _context.ProductCategories
+                    .Where(pc => pc.CategoryId == category.Id)
+                    .Select(pc => pc.Product)
+                    .Include(p => p.Variants)
+                    .ToListAsync();
+            }
+            else
+            {
+                response.Success = false;
+                response.Message = "Category not found.";
+            }
 
             return response;
         }

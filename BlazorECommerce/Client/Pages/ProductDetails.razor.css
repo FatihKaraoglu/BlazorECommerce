@@ -15,6 +15,97 @@
     text-decoration: line-through;
 }
 
+.product-container {
+    display: grid;
+    grid-template-columns: 1fr 2fr;
+    max-width: 120rem;
+    margin: 0 auto;
+    padding: 0 3.2rem;
+    gap: 2rem;
+}
+
+.product-detail-container {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: flex-start;
+    flex-direction: column;
+}
+
+.product-info-container{
+    margin: 1rem;
+}
+
+.product-preview-container {
+    position: sticky;
+    top: 5.2rem;
+    align-self: baseline
+}
+
+.form-select {
+    border: solid 2px #404040;
+}
+
+.btn-cart {
+    border-radius: 12px;
+    border: solid 2px #404040;
+    padding: 1rem 1.5rem;
+}
+
+.rating-container {
+    display: flex;
+    flex-wrap: wrap;
+    flex-direction: row;
+    gap: 1.2rem;
+    align-items: center;
+    margin-bottom: 2.4rem;
+}
+
+
+    .rating-container,
+    .rating-container-editable .stars {
+        display: flex;
+        gap: 0.6rem;
+    }
+
+
+        .rating-container .stars i,
+        .rating-container-editable .stars i {
+            cursor: pointer;
+            font-size: 2rem;
+            color: gold;
+            margin-bottom: 1.2rem;
+        }
+
+        .rating-container-editable .stars i.bi-star {
+            color: lightgray;
+        }
+
+.rating {
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+.rating:hover{
+    transform: scale(1.05);
+}
+
+.rating-calculation{
+    font-weight: 500;
+    font-size: 2rem;
+}
+
+.rating-count{
+    font-size: 1.6rem;
+    font-weight: 200;
+}
+
+.product-author{
+    font-size: 1.8rem;
+    font-style: italic;
+    font-weight: 200;
+}
+
+.description > p {
+    font-size: 1.4rem;
+}
 @media (max-width: 1023.98px){
     .media {
         flex-direction: column;
