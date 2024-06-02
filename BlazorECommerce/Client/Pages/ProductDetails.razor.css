@@ -5,6 +5,10 @@
     margin: 0 10px 10px 10px;
 }
 
+.media-wrap{
+    text-align: center;
+}
+
 .media-img-wrapper{
     max-width: 500px;
     max-height: 500px;
@@ -106,17 +110,26 @@
 .description > p {
     font-size: 1.4rem;
 }
-@media (max-width: 1023.98px){
-    .media {
-        flex-direction: column;
-    }
 
+/*Smaller Desktops*/
+@media(max-width: 84em) {
+}
+
+/*Landscape Tablets*/
+@media(max-width: 75em) {
+}
+
+/*Tablets*/
+@media(max-width: 59em) {
+}
+
+/*Smaller Tablets*/
+@media(max-width: 44em) {
     .media-img{
-        max-width: 300px;
+        width: 80%
     }
+}
 
-    .media-img-wrapper{
-        width: 100%;
-        height: auto;
-    }
+/*Phones*/
+@media(max-width: 34em) {
 }

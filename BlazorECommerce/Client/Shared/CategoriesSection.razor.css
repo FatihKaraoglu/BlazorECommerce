@@ -62,3 +62,33 @@ snaps-inline > *{
 .category:hover {
     transform: scale(1.05);
 }
+
+
+/*Smaller Desktops*/
+@media(max-width: 84em) {
+}
+
+/*Landscape Tablets*/
+@media(max-width: 75em) {
+
+}
+
+/*Tablets*/
+@media(max-width: 59em) {
+
+}
+
+/*Smaller Tablets*/
+@media(max-width: 44em) {
+    .media-scroller {
+        grid-auto-columns: 12%;
+    }
+
+    .category > i {
+        font-size: 4.6rem;
+    }
+}
+
+/*Phones*/
+@media(max-width: 34em) {
+}

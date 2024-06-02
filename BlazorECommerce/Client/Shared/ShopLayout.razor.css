@@ -5,6 +5,8 @@
 .main {
     width: 100%;
     display: flex;
+    flex-direction: column;
+    flex-wrap: wrap;
 }
 
 .content-area {
@@ -26,7 +28,10 @@
 .main-nav {
     width: 100%;
     height: 100%;
-    margin: 1.2rem 2.8rem;
+    margin: 1.2rem 0rem;
+}
+
+.subnav {
     border-bottom: 2px solid #DDDDDD;
 }
 
@@ -40,10 +45,75 @@
     gap: 3.2rem;
 }
 
+.sub-nav-list {
+    position: relative;
+    height: 100%;
+    list-style: none;
+    display: flex;
+    align-items: center;
+    justify-content: flex-start;
+    gap: 1.4rem;
+    padding: 0;
+}
+
+.menu-sub {
+    position: absolute;
+    left: 0;
+    display: none;
+    width: 100%;
+    transition: all 0.3s;
+    background-color: white;
+    border-bottom: 2px solid #DDDDDD;
+    padding: 1.2rem 0;
+    margin: 0;
+    z-index: 999999;
+}
+
 .nav-element {
     flex: 1;
     display: flex;
     justify-content: center;
+}
+
+.subnav-element {
+    display: inline-block;
+}
+
+.subnav-element:hover .menu-sub{
+    display: flex;
+    flex-wrap: wrap;
+    flex-direction: row;
+    gap: 2rem;
+}
+
+.subnav-element > span{
+    font-size: 1.5rem;
+}
+
+.search-element{
+    position: absolute;
+    right: 0;
+}
+
+.menu-list {
+    list-style: none;
+}
+
+.menu-list > li{
+    margin-top: 0.5rem;
+}
+
+
+.menu-list > li:hover{
+    text-decoration: underline;
+}
+
+.nav-element-focus{
+    justify-self: flex-end;
+}
+
+.sub-nav-element:last-child > li {
+    margin-right: auto;
 }
 
     .nav-element:last-child > div {
@@ -66,21 +136,46 @@
     transition: all 0.3s;
 }
 
-
 .sidebar {
-    display: flex;
-    flex-direction: column;
-    flex-wrap: wrap;
-    justify-content: flex-start;
-    align-content: flex-start;
-    top: 0;
+    display: none;
+    position: absolute;
     left: 0;
-    min-height: 100vh;
-    background-color: #f8f9fa;
-    overflow-x: hidden;
-    transition: width 0.2s;
-    z-index: 1000; /* Ensure it stays on top */
+    background-color: white;
+    height: 100%;
+    transition: all 0.3s;
+    z-index: 999999;
 }
+
+    .sidebar > h4 {
+        display: inline-block;
+        margin: 2rem;
+        font-size: 2.4rem;
+        font-weight: 400;
+        padding-bottom: 0.6rem;
+        border-bottom: 2px solid #DDDDDD;
+    }
+
+.sidebar-active{
+    display: block;
+}
+
+.sidebar-nav{
+    list-style: none;
+    display: flex; 
+    flex-wrap: wrap;
+    flex-direction: column;
+    gap: 1.2rem;
+}
+
+.sidebar-nav > li{
+    text-decoration: none;
+}
+
+.sidebar-nav > li:hover{
+    text-decoration: underline;
+}
+
+
 
 .navbar-toggler {
     color: rgba(255, 255, 255, 0.1);
@@ -105,6 +200,7 @@
 .nav-icon {
     align-self: center;
     font-size: 24px;
+    margin: 0 12px;
 }
 
 .nav-item {
@@ -126,6 +222,7 @@
     padding: 0;
     outline: none;
     align-self: center;
+    display: none;
 }
 
 .nav-item ::deep a {
@@ -173,22 +270,6 @@
     flex-grow: 1; /* Ensures the center nav takes up remaining space */
 }
 
-.sidebar.collapsed .nav-item {
-    display: none;
-}
-
-.sidebar.collapsed {
-    width: 0px;
-}
-
-.sidebar.expanded {
-    width: 240px;
-}
-
-.sidebar-header {
-    margin: 1rem;
-}
-
 .right-nav {
     display: flex;
     flex-wrap: wrap;
@@ -216,4 +297,45 @@
 .shop-heading-link {
     text-decoration: none;
     color: black;
+}
+
+
+/*Smaller Desktops*/
+@media(max-width: 84em){
+
+}
+
+/*Landscape Tablets*/
+@media(max-width: 75em) {
+
+}
+
+/*Tablets*/
+@media(max-width: 59em){
+
+}
+
+/*Smaller Tablets*/
+@media(max-width: 44em){
+
+
+    .toggle-button{
+        display:block;
+    }
+
+    .sub-nav > *{
+        display: none;
+    }
+
+    .sub-nav-list{
+        display: none;
+    }
+}
+
+/*Phones*/
+@media(max-width: 34em) {
+
+    .toggle-button {
+        display: block;
+    }
 }

@@ -39,13 +39,12 @@
     border: 2px solid #BABABA;
     border-radius: 12px;
     padding: 2.4rem;
-    flex-basis: 200px;
-    flex-grow: 1;
+    flex-basis: 150px;
 }
 
 .product-list{
     display: flex;
-    justify-content: space-between;
+    justify-content: space-evenly;
     align-content: center;
     flex-wrap: wrap;
     flex-direction: row;
@@ -125,14 +124,38 @@
         margin-right: 10px;
     }
 
-@media (max-width: 1023.98px){
-     .media{
-         flex-direction: column;
-     }
 
-     .media-img-wrapper {
-         width: 100%;
-         height: auto;
-     }
+/*Smaller Desktops*/
+@media(max-width: 84em) {
 }
 
+/*Landscape Tablets*/
+@media(max-width: 75em) {
+}
+
+/*Tablets*/
+@media(max-width: 59em) {
+    .product-list-layout {
+        grid-template-columns: 35% 65%;
+    }
+}
+
+/*Smaller Tablets*/
+@media(max-width: 44em) {
+    .product-list-layout{
+        grid-template-columns: 1fr 1fr;
+    }
+
+    .product-list{
+        flex-direction: column;
+        justify-content: center;
+    }
+
+    .product-container{
+        flex-grow: 1;
+    }
+}
+
+/*Phones*/
+@media(max-width: 34em) {
+}

@@ -5,14 +5,18 @@
 
 
 <PageTitle>Book Nook</PageTitle>
-@if(SearchText == null && CategoryUrl == null)
-{
-    <HeroSection></HeroSection>
-    <CategoriesSection></CategoriesSection>
-} else
-{
-    <ProductList></ProductList>
-}
+<div>
+    @if (SearchText == null && CategoryUrl == null)
+    {
+        <HeroSection></HeroSection>
+        <CategoriesSection></CategoriesSection>
+    }
+    else
+    {
+        <ProductList></ProductList>
+    }
+</div>
+
 
 
 @code{

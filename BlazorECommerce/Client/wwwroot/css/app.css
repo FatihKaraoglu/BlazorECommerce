@@ -3,7 +3,6 @@
 * {
     padding: 0;
     margin: 0;
-    box-sizing: border-box;
 }
 
 html {
@@ -19,17 +18,6 @@ body {
 
 h1:focus {
     outline: none;
-}
-
-a, .btn-link {
-    color: #0071c1;
-}
-
-
-.btn-primary {
-    color: #fff;
-    background-color: #1b6ec2;
-    border-color: #1861ac;
 }
 
 .content {
@@ -61,6 +49,12 @@ a, .btn-link {
     flex: 1;
 }
 
+.container {
+    max-width: 120rem;
+    margin: 0 auto;
+    padding: 0 3.2rem;
+}
+
 #blazor-error-ui {
     background: lightyellow;
     bottom: 0;
@@ -89,3 +83,27 @@ a, .btn-link {
     .blazor-error-boundary::after {
         content: "An error has occurred."
     }
+
+
+/*Smaller Desktops*/
+@media(max-width: 84em) {
+}
+
+/*Landscape Tablets*/
+@media(max-width: 75em) {
+}
+
+/*Tablets*/
+@media(max-width: 59em) {
+    html{
+        font-size: 50%;
+    }
+}
+
+/*Smaller Tablets*/
+@media(max-width: 44em) {
+}
+
+/*Phones*/
+@media(max-width: 34em) {
+}
