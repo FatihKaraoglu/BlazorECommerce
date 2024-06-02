@@ -30,6 +30,16 @@ namespace BlazorECommerce.Server.Data
                     productCategorie.CategoryId
                 });
 
+             modelBuilder.Entity<ProductCategories>()
+            .HasOne(pc => pc.Product)
+            .WithMany(p => p.ProductCategories)
+            .HasForeignKey(pc => pc.ProductId);
+
+            modelBuilder.Entity<ProductCategories>()
+            .HasOne(pc => pc.Category)
+            .WithMany(c => c.ProductCategories)
+            .HasForeignKey(pc => pc.CategoryId);
+
             modelBuilder.Entity<ProductType>().HasData(
                    new ProductType { Id = 1, Name = "Default" },
                    new ProductType { Id = 2, Name = "Paperback" },

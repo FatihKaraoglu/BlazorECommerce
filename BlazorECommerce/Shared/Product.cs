@@ -16,6 +16,8 @@ namespace BlazorECommerce.Shared
         public string ImageUrl { get; set; } = string.Empty;
         public bool Featured { get; set; } = false;
         public List<ProductVariant> Variants { get; set; } = new List<ProductVariant>();
+
+        public List<ProductCategories> ProductCategories { get; set; } = new List<ProductCategories>();
         //public string Theme { get; set; } = string.Empty;
         //public Author? Author { get; set; }
         //public int AuthorId { get; set; }

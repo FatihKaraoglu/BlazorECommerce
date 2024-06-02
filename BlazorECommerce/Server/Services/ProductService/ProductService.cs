@@ -64,11 +64,14 @@ namespace BlazorECommerce.Server.Services.ProductService
             if (category != null)
             {
                 // Retrieve all products associated with the found category
-                response.Data = await _context.ProductCategories
+                var products = await _context.ProductCategories
                     .Where(pc => pc.CategoryId == category.Id)
-                    .Select(pc => pc.Product)
-                    .Include(p => p.Variants)
+                    .Include(pc => pc.Product)
+                        .ThenInclude(p => p.Variants) // Include variants here
+                    .Select(pc => pc.Product) // Select the products after including the variants
                     .ToListAsync();
+
+                response.Data = products;
             }
             else
             {
