@@ -49,6 +49,28 @@ namespace BlazorECommerce.Client.Services.ProductService
             ProductsChanged.Invoke();
         }
 
+        public async Task GetFeaturedProducts()
+        {
+            var result =
+                await _http.GetFromJsonAsync<ServiceResponse<List<Product>>>("api/product/featured");
+            if (result != null && result.Data != null)
+            {
+                Products = result.Data;
+            }
+
+            CurrentPage = 1;
+            PageCount = 0;
+
+            if (Products.Count == 0)
+            {
+                Message = "No Products found";
+            }
+
+            ProductsChanged.Invoke();
+        }
+
+
+
         public async Task SearchProducts(string searchText, int page)
         {
             var result = await _http.GetFromJsonAsync<ServiceResponse<ProductSearchResultDTO>>($"api/product/search/{searchText}/{page}");
@@ -73,6 +95,26 @@ namespace BlazorECommerce.Client.Services.ProductService
         {
             var result = await _http.GetFromJsonAsync<ServiceResponse<List<string>>>($"api/product/searchsuggestions/{searchText}");
             return result.Data;
+        }
+
+        public async Task GetMostViewedProducts()
+        {
+            var result =
+              await _http.GetFromJsonAsync<ServiceResponse<List<Product>>>("api/product/most-viewed");
+            if (result != null && result.Data != null)
+            {
+                Products = result.Data;
+            }
+
+            CurrentPage = 1;
+            PageCount = 0;
+
+            if (Products.Count == 0)
+            {
+                Message = "No Products found";
+            }
+
+            ProductsChanged.Invoke();
         }
     }   
 }

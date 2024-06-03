@@ -1,0 +1,71 @@
+﻿.categories {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    align-content: center;
+    width: 100%;
+    flex-direction: row;
+    gap: 2rem;
+}
+
+.category{
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    align-content: center;
+    flex-direction: column;
+    height: 100%;
+    flex-grow: 1;
+    min-height: 12rem;
+    text-align: center;
+}
+
+.category > i {
+    font-size: 4rem;
+    margin-bottom: 1.2rem;
+}
+
+.category > span{
+    color: black;
+}
+
+.categories .category:nth-child(1) {
+    background-color: #e3f2fd; /* Very Light Blue */
+    color: #0ea5e9; /* Blue */
+}
+
+.categories .category:nth-child(2) {
+    background-color: #fde7e7; /* Very Light Red */
+    color: #dc2626; /* Red */
+}
+
+.categories .category:nth-child(3) {
+    background-color: #f0f9e4; /* Very Light Green */
+    color: #65a30d; /* Green */
+}
+
+.categories .category:nth-child(4) {
+    background-color: #fff8e1; /* Very Light Yellow */
+    color: #ca8a04; /* Yellow */
+}
+
+.categories .category:nth-child(5) {
+    background-color: #f3e8ff; /* Very Light Purple */
+    color: #7c3aed; /* Purple */
+}
+
+.header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    width: 100%;
+}
+
+.all-categories-link {
+    text-decoration: none;
+    color: #555;
+}
+
+.featured-categories{
+    margin-top: 2.4rem;
+}

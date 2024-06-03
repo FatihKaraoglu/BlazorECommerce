@@ -44,6 +44,12 @@
         document.addEventListener('DOMContentLoaded', function () {
             toggleSection();
         });
+
+        function scrollProductContainer(container, direction) {
+            let containerElement = container;
+            let containerWidth = containerElement.getBoundingClientRect().width;
+            containerElement.scrollLeft += direction * containerWidth;
+        }
     </script>
 
 

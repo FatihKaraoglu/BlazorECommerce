@@ -30,6 +30,7 @@ namespace BlazorECommerce.Server.Controllers
         public async Task<ActionResult<ServiceResponse<Product>>> GetProdcut(int productId)
         {
             var result = await _productService.GetProductAsync(productId);
+            await _productService.IncreaseViewCount(productId);
             return Ok(result);
         }
 
@@ -62,6 +63,15 @@ namespace BlazorECommerce.Server.Controllers
             var result = await _productService.GetFeaturedProducts();
             return Ok(result);
         }
+
+
+        [HttpGet("most-viewed")]
+        public async Task<ActionResult<ServiceResponse<List<Product>>>> GetMostViewedProducts()
+        {
+            var result = await _productService.GetMostViewed();
+            return Ok(result);
+        }
+
 
 
 

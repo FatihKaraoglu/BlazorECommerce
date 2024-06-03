@@ -20,5 +20,13 @@ namespace BlazorECommerce.Server.Services.CategoryService
                 Data = categories 
             };
         }
+
+        public async Task<ServiceResponse<List<Category>>> GetFeaturedCategories()
+        {
+            var categories = await _context.Categories.Where(x => x.Featured == true)
+                .Take(5)
+                .ToListAsync();
+            return new ServiceResponse<List<Category>> { Data = categories };
+        }
     }
 }

@@ -4,6 +4,7 @@ using BlazorECommerce.Server.Data;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 #nullable disable
@@ -11,9 +12,11 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace BlazorECommerce.Server.Migrations
 {
     [DbContext(typeof(DataContext))]
-    partial class DataContextModelSnapshot : ModelSnapshot
+    [Migration("20240603124512_ViewCountadded")]
+    partial class ViewCountadded
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -49,9 +52,6 @@ namespace BlazorECommerce.Server.Migrations
 
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
 
-                    b.Property<bool>("Featured")
-                        .HasColumnType("bit");
-
                     b.Property<string>("Icon")
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
@@ -72,7 +72,6 @@ namespace BlazorECommerce.Server.Migrations
                         new
                         {
                             Id = 1,
-                            Featured = false,
                             Icon = "bi bi-rocket",
                             Name = "Science-Fiction",
                             Url = "science-fiction"
@@ -80,7 +79,6 @@ namespace BlazorECommerce.Server.Migrations
                         new
                         {
                             Id = 2,
-                            Featured = false,
                             Icon = "bi bi-magic",
                             Name = "Fantasy",
                             Url = "fantasy"
@@ -88,7 +86,6 @@ namespace BlazorECommerce.Server.Migrations
                         new
                         {
                             Id = 3,
-                            Featured = false,
                             Icon = "bi bi-heart-arrow",
                             Name = "Romance",
                             Url = "romance"
@@ -96,7 +93,6 @@ namespace BlazorECommerce.Server.Migrations
                         new
                         {
                             Id = 4,
-                            Featured = false,
                             Icon = "bi bi-lightning",
                             Name = "Thriller",
                             Url = "thriller"
@@ -104,7 +100,6 @@ namespace BlazorECommerce.Server.Migrations
                         new
                         {
                             Id = 5,
-                            Featured = false,
                             Icon = "bi bi-person-badge",
                             Name = "Biography",
                             Url = "biography"
@@ -112,7 +107,6 @@ namespace BlazorECommerce.Server.Migrations
                         new
                         {
                             Id = 6,
-                            Featured = false,
                             Icon = "bi bi-balloon",
                             Name = "Children",
                             Url = "children"
@@ -120,7 +114,6 @@ namespace BlazorECommerce.Server.Migrations
                         new
                         {
                             Id = 7,
-                            Featured = false,
                             Icon = "bi bi-journal-richtext",
                             Name = "Classic",
                             Url = "classic"
@@ -128,7 +121,6 @@ namespace BlazorECommerce.Server.Migrations
                         new
                         {
                             Id = 8,
-                            Featured = false,
                             Icon = "bi bi-egg-fried",
                             Name = "Cooking",
                             Url = "cooking"
@@ -136,7 +128,6 @@ namespace BlazorECommerce.Server.Migrations
                         new
                         {
                             Id = 9,
-                            Featured = false,
                             Icon = "bi bi-heart-pulse",
                             Name = "Health & Fitness",
                             Url = "health-fitness"
@@ -144,7 +135,6 @@ namespace BlazorECommerce.Server.Migrations
                         new
                         {
                             Id = 10,
-                            Featured = false,
                             Icon = "bi bi-brush",
                             Name = "Art",
                             Url = "art"
@@ -152,7 +142,6 @@ namespace BlazorECommerce.Server.Migrations
                         new
                         {
                             Id = 11,
-                            Featured = false,
                             Icon = "bi bi-lightbulb",
                             Name = "Science",
                             Url = "science"
@@ -160,7 +149,6 @@ namespace BlazorECommerce.Server.Migrations
                         new
                         {
                             Id = 12,
-                            Featured = false,
                             Icon = "bi bi-walking",
                             Name = "Sport",
                             Url = "sport"
@@ -168,7 +156,6 @@ namespace BlazorECommerce.Server.Migrations
                         new
                         {
                             Id = 13,
-                            Featured = false,
                             Icon = "bi bi-emoji-dizzy",
                             Name = "Horror",
                             Url = "horror"
@@ -176,7 +163,6 @@ namespace BlazorECommerce.Server.Migrations
                         new
                         {
                             Id = 14,
-                            Featured = false,
                             Icon = "bi bi-patch-check",
                             Name = "Self-Help",
                             Url = "self-help"
@@ -262,6 +248,15 @@ namespace BlazorECommerce.Server.Migrations
                     b.ToTable("Products");
 
                     b.HasData(
+                        new
+                        {
+                            Id = 48,
+                            Description = "Dune is a science fiction novel by American author Frank Herbert, originally published in 1965.",
+                            Featured = true,
+                            ImageUrl = "https://upload.wikimedia.org/wikipedia/en/a/a8/Dune_1965_First_Edition.jpg",
+                            Title = "Dune",
+                            Views = 0
+                        },
                         new
                         {
                             Id = 1,
@@ -669,15 +664,6 @@ namespace BlazorECommerce.Server.Migrations
                         },
                         new
                         {
-                            Id = 48,
-                            Description = "Dune is a science fiction novel by American author Frank Herbert, originally published in 1965.",
-                            Featured = true,
-                            ImageUrl = "https://upload.wikimedia.org/wikipedia/en/a/a8/Dune_1965_First_Edition.jpg",
-                            Title = "Dune",
-                            Views = 0
-                        },
-                        new
-                        {
                             Id = 49,
                             Description = "Jane Eyre is a novel by English writer Charlotte Brontë, published under the pen name \"Currer Bell\", on 16 October 1847.",
                             Featured = false,
@@ -738,6 +724,36 @@ namespace BlazorECommerce.Server.Migrations
                         {
                             Id = 4,
                             Name = "Audiobook"
+                        },
+                        new
+                        {
+                            Id = 5,
+                            Name = "Stream"
+                        },
+                        new
+                        {
+                            Id = 6,
+                            Name = "Blu-ray"
+                        },
+                        new
+                        {
+                            Id = 7,
+                            Name = "VHS"
+                        },
+                        new
+                        {
+                            Id = 8,
+                            Name = "PC"
+                        },
+                        new
+                        {
+                            Id = 9,
+                            Name = "PlayStation"
+                        },
+                        new
+                        {
+                            Id = 10,
+                            Name = "Xbox"
                         });
                 });
 
@@ -800,42 +816,70 @@ namespace BlazorECommerce.Server.Migrations
                         new
                         {
                             ProductId = 4,
-                            ProductTypeId = 2,
+                            ProductTypeId = 5,
                             OriginalPrice = 0m,
                             Price = 3.99m
                         },
                         new
                         {
+                            ProductId = 4,
+                            ProductTypeId = 6,
+                            OriginalPrice = 0m,
+                            Price = 9.99m
+                        },
+                        new
+                        {
+                            ProductId = 4,
+                            ProductTypeId = 7,
+                            OriginalPrice = 0m,
+                            Price = 19.99m
+                        },
+                        new
+                        {
                             ProductId = 5,
-                            ProductTypeId = 2,
+                            ProductTypeId = 5,
                             OriginalPrice = 0m,
                             Price = 3.99m
                         },
                         new
                         {
                             ProductId = 6,
-                            ProductTypeId = 2,
+                            ProductTypeId = 5,
                             OriginalPrice = 0m,
                             Price = 2.99m
                         },
                         new
                         {
                             ProductId = 7,
-                            ProductTypeId = 2,
+                            ProductTypeId = 8,
                             OriginalPrice = 29.99m,
                             Price = 19.99m
                         },
                         new
                         {
+                            ProductId = 7,
+                            ProductTypeId = 9,
+                            OriginalPrice = 0m,
+                            Price = 69.99m
+                        },
+                        new
+                        {
+                            ProductId = 7,
+                            ProductTypeId = 10,
+                            OriginalPrice = 59.99m,
+                            Price = 49.99m
+                        },
+                        new
+                        {
                             ProductId = 8,
-                            ProductTypeId = 3,
+                            ProductTypeId = 8,
                             OriginalPrice = 24.99m,
                             Price = 9.99m
                         },
                         new
                         {
                             ProductId = 9,
-                            ProductTypeId = 2,
+                            ProductTypeId = 8,
                             OriginalPrice = 0m,
                             Price = 14.99m
                         },
@@ -852,258 +896,6 @@ namespace BlazorECommerce.Server.Migrations
                             ProductTypeId = 1,
                             OriginalPrice = 399m,
                             Price = 79.99m
-                        },
-                        new
-                        {
-                            ProductId = 12,
-                            ProductTypeId = 2,
-                            OriginalPrice = 0m,
-                            Price = 7.99m
-                        },
-                        new
-                        {
-                            ProductId = 13,
-                            ProductTypeId = 3,
-                            OriginalPrice = 0m,
-                            Price = 15.99m
-                        },
-                        new
-                        {
-                            ProductId = 14,
-                            ProductTypeId = 2,
-                            OriginalPrice = 0m,
-                            Price = 6.99m
-                        },
-                        new
-                        {
-                            ProductId = 15,
-                            ProductTypeId = 3,
-                            OriginalPrice = 0m,
-                            Price = 8.99m
-                        },
-                        new
-                        {
-                            ProductId = 16,
-                            ProductTypeId = 4,
-                            OriginalPrice = 0m,
-                            Price = 11.99m
-                        },
-                        new
-                        {
-                            ProductId = 17,
-                            ProductTypeId = 2,
-                            OriginalPrice = 0m,
-                            Price = 13.99m
-                        },
-                        new
-                        {
-                            ProductId = 18,
-                            ProductTypeId = 2,
-                            OriginalPrice = 0m,
-                            Price = 5.99m
-                        },
-                        new
-                        {
-                            ProductId = 19,
-                            ProductTypeId = 4,
-                            OriginalPrice = 0m,
-                            Price = 19.99m
-                        },
-                        new
-                        {
-                            ProductId = 20,
-                            ProductTypeId = 3,
-                            OriginalPrice = 0m,
-                            Price = 9.99m
-                        },
-                        new
-                        {
-                            ProductId = 22,
-                            ProductTypeId = 2,
-                            OriginalPrice = 0m,
-                            Price = 12.99m
-                        },
-                        new
-                        {
-                            ProductId = 23,
-                            ProductTypeId = 2,
-                            OriginalPrice = 0m,
-                            Price = 7.99m
-                        },
-                        new
-                        {
-                            ProductId = 24,
-                            ProductTypeId = 3,
-                            OriginalPrice = 0m,
-                            Price = 8.99m
-                        },
-                        new
-                        {
-                            ProductId = 25,
-                            ProductTypeId = 2,
-                            OriginalPrice = 0m,
-                            Price = 6.99m
-                        },
-                        new
-                        {
-                            ProductId = 26,
-                            ProductTypeId = 4,
-                            OriginalPrice = 0m,
-                            Price = 10.99m
-                        },
-                        new
-                        {
-                            ProductId = 27,
-                            ProductTypeId = 2,
-                            OriginalPrice = 0m,
-                            Price = 11.99m
-                        },
-                        new
-                        {
-                            ProductId = 28,
-                            ProductTypeId = 4,
-                            OriginalPrice = 0m,
-                            Price = 9.99m
-                        },
-                        new
-                        {
-                            ProductId = 29,
-                            ProductTypeId = 3,
-                            OriginalPrice = 0m,
-                            Price = 14.99m
-                        },
-                        new
-                        {
-                            ProductId = 30,
-                            ProductTypeId = 2,
-                            OriginalPrice = 0m,
-                            Price = 8.99m
-                        },
-                        new
-                        {
-                            ProductId = 31,
-                            ProductTypeId = 2,
-                            OriginalPrice = 0m,
-                            Price = 7.99m
-                        },
-                        new
-                        {
-                            ProductId = 32,
-                            ProductTypeId = 4,
-                            OriginalPrice = 0m,
-                            Price = 10.99m
-                        },
-                        new
-                        {
-                            ProductId = 33,
-                            ProductTypeId = 2,
-                            OriginalPrice = 0m,
-                            Price = 6.99m
-                        },
-                        new
-                        {
-                            ProductId = 34,
-                            ProductTypeId = 3,
-                            OriginalPrice = 0m,
-                            Price = 9.99m
-                        },
-                        new
-                        {
-                            ProductId = 35,
-                            ProductTypeId = 2,
-                            OriginalPrice = 0m,
-                            Price = 6.99m
-                        },
-                        new
-                        {
-                            ProductId = 36,
-                            ProductTypeId = 4,
-                            OriginalPrice = 0m,
-                            Price = 12.99m
-                        },
-                        new
-                        {
-                            ProductId = 37,
-                            ProductTypeId = 2,
-                            OriginalPrice = 0m,
-                            Price = 13.99m
-                        },
-                        new
-                        {
-                            ProductId = 38,
-                            ProductTypeId = 3,
-                            OriginalPrice = 0m,
-                            Price = 9.99m
-                        },
-                        new
-                        {
-                            ProductId = 39,
-                            ProductTypeId = 4,
-                            OriginalPrice = 0m,
-                            Price = 11.99m
-                        },
-                        new
-                        {
-                            ProductId = 40,
-                            ProductTypeId = 2,
-                            OriginalPrice = 0m,
-                            Price = 5.99m
-                        },
-                        new
-                        {
-                            ProductId = 41,
-                            ProductTypeId = 3,
-                            OriginalPrice = 0m,
-                            Price = 8.99m
-                        },
-                        new
-                        {
-                            ProductId = 42,
-                            ProductTypeId = 2,
-                            OriginalPrice = 0m,
-                            Price = 6.99m
-                        },
-                        new
-                        {
-                            ProductId = 44,
-                            ProductTypeId = 3,
-                            OriginalPrice = 0m,
-                            Price = 7.99m
-                        },
-                        new
-                        {
-                            ProductId = 45,
-                            ProductTypeId = 2,
-                            OriginalPrice = 0m,
-                            Price = 5.99m
-                        },
-                        new
-                        {
-                            ProductId = 46,
-                            ProductTypeId = 3,
-                            OriginalPrice = 0m,
-                            Price = 7.99m
-                        },
-                        new
-                        {
-                            ProductId = 47,
-                            ProductTypeId = 4,
-                            OriginalPrice = 0m,
-                            Price = 12.99m
-                        },
-                        new
-                        {
-                            ProductId = 48,
-                            ProductTypeId = 3,
-                            OriginalPrice = 0m,
-                            Price = 14.99m
-                        },
-                        new
-                        {
-                            ProductId = 49,
-                            ProductTypeId = 2,
-                            OriginalPrice = 0m,
-                            Price = 8.99m
                         });
                 });
 

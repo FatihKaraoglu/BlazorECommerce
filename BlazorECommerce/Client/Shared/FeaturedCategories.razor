@@ -1,0 +1,35 @@
+﻿@inject ICategoryService CategoryService
+
+
+<div class="featured-categories">
+    <div class="header">
+        <h3>Featured Categories</h3>
+        <div>
+            <a href="/all-categories" class="all-categories-link">All Categories</a>
+            <i class="bi bi-caret-right"></i>
+        </div>
+
+    </div>
+    <div class="categories">
+        @foreach (var featuredCategory in CategoryService.Categories)
+        {
+            <div class="category">
+                <i class="@featuredCategory.Icon">
+
+                </i>
+                <span>
+                    @featuredCategory.Name
+                </span>
+                <a>Explore Now</a>
+            </div>
+        }
+    </div>
+</div>
+
+
+@code {
+    protected override async Task OnInitializedAsync()
+    {
+        await CategoryService.GetFeaturedCategories();
+    }
+}

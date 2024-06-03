@@ -1,0 +1,79 @@
+﻿@inject IProductService ProductService;
+@inject IJSRuntime JSRuntime;
+<div class="preview-section">
+    <div class="preview-navigation">
+        <h4>
+            @CurrentTabName
+        </h4>
+
+        <div class="tabs">
+            <ul class="tab-list">
+                <li @onclick='() => ChangeTab("Latest Releases")'>
+                    <a>New Releases</a>
+                </li>
+                <li @onclick='() => ChangeTab("Featured")'>
+                    <a>Featured</a>
+                </li>
+                <li @onclick='() => ChangeTab("Most Viewed")'>
+                    <a>Most Viewed</a>
+                </li>
+            </ul>
+        </div>
+    </div>
+    <section class="product">
+        <button class="pre-btn" @onclick="ScrollLeft"><i class="bi bi-caret-left"></i></button>
+        <button class="nxt-btn" @onclick="ScrollRight"><i class="bi bi-caret-right"></i></button>
+        <div class="product-container" @ref="productContainer">
+            @foreach(var product in ProductService.Products)
+            {
+                <div class="product-card">
+                    <div class="product-image">
+                        <span class="discount-tag">50% off</span>
+                        <img src="@product.ImageUrl" class="product-thumb" alt="">
+                        <button class="card-btn">add to wishlist</button>
+                    </div>
+                    <div class="product-info">
+                        <h2 class="product-brand">@product.Title</h2>
+                        <span class="price">@product.Variants.First().OriginalPrice</span><span class="actual-price">@product.Variants.First().Price</span>
+                    </div>
+                </div>
+            }
+        </div>
+    </section>
+</div>
+
+@code {
+    private ElementReference productContainer;
+    private string CurrentTabName { get; set; } = "Most Viewed";
+
+    protected override async Task OnInitializedAsync()
+    {
+        ProductService.ProductsChanged += StateHasChanged;
+        ChangeTab(CurrentTabName);
+    }
+
+
+    private void ChangeTab(string tabName)
+    {
+        CurrentTabName = tabName;
+        if(CurrentTabName == "Featured")
+        {
+            ProductService.GetFeaturedProducts();
+        }
+
+        if(CurrentTabName == "Most Viewed")
+        {
+            ProductService.GetMostViewedProducts();
+        }
+    }
+
+    private async Task ScrollLeft()
+    {
+        await JSRuntime.InvokeVoidAsync("scrollProductContainer", productContainer, -1);
+    }
+
+    private async Task ScrollRight()
+    {
+        await JSRuntime.InvokeVoidAsync("scrollProductContainer", productContainer, 1);
+    }
+}

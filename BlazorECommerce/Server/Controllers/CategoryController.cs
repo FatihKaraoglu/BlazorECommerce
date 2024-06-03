@@ -22,5 +22,12 @@ namespace BlazorECommerce.Server.Controllers
             var result = await _categoryService.GetCategories();
             return Ok(result);
         }
+
+        [HttpGet("featured")]
+        public async Task<ActionResult<ServiceResponse<List<Category>>>> GetFeaturedCategories() 
+        {
+            var result = await _categoryService.GetFeaturedCategories();
+            return Ok(result);
+        }
     }
 }

@@ -4,5 +4,6 @@
     {
         List<Category> Categories { get; set; }
         Task GetCategories();
+        Task GetFeaturedCategories();
     }
 }

@@ -11,6 +11,8 @@ namespace BlazorECommerce.Client.Services.ProductService
         public int PageCount { get; set; }
         public string LastSearchText { get; set; }
         Task GetProducts(string? categoryUrl = null);
+        Task GetFeaturedProducts();
+        Task GetMostViewedProducts();
         Task<ServiceResponse<Product>> GetProduct(int productId);
         Task SearchProducts(string searchText, int page);
         Task<List<string>> GetProductSearchSuggestions(string searchText);

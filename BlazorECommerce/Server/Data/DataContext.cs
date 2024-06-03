@@ -44,127 +44,312 @@ namespace BlazorECommerce.Server.Data
                    new ProductType { Id = 1, Name = "Default" },
                    new ProductType { Id = 2, Name = "Paperback" },
                    new ProductType { Id = 3, Name = "E-Book" },
-                   new ProductType { Id = 4, Name = "Audiobook" },
-                   new ProductType { Id = 5, Name = "Stream" },
-                   new ProductType { Id = 6, Name = "Blu-ray" },
-                   new ProductType { Id = 7, Name = "VHS" },
-                   new ProductType { Id = 8, Name = "PC" },
-                   new ProductType { Id = 9, Name = "PlayStation" },
-                   new ProductType { Id = 10, Name = "Xbox" }
+                   new ProductType { Id = 4, Name = "Audiobook" }
                );
 
             modelBuilder.Entity<ProductVariant>().HasData(
-                new ProductVariant
-                {
-                    ProductId = 1,
-                    ProductTypeId = 2,
-                    Price = 9.99m,
-                    OriginalPrice = 19.99m
-                },
-                new ProductVariant
-                {
-                    ProductId = 1,
-                    ProductTypeId = 3,
-                    Price = 7.99m
-                },
-                new ProductVariant
-                {
-                    ProductId = 1,
-                    ProductTypeId = 4,
-                    Price = 19.99m,
-                    OriginalPrice = 29.99m
-                },
-                new ProductVariant
-                {
-                    ProductId = 2,
-                    ProductTypeId = 2,
-                    Price = 7.99m,
-                    OriginalPrice = 14.99m
-                },
-                new ProductVariant
-                {
-                    ProductId = 3,
-                    ProductTypeId = 2,
-                    Price = 6.99m
-                },
-                new ProductVariant
-                {
-                    ProductId = 4,
-                    ProductTypeId = 5,
-                    Price = 3.99m
-                },
-                new ProductVariant
-                {
-                    ProductId = 4,
-                    ProductTypeId = 6,
-                    Price = 9.99m
-                },
-                new ProductVariant
-                {
-                    ProductId = 4,
-                    ProductTypeId = 7,
-                    Price = 19.99m
-                },
-                new ProductVariant
-                {
-                    ProductId = 5,
-                    ProductTypeId = 5,
-                    Price = 3.99m,
-                },
-                new ProductVariant
-                {
-                    ProductId = 6,
-                    ProductTypeId = 5,
-                    Price = 2.99m
-                },
-                new ProductVariant
-                {
-                    ProductId = 7,
-                    ProductTypeId = 8,
-                    Price = 19.99m,
-                    OriginalPrice = 29.99m
-                },
-                new ProductVariant
-                {
-                    ProductId = 7,
-                    ProductTypeId = 9,
-                    Price = 69.99m
-                },
-                new ProductVariant
-                {
-                    ProductId = 7,
-                    ProductTypeId = 10,
-                    Price = 49.99m,
-                    OriginalPrice = 59.99m
-                },
-                new ProductVariant
-                {
-                    ProductId = 8,
-                    ProductTypeId = 8,
-                    Price = 9.99m,
-                    OriginalPrice = 24.99m,
-                },
-                new ProductVariant
-                {
-                    ProductId = 9,
-                    ProductTypeId = 8,
-                    Price = 14.99m
-                },
-                new ProductVariant
-                {
-                    ProductId = 10,
-                    ProductTypeId = 1,
-                    Price = 159.99m,
-                    OriginalPrice = 299m
-                },
-                new ProductVariant
-                {
-                    ProductId = 11,
-                    ProductTypeId = 1,
-                    Price = 79.99m,
-                    OriginalPrice = 399m
-                }
-            );
+    new ProductVariant
+    {
+        ProductId = 1,
+        ProductTypeId = 2,
+        Price = 9.99m,
+        OriginalPrice = 19.99m
+    },
+    new ProductVariant
+    {
+        ProductId = 1,
+        ProductTypeId = 3,
+        Price = 7.99m
+    },
+    new ProductVariant
+    {
+        ProductId = 1,
+        ProductTypeId = 4,
+        Price = 19.99m,
+        OriginalPrice = 29.99m
+    },
+    new ProductVariant
+    {
+        ProductId = 2,
+        ProductTypeId = 2,
+        Price = 7.99m,
+        OriginalPrice = 14.99m
+    },
+    new ProductVariant
+    {
+        ProductId = 3,
+        ProductTypeId = 2,
+        Price = 6.99m
+    },
+    new ProductVariant
+    {
+        ProductId = 4,
+        ProductTypeId = 2,
+        Price = 3.99m
+    },
+    new ProductVariant
+    {
+        ProductId = 5,
+        ProductTypeId = 2,
+        Price = 3.99m
+    },
+    new ProductVariant
+    {
+        ProductId = 6,
+        ProductTypeId = 2,
+        Price = 2.99m
+    },
+    new ProductVariant
+    {
+        ProductId = 7,
+        ProductTypeId = 2,
+        Price = 19.99m,
+        OriginalPrice = 29.99m
+    },
+    new ProductVariant
+    {
+        ProductId = 8,
+        ProductTypeId = 3,
+        Price = 9.99m,
+        OriginalPrice = 24.99m
+    },
+    new ProductVariant
+    {
+        ProductId = 9,
+        ProductTypeId = 2,
+        Price = 14.99m
+    },
+    new ProductVariant
+    {
+        ProductId = 10,
+        ProductTypeId = 1,
+        Price = 159.99m,
+        OriginalPrice = 299m
+    },
+    new ProductVariant
+    {
+        ProductId = 11,
+        ProductTypeId = 1,
+        Price = 79.99m,
+        OriginalPrice = 399m
+    },
+    new ProductVariant
+    {
+        ProductId = 12,
+        ProductTypeId = 2,
+        Price = 7.99m
+    },
+    new ProductVariant
+    {
+        ProductId = 13,
+        ProductTypeId = 3,
+        Price = 15.99m
+    },
+    new ProductVariant
+    {
+        ProductId = 14,
+        ProductTypeId = 2,
+        Price = 6.99m
+    },
+    new ProductVariant
+    {
+        ProductId = 15,
+        ProductTypeId = 3,
+        Price = 8.99m
+    },
+    new ProductVariant
+    {
+        ProductId = 16,
+        ProductTypeId = 4,
+        Price = 11.99m
+    },
+    new ProductVariant
+    {
+        ProductId = 17,
+        ProductTypeId = 2,
+        Price = 13.99m
+    },
+    new ProductVariant
+    {
+        ProductId = 18,
+        ProductTypeId = 2,
+        Price = 5.99m
+    },
+    new ProductVariant
+    {
+        ProductId = 19,
+        ProductTypeId = 4,
+        Price = 19.99m
+    },
+    new ProductVariant
+    {
+        ProductId = 20,
+        ProductTypeId = 3,
+        Price = 9.99m
+    },
+    new ProductVariant
+    {
+        ProductId = 22,
+        ProductTypeId = 2,
+        Price = 12.99m
+    },
+    new ProductVariant
+    {
+        ProductId = 23,
+        ProductTypeId = 2,
+        Price = 7.99m
+    },
+    new ProductVariant
+    {
+        ProductId = 24,
+        ProductTypeId = 3,
+        Price = 8.99m
+    },
+    new ProductVariant
+    {
+        ProductId = 25,
+        ProductTypeId = 2,
+        Price = 6.99m
+    },
+    new ProductVariant
+    {
+        ProductId = 26,
+        ProductTypeId = 4,
+        Price = 10.99m
+    },
+    new ProductVariant
+    {
+        ProductId = 27,
+        ProductTypeId = 2,
+        Price = 11.99m
+    },
+    new ProductVariant
+    {
+        ProductId = 28,
+        ProductTypeId = 4,
+        Price = 9.99m
+    },
+    new ProductVariant
+    {
+        ProductId = 29,
+        ProductTypeId = 3,
+        Price = 14.99m
+    },
+    new ProductVariant
+    {
+        ProductId = 30,
+        ProductTypeId = 2,
+        Price = 8.99m
+    },
+    new ProductVariant
+    {
+        ProductId = 31,
+        ProductTypeId = 2,
+        Price = 7.99m
+    },
+    new ProductVariant
+    {
+        ProductId = 32,
+        ProductTypeId = 4,
+        Price = 10.99m
+    },
+    new ProductVariant
+    {
+        ProductId = 33,
+        ProductTypeId = 2,
+        Price = 6.99m
+    },
+    new ProductVariant
+    {
+        ProductId = 34,
+        ProductTypeId = 3,
+        Price = 9.99m
+    },
+    new ProductVariant
+    {
+        ProductId = 35,
+        ProductTypeId = 2,
+        Price = 6.99m
+    },
+    new ProductVariant
+    {
+        ProductId = 36,
+        ProductTypeId = 4,
+        Price = 12.99m
+    },
+    new ProductVariant
+    {
+        ProductId = 37,
+        ProductTypeId = 2,
+        Price = 13.99m
+    },
+    new ProductVariant
+    {
+        ProductId = 38,
+        ProductTypeId = 3,
+        Price = 9.99m
+    },
+    new ProductVariant
+    {
+        ProductId = 39,
+        ProductTypeId = 4,
+        Price = 11.99m
+    },
+    new ProductVariant
+    {
+        ProductId = 40,
+        ProductTypeId = 2,
+        Price = 5.99m
+    },
+    new ProductVariant
+    {
+        ProductId = 41,
+        ProductTypeId = 3,
+        Price = 8.99m
+    },
+    new ProductVariant
+    {
+        ProductId = 42,
+        ProductTypeId = 2,
+        Price = 6.99m
+    },
+    new ProductVariant
+    {
+        ProductId = 44,
+        ProductTypeId = 3,
+        Price = 7.99m
+    },
+    new ProductVariant
+    {
+        ProductId = 45,
+        ProductTypeId = 2,
+        Price = 5.99m
+    },
+    new ProductVariant
+    {
+        ProductId = 46,
+        ProductTypeId = 3,
+        Price = 7.99m
+    },
+    new ProductVariant
+    {
+        ProductId = 47,
+        ProductTypeId = 4,
+        Price = 12.99m
+    },
+    new ProductVariant
+    {
+        ProductId = 48,
+        ProductTypeId = 3,
+        Price = 14.99m
+    },
+    new ProductVariant
+    {
+        ProductId = 49,
+        ProductTypeId = 2,
+        Price = 8.99m
+    }
+);
 
             modelBuilder.Entity<Category>().HasData(
                 new Category { Id = 1, Name = "Science-Fiction", Url = "science-fiction", Icon = "bi bi-rocket" },
@@ -184,7 +369,6 @@ namespace BlazorECommerce.Server.Data
             );
 
             modelBuilder.Entity<Product>().HasData(
-    new Product { Id = 48, Title = "Dune", Description = "Dune is a science fiction novel by American author Frank Herbert, originally published in 1965.", ImageUrl = "https://upload.wikimedia.org/wikipedia/en/a/a8/Dune_1965_First_Edition.jpg", Featured = true },
     new Product { Id = 1, Title = "Neuromancer", Description = "Neuromancer is a science fiction novel by American-Canadian writer William Gibson, published in 1984.", ImageUrl = "https://upload.wikimedia.org/wikipedia/en/4/4b/Neuromancer_%28Book%29.jpg" },
     new Product { Id = 2, Title = "Snow Crash", Description = "Snow Crash is a science fiction novel by American writer Neal Stephenson, published in 1992.", ImageUrl = "https://upload.wikimedia.org/wikipedia/en/d/d5/Snowcrash.jpg" },
     new Product { Id = 3, Title = "Foundation", Description = "Foundation is a science fiction novel by American writer Isaac Asimov, first published in 1951.", ImageUrl = "https://upload.wikimedia.org/wikipedia/en/2/25/Foundation_gnome.jpg" },
@@ -230,6 +414,7 @@ namespace BlazorECommerce.Server.Data
     new Product { Id = 45, Title = "Moby-Dick", Description = "Moby-Dick; or, The Whale is an 1851 novel by American writer Herman Melville.", ImageUrl = "https://upload.wikimedia.org/wikipedia/commons/5/57/Moby-Dick_FE_title_page.jpg" },
     new Product { Id = 46, Title = "The Great Gatsby", Description = "The Great Gatsby is a 1925 novel by American writer F. Scott Fitzgerald.", ImageUrl = "https://upload.wikimedia.org/wikipedia/commons/thumb/2/25/TheGreatGatsby_1925jacket.jpeg/800px-TheGreatGatsby_1925jacket.jpeg" },
     new Product { Id = 47, Title = "War and Peace", Description = "War and Peace is a novel by the Russian author Leo Tolstoy, published from 1865 to 1869.", ImageUrl = "https://upload.wikimedia.org/wikipedia/commons/8/8b/War-and-peace-book-cover.jpg" },
+    new Product { Id = 48, Title = "Dune", Description = "Dune is a science fiction novel by American author Frank Herbert, originally published in 1965.", ImageUrl = "https://upload.wikimedia.org/wikipedia/en/a/a8/Dune_1965_First_Edition.jpg", Featured = true },
     new Product { Id = 49, Title = "Jane Eyre", Description = "Jane Eyre is a novel by English writer Charlotte Brontë, published under the pen name \"Currer Bell\", on 16 October 1847.", ImageUrl = "https://upload.wikimedia.org/wikipedia/commons/thumb/7/73/Jane_Eyre_title_page.jpg/800px-Jane_Eyre_title_page.jpg" }
 
 );

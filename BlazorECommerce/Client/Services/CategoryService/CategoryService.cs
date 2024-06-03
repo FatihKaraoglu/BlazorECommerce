@@ -21,5 +21,14 @@ namespace BlazorECommerce.Client.Services.CategoryService
             }
            
         }
+
+        public async Task GetFeaturedCategories()
+        {
+            var response = await _http.GetFromJsonAsync<ServiceResponse<List<Category>>>("api/category/featured");
+            if (response != null && response.Data != null)
+            {
+                Categories = response.Data;
+            }
+        }
     }
 }
