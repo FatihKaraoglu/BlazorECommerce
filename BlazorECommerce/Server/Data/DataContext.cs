@@ -1,5 +1,6 @@
 ﻿using BlazorECommerce.Shared;
 using Microsoft.EntityFrameworkCore;
+using MudBlazor;
 using System.Collections.Generic;
 using System.Security.Policy;
 
@@ -352,21 +353,21 @@ namespace BlazorECommerce.Server.Data
 );
 
             modelBuilder.Entity<Category>().HasData(
-                new Category { Id = 1, Name = "Science-Fiction", Url = "science-fiction", Icon = "bi bi-rocket" },
-                new Category { Id = 2, Name = "Fantasy", Url = "fantasy", Icon = "bi bi-magic" },
-                new Category { Id = 3, Name = "Romance", Url = "romance", Icon = "bi bi-heart-arrow" },
-                new Category { Id = 4, Name = "Thriller", Url = "thriller", Icon = "bi bi-lightning" },
-                new Category { Id = 5, Name = "Biography", Url = "biography", Icon = "bi bi-person-badge" },
-                new Category { Id = 6, Name = "Children", Url = "children", Icon = "bi bi-balloon" },
-                new Category { Id = 7, Name = "Classic", Url = "classic", Icon = "bi bi-journal-richtext" },
-                new Category { Id = 8, Name = "Cooking", Url = "cooking", Icon = "bi bi-egg-fried" },
-                new Category { Id = 9, Name = "Health & Fitness", Url = "health-fitness", Icon = "bi bi-heart-pulse" },
-                new Category { Id = 10, Name = "Art", Url = "art", Icon = "bi bi-brush" },
-                new Category { Id = 11, Name = "Science", Url = "science", Icon = "bi bi-lightbulb" },
-                new Category { Id = 12, Name = "Sport", Url = "sport", Icon = "bi bi-walking" },
-                new Category { Id = 13, Name = "Horror", Url = "horror", Icon = "bi bi-emoji-dizzy" },
-                new Category { Id = 14, Name = "Self-Help", Url = "self-help", Icon = "bi bi-patch-check" }
-            );
+            new Category { Id = 1, Name = "Science-Fiction", Url = "science-fiction", Icon = Icons.Material.Filled.Science },
+            new Category { Id = 2, Name = "Fantasy", Url = "fantasy", Icon = Icons.Material.Filled.AutoFixHigh },
+            new Category { Id = 3, Name = "Romance", Url = "romance", Icon = Icons.Material.Filled.Favorite },
+            new Category { Id = 4, Name = "Thriller", Url = "thriller", Icon = Icons.Material.Filled.FlashOn },
+            new Category { Id = 5, Name = "Biography", Url = "biography", Icon = Icons.Material.Filled.Person },
+            new Category { Id = 6, Name = "Children", Url = "children", Icon = Icons.Material.Filled.ChildCare },
+            new Category { Id = 7, Name = "Classic", Url = "classic", Icon = Icons.Material.Filled.MenuBook },
+            new Category { Id = 8, Name = "Cooking", Url = "cooking", Icon = Icons.Material.Filled.LocalDining },
+            new Category { Id = 9, Name = "Health & Fitness", Url = "health-fitness", Icon = Icons.Material.Filled.FitnessCenter },
+            new Category { Id = 10, Name = "Art", Url = "art", Icon = Icons.Material.Filled.Palette },
+            new Category { Id = 11, Name = "Science", Url = "science", Icon = Icons.Material.Filled.Science },
+            new Category { Id = 12, Name = "Sport", Url = "sport", Icon = Icons.Material.Filled.DirectionsRun },
+            new Category { Id = 13, Name = "Horror", Url = "horror", Icon = Icons.Material.Filled.SentimentVeryDissatisfied },
+            new Category { Id = 14, Name = "Self-Help", Url = "self-help", Icon = Icons.Material.Filled.CheckCircle }
+        );
 
             modelBuilder.Entity<Product>().HasData(
     new Product { Id = 1, Title = "Neuromancer", Description = "Neuromancer is a science fiction novel by American-Canadian writer William Gibson, published in 1984.", ImageUrl = "https://upload.wikimedia.org/wikipedia/en/4/4b/Neuromancer_%28Book%29.jpg" },

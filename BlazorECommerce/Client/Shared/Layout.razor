@@ -1,0 +1,92 @@
+﻿@inject ICategoryService CategoryService
+@inherits LayoutComponentBase
+
+
+<MudLayout>
+    <MudAppBar Elevation="1" Style="@($"background-color: white; color: var(--main-text-color)")">
+        <MudIconButton Icon="@Icons.Material.Filled.Menu" Color="Color.Inherit" Edge="Edge.Start" OnClick="@((e) => DrawerToggle())" />
+        <MudSpacer />
+        <div class="brand-title">
+            <MudIcon Icon="@Icons.Material.Filled.MenuBook" Size="Size.Large" Color="Color.Inherit"></MudIcon>
+            <span>BookNook</span>
+        </div>
+        <MudSpacer />
+
+        <div class="nav-icons">
+            <MudIconButton Icon="@Icons.Material.Filled.Favorite" Color="Color.Inherit" Edge="Edge.End" />
+            <CartCounter></CartCounter>
+            <MudIconButton Icon="@Icons.Material.Filled.Person" Color="Color.Inherit" Edge="Edge.End" 
+                           OnClick="ToggleOpen" />
+
+            <MudPopover Open="@_isOpen" Fixed="true"  AnchorOrigin=Origin.BottomCenter TransformOrigin=Origin.TopCenter>
+                <div class="d-flex flex-column justify-start login-menu">
+                    <MudLink>Login</MudLink>
+                    <MudDivider></MudDivider>
+                    <MudLink>Register</MudLink>
+                </div>
+            </MudPopover>
+        </div>
+    </MudAppBar>
+    <MudDrawer @bind-Open="_drawerOpen" Elevation="2">
+        <MudDrawerHeader Class="drawer-header">
+            <MudText Typo="Typo.h5" Class="mt-1">BookNook</MudText>
+        </MudDrawerHeader>
+
+        <MudNavMenu Class="mud-width-full">
+
+            <MudNavGroup Title="Categories" Icon="@Icons.Material.Filled.Settings" Expanded="true">
+                @foreach (var category in CategoryService.Categories)
+                {
+                    <MudNavLink Href="@category.Url" Icon="@category.Icon">@category.Name</MudNavLink>
+                }
+            </MudNavGroup>
+            <MudNavLink Href="/sale" Icon="@Icons.Material.Filled.Discount">Sale</MudNavLink>
+            <MudNavLink Href="/my-orders" Icon="@Icons.Material.Filled.LocalShipping">My Orders</MudNavLink>
+            <MudNavLink Href="/favs" Icon="@Icons.Material.Filled.Favorite">Wishlist</MudNavLink>
+        </MudNavMenu>
+    </MudDrawer>
+    <MudMainContent>
+        @Body
+    </MudMainContent>
+</MudLayout>
+
+<MudThemeProvider Theme="@theme" />
+<MudDialogProvider />
+<MudSnackbarProvider />
+
+@code {
+    bool _drawerOpen = false;
+    public bool _isOpen;
+
+    public void ToggleOpen()
+    {
+        if (_isOpen)
+            _isOpen = false;
+        else
+            _isOpen = true;
+    }
+
+
+    protected override async Task OnInitializedAsync()
+    {
+        await CategoryService.GetCategories();
+    }
+
+    void DrawerToggle()
+    {
+        _drawerOpen = !_drawerOpen;
+    }
+    MudTheme theme = new MudTheme()
+        {
+            Typography = new Typography()
+            {
+                Default = new Default()
+                {
+                    FontFamily = new[] { "Rubik", "sans-serif" },
+                    FontSize = "62.5%",
+                    LineHeight = 1,
+                    FontWeight = 400
+                }
+            }
+        };
+}

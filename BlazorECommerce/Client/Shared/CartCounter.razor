@@ -2,14 +2,10 @@
 @inject ISyncLocalStorageService LocalStorage
 @implements IDisposable
 
+<MudBadge Origin=Origin.TopRight Content="@GetCartItemsCount()" Color="Color.Primary" Overlap=true>
+    <MudIconButton Icon="@Icons.Material.Filled.ShoppingBag" Color="Color.Inherit" Edge="Edge.End" />
+</MudBadge>
 
-
-<li class="main-nav-list-link counter-li">
-    <div class="counter">
-        <i class="oi oi-cart"></i>
-        <a href="#" class="counter-link">@GetCartItemsCount()</a>
-    </div>
-</li>
 
 @code {
     private int GetCartItemsCount()

@@ -1,0 +1,28 @@
+﻿@inject ICategoryService CategoryService
+<div class="new-release-section">
+
+    <div class="heading">
+        <h2>
+            New Releases
+        </h2>
+    </div>
+ 
+
+    <MudTabs Rounded="true" ApplyEffectsToContainer="true" Position="Position.Right" Class="">
+        @foreach(var category in CategoryService.Categories)
+        {
+            <MudTabPanel Text="@category.Name">
+                <ProductPreviewGrid CategoryId="@category.Id">
+
+                </ProductPreviewGrid>
+            </MudTabPanel>
+        }
+    </MudTabs>
+</div>
+
+@code {
+    protected override async Task OnInitializedAsync()
+    {
+        await CategoryService.GetCategories();
+    }
+}

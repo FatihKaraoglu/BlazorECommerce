@@ -1,11 +1,9 @@
-﻿@inject IProductService ProductService;
-@inject IJSRuntime JSRuntime;
+﻿@inject IProductService ProductService
+@inject IJSRuntime JSRuntime
+
 <div class="preview-section">
     <div class="preview-navigation">
-        <h4>
-            @CurrentTabName
-        </h4>
-
+        <h4>@CurrentTabName</h4>
         <div class="tabs">
             <ul class="tab-list">
                 <li @onclick='() => ChangeTab("Latest Releases")'>
@@ -20,11 +18,25 @@
             </ul>
         </div>
     </div>
-    <section class="product">
+
+    <div class="slick-carousel">
+        @foreach (var product in ProductService.Products)
+        {
+            <div>
+                @product.Title
+            </div>
+        }
+    </div>
+
+</div>
+
+
+
+  @*  <section class="product">
         <button class="pre-btn" @onclick="ScrollLeft"><i class="bi bi-caret-left"></i></button>
         <button class="nxt-btn" @onclick="ScrollRight"><i class="bi bi-caret-right"></i></button>
         <div class="product-container" @ref="productContainer">
-            @foreach(var product in ProductService.Products)
+            @foreach (var product in ProductService.Products)
             {
                 <div class="product-card">
                     <div class="product-image">
@@ -39,8 +51,7 @@
                 </div>
             }
         </div>
-    </section>
-</div>
+    </section>*@
 
 @code {
     private ElementReference productContainer;
@@ -52,28 +63,33 @@
         ChangeTab(CurrentTabName);
     }
 
+    protected override async Task OnAfterRenderAsync(bool firstRender)
+    {
+        if (firstRender)
+        {
+            await JSRuntime.InvokeVoidAsync("initializeSlickCarousel");
+            StateHasChanged();
+        }
+        else
+        {
+            // Reinitialize the carousel every time the component updates
+            await JSRuntime.InvokeVoidAsync("initializeSlickCarousel");
+
+        }
+    }
 
     private void ChangeTab(string tabName)
     {
         CurrentTabName = tabName;
-        if(CurrentTabName == "Featured")
+        if (CurrentTabName == "Featured")
         {
             ProductService.GetFeaturedProducts();
         }
 
-        if(CurrentTabName == "Most Viewed")
+        if (CurrentTabName == "Most Viewed")
         {
             ProductService.GetMostViewedProducts();
         }
     }
 
-    private async Task ScrollLeft()
-    {
-        await JSRuntime.InvokeVoidAsync("scrollProductContainer", productContainer, -1);
-    }
-
-    private async Task ScrollRight()
-    {
-        await JSRuntime.InvokeVoidAsync("scrollProductContainer", productContainer, 1);
-    }
 }

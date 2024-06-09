@@ -1,0 +1,82 @@
+﻿@page "/{categoryUrl}"
+@inject IProductService ProductService
+
+
+<div class="container">
+    <div class="d-flex flex-row align-center justify-space-between mx-5 my-4 border-bottom">
+        <h3>
+            Shop
+        </h3>
+        <MudBreadcrumbs Items="BreadCrumbs"></MudBreadcrumbs>
+    </div>
+
+    <div class="product-container">
+        <div class="filters">
+            <MudExpansionPanels>
+                <MudExpansionPanel Text="Categories" MaxHeight="150">
+                    Panel One Content
+                </MudExpansionPanel>
+                <MudExpansionPanel Text="Author" MaxHeight="500">
+                    Panel Two Content
+                </MudExpansionPanel>
+                <MudExpansionPanel Text="Format" MaxHeight="1000">
+                    Panel Three Content
+                </MudExpansionPanel>
+                <MudExpansionPanel Text="Filter by price">
+                    Panel Four Content
+                </MudExpansionPanel>
+                <MudExpansionPanel Text="By Review">
+                    Panel Four Content
+                </MudExpansionPanel>
+                <MudExpansionPanel Text="Featured Books">
+                    Panel Four Content
+                </MudExpansionPanel>
+            </MudExpansionPanels>
+        </div>
+        <div class="product-list">
+            <div class="pagination">
+                <span class="result-count">
+                    Showing 1-12 of 32 results
+                </span>
+                <div class="pagination-options">
+                    <MudSelect T="string" Label="Default Sorting" AnchorOrigin="Origin.BottomCenter">
+                        <MudSelectItem Value="@("Sort by popularity")" />
+                        <MudSelectItem Value="@("Defautl Sorting")" />
+                        <MudSelectItem Value="@("Sort by newness")" />
+                        <MudSelectItem Value="@("Sort by price: low to high")" />
+                        <MudSelectItem Value="@("Sort by price: high to low")" />
+                    </MudSelect>
+
+                    <MudSelect T="string" Label="Show 12" AnchorOrigin="Origin.BottomCenter">
+                        <MudSelectItem Value="@("Show 4")" />
+                        <MudSelectItem Value="@("Show 8")" />
+                        <MudSelectItem Value="@("Show 12")" />
+                        <MudSelectItem Value="@("Show 16")" />
+                        <MudSelectItem Value="@("Show 20")" />
+                    </MudSelect>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+@code {
+    [Parameter]
+    public string CategoryUrl { get; set; }
+    public List<BreadcrumbItem> BreadCrumbs { get; set; } = new List<BreadcrumbItem>();
+
+    protected override void OnInitialized()
+    {
+        ProductService.ProductsChanged += StateHasChanged;
+        BreadCrumbs.Add(new BreadcrumbItem("Home", href: "#"));
+        BreadCrumbs.Add(new BreadcrumbItem(CategoryUrl, href: "/" + CategoryUrl));
+    }
+
+    public void OnDispose()
+    {
+        ProductService.ProductsChanged -= StateHasChanged;
+    }
+
+    
+
+}

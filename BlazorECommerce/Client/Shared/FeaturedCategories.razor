@@ -1,26 +1,29 @@
 ﻿@inject ICategoryService CategoryService
+@inject NavigationManager NavigationManager
 
 
 <div class="featured-categories">
     <div class="header">
-        <h3>Featured Categories</h3>
-        <div>
-            <a href="/all-categories" class="all-categories-link">All Categories</a>
-            <i class="bi bi-caret-right"></i>
+        <h2>Featured Categories</h2>
+        <div class="icon-link">
+            <MudLink href="/all-categories" class="all-categories-link" Color="Color.Inherit">All Categories
+                
+            </MudLink>
+            <MudIcon Icon="@Icons.Material.Filled.ChevronRight"></MudIcon>
         </div>
 
     </div>
     <div class="categories">
-        @foreach (var featuredCategory in CategoryService.Categories)
+        @foreach (var featuredCategory in CategoryService.FeaturedCategories)
         {
-            <div class="category">
-                <i class="@featuredCategory.Icon">
-
-                </i>
+            <div class="category pointer-cursor" @onclick="() => NavigateToCategory(featuredCategory)">
+                <MudIcon Icon="@featuredCategory.Icon" Title="@featuredCategory.Name" />
+                <div class="category-info">
                 <span>
                     @featuredCategory.Name
                 </span>
                 <a>Explore Now</a>
+                </div>
             </div>
         }
     </div>
@@ -32,4 +35,11 @@
     {
         await CategoryService.GetFeaturedCategories();
     }
+
+    public void NavigateToCategory(Category category)
+    {
+        NavigationManager.NavigateTo(category.Url);
+    }
+
+
 }

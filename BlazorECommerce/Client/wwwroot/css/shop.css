@@ -1,0 +1,65 @@
+﻿.brand-name {
+    font-size: 2rem;
+    color: var(--text-color);
+    margin: 0;
+}
+
+.brand-name span{
+    color: var(--main-color, lawngreen);
+}
+
+.drawer-header{
+    padding: 0.6rem 1.6rem;
+    display: flex;
+    flex-wrap: wrap;
+    align-content: center;
+}
+
+.brand-title{
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    gap: 0.6rem;
+    font-size:  var(--brand-font-size);
+}
+
+.mud-nav-link{
+    align-items: center !important;
+}
+
+.pointer-cursor{
+    cursor: pointer;
+}
+
+.icon-link{
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+}
+
+
+.mud-tabs-toolbar {
+    border-top: 1px solid #eae8e4;
+    border-right: 1px solid #eae8e4;
+    border-bottom: 1px solid #eae8e4;
+}
+
+.mud-tooltip-inline {
+    border-bottom: 1px solid #eae8e4;
+}
+
+.tab-color{
+    color: var(--main-color)
+}
+
+.heading{
+    padding-bottom: 1.2rem;
+}
+.justify-start{
+    justify-content: start !important;
+}
+
+.login-menu{
+    margin: 1.4rem;
+}
+

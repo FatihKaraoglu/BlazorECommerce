@@ -1,0 +1,19 @@
+﻿.border-bottom {
+    border-bottom: 1px solid #eae8e4;
+}
+
+.product-container{
+    display: grid;
+    grid-template-columns: 20% 80%;
+}
+
+.pagination{
+    display: flex;
+    flex-direction: row;
+}
+
+.pagination-options {
+    display: flex;
+    flex-direction: row;
+    gap: 1.2rem;
+}

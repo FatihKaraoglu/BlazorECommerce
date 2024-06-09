@@ -1,7 +1,7 @@
 ﻿<Microsoft.AspNetCore.Components.Authorization.CascadingAuthenticationState>
     <Router AppAssembly="@typeof(App).Assembly">
         <Found Context="routeData">
-            <Microsoft.AspNetCore.Components.Authorization.AuthorizeRouteView RouteData="@routeData" DefaultLayout="@typeof(ShopLayout)" >
+            <Microsoft.AspNetCore.Components.Authorization.AuthorizeRouteView RouteData="@routeData" DefaultLayout="@typeof(Layout)" >
                 <NotAuthorized>
                     <h3>Whoops! You are not allowed to see this page.</h3>
                     <h5>Please <a href="login">login</a> or <a href="register">register</a> for a new account.</h5>
@@ -11,7 +11,7 @@
         </Found>
         <NotFound>
             <PageTitle>Not found</PageTitle>
-            <LayoutView Layout="@typeof(ShopLayout)">
+            <LayoutView Layout="@typeof(Layout)">
                 <p role="alert">Sorry, there's nothing at this address.</p>
             </LayoutView>
         </NotFound>

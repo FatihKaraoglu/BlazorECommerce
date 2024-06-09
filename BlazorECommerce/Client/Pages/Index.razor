@@ -1,7 +1,7 @@
 ﻿@page "/"
-@page "/search/{searchText}/{page:int}"
-@page "/{categoryUrl}"
+
 @inject IProductService ProductService
+@inject IJSRuntime JS
 
 
 <PageTitle>Book Nook</PageTitle>
@@ -13,7 +13,7 @@
             <FeaturedCategories>
 
             </FeaturedCategories>
-            <PreviewSection></PreviewSection>
+            <NewReleaseSection></NewReleaseSection>
         </div>
 
     }
@@ -45,4 +45,5 @@
             await ProductService.GetProducts(CategoryUrl);
         }
     }
+
 }

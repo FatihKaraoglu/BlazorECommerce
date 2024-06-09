@@ -11,7 +11,7 @@ namespace BlazorECommerce.Client.Services.CategoryService
             _http = http;
         }
         public List<Category> Categories { get; set; } = new List<Category>();
-
+        public List<Category> FeaturedCategories { get; set; } = new List<Category>();
         public async Task GetCategories()
         {
             var response = await _http.GetFromJsonAsync<ServiceResponse<List<Category>>>("api/category");
@@ -27,7 +27,7 @@ namespace BlazorECommerce.Client.Services.CategoryService
             var response = await _http.GetFromJsonAsync<ServiceResponse<List<Category>>>("api/category/featured");
             if (response != null && response.Data != null)
             {
-                Categories = response.Data;
+                FeaturedCategories = response.Data;
             }
         }
     }

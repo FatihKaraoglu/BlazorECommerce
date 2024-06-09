@@ -1,0 +1,56 @@
+﻿@inject IProductService ProductService
+@inject NavigationManager NavigationManager
+@inject ICartService CartService;
+
+<div class="product-grid">
+    <div class="promo-panel">
+        <img src="/images/taylor-heery-LNkPwNVAdmA-unsplash.jpg" class="promo-img"/>
+        <h1>Super Sale</h1>
+        <span>10% Off on Orders over $50</span>
+    </div>
+    <div class="products">
+        @foreach (var product in ProductService.Products)
+        {
+            <div class="product pointer-cursor" @onclick="() => NavigatoToProductDetails(product.Id)">
+                <img src="@product.ImageUrl" class="preview-media" />
+                <div class="product-info">
+                    <span class="product-variant">E-Book</span>
+                    <h5>@product.Title</h5>
+                    <span class="product-author">Lilly Vanillie</span>
+                    <span class="price">@product.Variants.First().Price</span>
+                </div>
+                <div class="product-hover">
+                    <MudIconButton Icon="@Icons.Material.Filled.ShoppingBag" aria-label="add-to-cart" OnClick="() => AddToCart(product.Variants.First())"></MudIconButton>
+                    <MudIconButton Icon="@Icons.Material.Filled.Favorite" aria-label="add-to-cart"></MudIconButton>
+                </div>
+            </div>
+        }
+    </div>
+</div>
+
+@code {
+    [Parameter]
+    public int CategoryId { get; set; }
+
+    protected override async Task OnInitializedAsync()
+    {
+        await ProductService.GetFeaturedProducts();
+    }
+
+    public void NavigatoToProductDetails(int productId)
+    {
+        NavigationManager.NavigateTo($"/product/{productId}");
+    }
+
+    private async Task AddToCart(ProductVariant variant)
+    {
+
+        var cartItem = new CartItem
+            {
+                ProductId = variant.ProductId,
+                ProductTypeId = variant.ProductTypeId
+            };
+
+        await CartService.AddToCart(cartItem);
+    }
+}
