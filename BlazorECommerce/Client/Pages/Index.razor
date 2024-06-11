@@ -1,7 +1,6 @@
 ﻿@page "/"
 
 @inject IProductService ProductService
-@inject IJSRuntime JS
 
 
 <PageTitle>Book Nook</PageTitle>
@@ -13,7 +12,7 @@
             <FeaturedCategories>
 
             </FeaturedCategories>
-            <NewReleaseSection></NewReleaseSection>
+        @*    <NewReleaseSection></NewReleaseSection>*@
         </div>
 
     }
@@ -37,13 +36,15 @@
 
     protected override async Task OnParametersSetAsync()
     {
-        if(SearchText != null)
-        {
-            await ProductService.SearchProducts(SearchText, Page);
-        } else
-        {
-            await ProductService.GetProducts(CategoryUrl);
-        }
+        //if(SearchText != null)
+        //{
+        //    await ProductService.SearchProducts(SearchText, Page);
+        //} else
+        //{
+           
+        //}
+
+        await ProductService.GetProducts(CategoryUrl);
     }
 
 }

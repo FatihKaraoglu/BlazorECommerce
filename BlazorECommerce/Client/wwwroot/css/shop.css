@@ -63,3 +63,110 @@
     margin: 1.4rem;
 }
 
+.products {
+    display: grid;
+    grid-template-columns: 1fr 1fr 1fr 1fr 1fr;
+    width: 100%;
+    height: 100%;
+}
+
+.promo-img {
+    object-fit: scale-down;
+    max-width: 100%;
+    margin-bottom: 0.6rem;
+}
+
+.promo-panel {
+    display: flex;
+    justify-content: center;
+    align-content: center;
+    align-items: center;
+    padding: 2.4rem;
+    flex-direction: column;
+    width: 100%;
+    height: 100%;
+    border-left: 1px solid #eae8e4;
+    border-top: 1px solid #eae8e4;
+    border-bottom: 1px solid #eae8e4;
+    background-color: #f0f9e4;
+}
+
+    .promo-panel span {
+        font-size: 1.2rem;
+    }
+
+    .promo-panel h1 {
+        font-size: 2rem;
+        margin-bottom: 0.6rem;
+    }
+
+.preview-media {
+    max-width: 100%;
+    height: 100%;
+    margin-bottom: 0.6rem;
+    padding: 0.6rem;
+    object-fit:scale-down;
+}
+
+.product {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-content: center;
+    border-right: 1px solid #eae8e4;
+    border-top: 1px solid #eae8e4;
+    flex-grow: 1;
+    width: 100%;
+    height: 100%;
+    padding: 1.6rem;
+    position: relative;
+    overflow: hidden;
+}
+
+    .product:nth-child(1) {
+        border-left: 1px solid #eae8e4;
+    }
+
+    .product:nth-child(6) {
+        border-left: 1px solid #eae8e4;
+    }
+
+    .product:nth-child(n+4) {
+        border-bottom: 1px solid #eae8e4;
+    }
+
+    .product:hover {
+        box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+    }
+
+        .product:hover .product-hover {
+            transform: translateY(0); /* Moves up into view on hover */
+        }
+
+.product-info {
+    font-size: 1.2rem;
+    margin: 1.6rem 0rem;
+}
+
+    .product-info .product-author {
+        font-size: 1.1rem;
+        font-style: italic;
+    }
+
+/* Initial state of the hover bar */
+.product-hover {
+    position: absolute;
+    bottom: 0; /* Initially visible */
+    left: 0;
+    width: 100%;
+    display: flex;
+    justify-content: space-around;
+    padding: 10px 0;
+    transform: translateY(100%); /* Move it out of view */
+    transition: transform 0.3s ease; /* Smooth transition */
+}
+
+.product:hover .product-hover {
+    bottom: 0;
+}
+

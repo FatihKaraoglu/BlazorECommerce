@@ -48,28 +48,23 @@
 }
 
 .categories .category:nth-child(1) {
-    background-color: #e3f2fd; /* Very Light Blue */
-    color: #0ea5e9; /* Blue */
+    background-color: var( --nyanza);
 }
 
 .categories .category:nth-child(2) {
-    background-color: #fde7e7; /* Very Light Red */
-    color: #dc2626; /* Red */
+    background-color: var(--celadon);
 }
 
 .categories .category:nth-child(3) {
-    background-color: #f0f9e4; /* Very Light Green */
-    color: #65a30d; /* Green */
+    background-color: var(--celadon-2);
 }
 
 .categories .category:nth-child(4) {
-    background-color: #fff8e1; /* Very Light Yellow */
-    color: #ca8a04; /* Yellow */
+   background-color: var(--mint);
 }
 
 .categories .category:nth-child(5) {
-    background-color: #f3e8ff; /* Very Light Purple */
-    color: #7c3aed; /* Purple */
+    background-color: var(--mint-2);
 }
 
 .header {

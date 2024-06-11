@@ -18,8 +18,8 @@ namespace BlazorECommerce.Shared
         public List<ProductVariant> Variants { get; set; } = new List<ProductVariant>();
         public List<ProductCategories> ProductCategories { get; set; } = new List<ProductCategories>();
         public int Views { get; set; } = 0;
-        //public string Theme { get; set; } = string.Empty;
-        //public Author? Author { get; set; }
-        //public int AuthorId { get; set; }
+
+        public Author? Author { get; set; }
+        public int? AuthorId { get; set; }
     }
 }

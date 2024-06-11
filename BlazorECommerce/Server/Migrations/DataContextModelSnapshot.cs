@@ -22,6 +22,27 @@ namespace BlazorECommerce.Server.Migrations
 
             SqlServerModelBuilderExtensions.UseIdentityColumns(modelBuilder);
 
+            modelBuilder.Entity("BlazorECommerce.Shared.Author", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
+
+                    b.Property<string>("Name")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("Surname")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("Authors");
+                });
+
             modelBuilder.Entity("BlazorECommerce.Shared.CartItem", b =>
                 {
                     b.Property<int>("UserId")
@@ -239,6 +260,9 @@ namespace BlazorECommerce.Server.Migrations
 
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
 
+                    b.Property<int?>("AuthorId")
+                        .HasColumnType("int");
+
                     b.Property<string>("Description")
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
@@ -258,6 +282,8 @@ namespace BlazorECommerce.Server.Migrations
                         .HasColumnType("int");
 
                     b.HasKey("Id");
+
+                    b.HasIndex("AuthorId");
 
                     b.ToTable("Products");
 
@@ -700,6 +726,28 @@ namespace BlazorECommerce.Server.Migrations
                     b.HasIndex("CategoryId");
 
                     b.ToTable("ProductCategories");
+
+                    b.HasData(
+                        new
+                        {
+                            ProductId = 1,
+                            CategoryId = 4
+                        },
+                        new
+                        {
+                            ProductId = 2,
+                            CategoryId = 2
+                        },
+                        new
+                        {
+                            ProductId = 3,
+                            CategoryId = 1
+                        },
+                        new
+                        {
+                            ProductId = 4,
+                            CategoryId = 8
+                        });
                 });
 
             modelBuilder.Entity("BlazorECommerce.Shared.ProductType", b =>
@@ -1162,6 +1210,15 @@ namespace BlazorECommerce.Server.Migrations
                     b.Navigation("ProductType");
                 });
 
+            modelBuilder.Entity("BlazorECommerce.Shared.Product", b =>
+                {
+                    b.HasOne("BlazorECommerce.Shared.Author", "Author")
+                        .WithMany("Products")
+                        .HasForeignKey("AuthorId");
+
+                    b.Navigation("Author");
+                });
+
             modelBuilder.Entity("BlazorECommerce.Shared.ProductCategories", b =>
                 {
                     b.HasOne("BlazorECommerce.Shared.Category", "Category")
@@ -1198,6 +1255,11 @@ namespace BlazorECommerce.Server.Migrations
                     b.Navigation("Product");
 
                     b.Navigation("ProductType");
+                });
+
+            modelBuilder.Entity("BlazorECommerce.Shared.Author", b =>
+                {
+                    b.Navigation("Products");
                 });
 
             modelBuilder.Entity("BlazorECommerce.Shared.Category", b =>

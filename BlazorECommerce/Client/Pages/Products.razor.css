@@ -2,18 +2,39 @@
     border-bottom: 1px solid #eae8e4;
 }
 
+.shop-heading{
+    font-size: 1.2rem;
+    margin-bottom: 0.6rem;
+}
+
 .product-container{
     display: grid;
     grid-template-columns: 20% 80%;
+    gap: 1.6rem;
+}
+
+.filters{
+    margin-top: 1.2rem;
 }
 
 .pagination{
     display: flex;
     flex-direction: row;
+    justify-content: space-between;
+    margin-bottom: 1.2rem;
 }
 
 .pagination-options {
     display: flex;
     flex-direction: row;
     gap: 1.2rem;
+}
+.result-count{
+    align-self: end;
+    margin-left: 0.6rem;
+    margin-bottom: 0.4rem;
+}
+
+.result-text{
+    font-size: 0.8rem;
 }

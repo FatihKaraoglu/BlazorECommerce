@@ -1,10 +1,13 @@
 ﻿@page "/{categoryUrl}"
 @inject IProductService ProductService
+@inject ICategoryService CategoryService
+@inject NavigationManager NavigationManager
+@inject ICartService CartService
 
 
 <div class="container">
-    <div class="d-flex flex-row align-center justify-space-between mx-5 my-4 border-bottom">
-        <h3>
+    <div class="d-flex flex-row align-center justify-space-between my-8 border-bottom">
+        <h3 class="shop-heading">
             Shop
         </h3>
         <MudBreadcrumbs Items="BreadCrumbs"></MudBreadcrumbs>
@@ -13,13 +16,18 @@
     <div class="product-container">
         <div class="filters">
             <MudExpansionPanels>
-                <MudExpansionPanel Text="Categories" MaxHeight="150">
-                    Panel One Content
+                <MudExpansionPanel Text="Categories">
+                    @foreach(var category in CategoryService.Categories)
+                    {
+                        <MudNavLink Href="@category.Url">
+                            @category.Name
+                        </MudNavLink>
+                    }
                 </MudExpansionPanel>
-                <MudExpansionPanel Text="Author" MaxHeight="500">
+                <MudExpansionPanel Text="Author">
                     Panel Two Content
                 </MudExpansionPanel>
-                <MudExpansionPanel Text="Format" MaxHeight="1000">
+                <MudExpansionPanel Text="Format">
                     Panel Three Content
                 </MudExpansionPanel>
                 <MudExpansionPanel Text="Filter by price">
@@ -35,11 +43,17 @@
         </div>
         <div class="product-list">
             <div class="pagination">
-                <span class="result-count">
-                    Showing 1-12 of 32 results
-                </span>
+                
+                <div class="result-count">
+                    <span class="result-text">
+                        Showing 1-12 of 32 results
+                    </span>
+                </div>
+                    
+                
+                
                 <div class="pagination-options">
-                    <MudSelect T="string" Label="Default Sorting" AnchorOrigin="Origin.BottomCenter">
+                    <MudSelect T="string" Label="Default Sorting" AnchorOrigin="Origin.BottomCenter" Style="margin: 0;">
                         <MudSelectItem Value="@("Sort by popularity")" />
                         <MudSelectItem Value="@("Defautl Sorting")" />
                         <MudSelectItem Value="@("Sort by newness")" />
@@ -47,7 +61,7 @@
                         <MudSelectItem Value="@("Sort by price: high to low")" />
                     </MudSelect>
 
-                    <MudSelect T="string" Label="Show 12" AnchorOrigin="Origin.BottomCenter">
+                    <MudSelect T="string" Label="Show 12" AnchorOrigin="Origin.BottomCenter" Style="margin: 0;">
                         <MudSelectItem Value="@("Show 4")" />
                         <MudSelectItem Value="@("Show 8")" />
                         <MudSelectItem Value="@("Show 12")" />
@@ -55,6 +69,25 @@
                         <MudSelectItem Value="@("Show 20")" />
                     </MudSelect>
                 </div>
+            </div>
+
+            <div class="products">
+                @foreach (var product in ProductService.Products)
+                {
+                    <div class="product pointer-cursor" @onclick="() => NavigatoToProductDetails(product.Id)">
+                        <img src="@product.ImageUrl" class="preview-media" />
+                        <div class="product-info">
+                            <span class="product-variant">E-Book</span>
+                            <h5>@product.Title</h5>
+                            <span class="product-author">Lilly Vanillie</span>
+                            <span class="price">@product.Variants.First().Price</span>
+                        </div>
+                        <div class="product-hover">
+                            <MudIconButton Icon="@Icons.Material.Filled.ShoppingBag" aria-label="add-to-cart" OnClick="() => AddToCart(product.Variants.First())"></MudIconButton>
+                            <MudIconButton Icon="@Icons.Material.Filled.Favorite" aria-label="add-to-cart"></MudIconButton>
+                        </div>
+                    </div>
+                }
             </div>
         </div>
     </div>
@@ -68,13 +101,46 @@
     protected override void OnInitialized()
     {
         ProductService.ProductsChanged += StateHasChanged;
+    }
+
+    public void Dispose()
+    {
+        ProductService.ProductsChanged -= StateHasChanged;
+    }
+
+    //protected override async Task OnInitializedAsync()
+    //{
+    //    await ProductService.GetProducts();
+    //    await CategoryService.GetCategories();
+
+    //}
+
+    protected override async Task OnParametersSetAsync()
+    {
+        await ProductService.GetProducts(CategoryUrl);
+        await CategoryService.GetCategories();
+        BreadCrumbs.Clear();
         BreadCrumbs.Add(new BreadcrumbItem("Home", href: "#"));
         BreadCrumbs.Add(new BreadcrumbItem(CategoryUrl, href: "/" + CategoryUrl));
     }
 
-    public void OnDispose()
+
+
+    public void NavigatoToProductDetails(int productId)
     {
-        ProductService.ProductsChanged -= StateHasChanged;
+        NavigationManager.NavigateTo($"/product/{productId}");
+    }
+
+    private async Task AddToCart(ProductVariant variant)
+    {
+
+        var cartItem = new CartItem
+            {
+                ProductId = variant.ProductId,
+                ProductTypeId = variant.ProductTypeId
+            };
+
+        await CartService.AddToCart(cartItem);
     }
 
     
