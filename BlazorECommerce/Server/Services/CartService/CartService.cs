@@ -17,12 +17,11 @@ namespace BlazorECommerce.Server.Services.CartService
             _authService = authService;
         }
 
-
-        public async Task<ServiceResponse<List<CartProductResponseDTO>>> GetCartProducts(List<CartItem> cartItems)
+        public async Task<ServiceResponse<List<CartProduct>>> GetCartProducts(List<CartItem> cartItems)
         {
-            var result = new ServiceResponse<List<CartProductResponseDTO>>
+            var result = new ServiceResponse<List<CartProduct>>
             {
-                Data = new List<CartProductResponseDTO>()
+                Data = new List<CartProduct>()
             };
 
             foreach (var item in cartItems)
@@ -35,25 +34,22 @@ namespace BlazorECommerce.Server.Services.CartService
                     continue;
                 }
 
-                var productVariant = await _dataContext.ProductVariants
-                    .Where(x => x.ProductId == item.ProductId
-                    && x.ProductTypeId == item.ProductTypeId)
+                var productVariants = await _dataContext.ProductVariants
+                    .Where(x => x.ProductId == item.ProductId)
                     .Include(x => x.ProductType)
-                    .FirstOrDefaultAsync();
+                    .ToListAsync();
 
-                if (productVariant == null)
+                if (productVariants == null || productVariants.Count == 0)
                 {
                     continue;
                 }
 
-                var cartProduct = new CartProductResponseDTO
+                var cartProduct = new CartProduct
                 {
                     ProductId = product.Id,
                     Title = product.Title,
                     ImageUrl = product.ImageUrl,
-                    Price = productVariant.Price,
-                    ProductType = productVariant.ProductType.Name,
-                    ProductTypeId = productVariant.ProductTypeId,
+                    Variants = productVariants,
                     Quantity = item.Quantity
                 };
 
@@ -62,7 +58,8 @@ namespace BlazorECommerce.Server.Services.CartService
             return result;
         }
 
-        public async Task<ServiceResponse<List<CartProductResponseDTO>>> StoreCartItems(List<CartItem> cartItems)
+
+        public async Task<ServiceResponse<List<CartProduct>>> StoreCartItems(List<CartItem> cartItems)
         {
             cartItems.ForEach(cartItem => cartItem.UserId = _authService.GetUserId());
             _dataContext.CartItems.AddRange(cartItems);
@@ -77,7 +74,7 @@ namespace BlazorECommerce.Server.Services.CartService
             return new ServiceResponse<int> { Data = count };
         }
 
-        public async Task<ServiceResponse<List<CartProductResponseDTO>>> GetDbCartProducts(int? userId = null)
+        public async Task<ServiceResponse<List<CartProduct>>> GetDbCartProducts(int? userId = null)
         {
             if(userId == null)
                 userId = _authService.GetUserId();

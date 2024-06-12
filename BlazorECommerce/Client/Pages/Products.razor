@@ -108,12 +108,12 @@
         ProductService.ProductsChanged -= StateHasChanged;
     }
 
-    //protected override async Task OnInitializedAsync()
-    //{
-    //    await ProductService.GetProducts();
-    //    await CategoryService.GetCategories();
+    protected override async Task OnInitializedAsync()
+    {
+        await ProductService.GetProducts();
+        await CategoryService.GetCategories();
 
-    //}
+    }
 
     protected override async Task OnParametersSetAsync()
     {

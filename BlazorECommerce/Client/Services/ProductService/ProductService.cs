@@ -1,4 +1,5 @@
-﻿using BlazorECommerce.Shared;
+﻿using BlazorECommerce.Client.Pages;
+using BlazorECommerce.Shared;
 using BlazorECommerce.Shared.DTO;
 using System.Net.Http.Json;
 
@@ -115,6 +116,15 @@ namespace BlazorECommerce.Client.Services.ProductService
             }
 
             ProductsChanged.Invoke();
+        }
+
+        public async Task<ServiceResponse<List<Product>>> GetRangeOfProducts(List<int> productIds)
+        {
+            var response = await _http.PostAsJsonAsync("api/product/GetRangeOfProducts", productIds);
+            var result = await response.Content.ReadFromJsonAsync<ServiceResponse<List<Product>>>();
+
+            return result;
+            
         }
     }   
 }

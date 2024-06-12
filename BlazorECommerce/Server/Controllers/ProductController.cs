@@ -34,6 +34,22 @@ namespace BlazorECommerce.Server.Controllers
             return Ok(result);
         }
 
+        [HttpPost("RangeOfProducts")]
+        public async Task<ActionResult<ServiceResponse<List<Product>>>> GetRangeOfProducts([FromBody] List<int> productIds)
+        {
+            var result = await _productService.GetRangeOfProducts(productIds);
+
+            if (result.Success)
+            {
+                foreach (var productId in productIds)
+                {
+                    await _productService.IncreaseViewCount(productId);
+                }
+            }
+
+            return Ok(result);
+        }
+
         [HttpGet("category/{categoryUrl}")]
         public async Task<ActionResult<ServiceResponse<List<Product>>>> GetProdcutByCategory(string categoryUrl)
         {

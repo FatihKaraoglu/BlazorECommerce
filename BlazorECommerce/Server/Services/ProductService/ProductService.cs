@@ -127,6 +127,31 @@ namespace BlazorECommerce.Server.Services.ProductService
             return new ServiceResponse<List<string>> { Data = result };
         }
 
+        public async Task<ServiceResponse<List<Product>>> GetRangeOfProducts(List<int> productIds)
+        {
+            var response = new ServiceResponse<List<Product>>();
+
+            // Retrieve the list of products that match the provided product IDs
+            var products = await _context.Products
+                .Where(p => productIds.Contains(p.Id))
+                .Include(p => p.Variants)
+                .ThenInclude(v => v.ProductType)
+                .ToListAsync();
+
+            // Check if any products were found
+            if (products == null || !products.Any())
+            {
+                response.Success = false;
+                response.Message = "None of the products exist!";
+            }
+            else
+            {
+                response.Data = products;
+            }
+
+            return response;
+        }
+
         public async Task IncreaseViewCount(int productId)
         {
             var product = await _context.Products.Where(x => x.Id == productId).FirstOrDefaultAsync();

@@ -88,7 +88,7 @@ namespace BlazorECommerce.Server.Services.OrderService
         {
             var products = (await _cartService.GetDbCartProducts(userId)).Data;
             decimal totalPrice = 0;
-            products.ForEach(product => totalPrice += product.Price * product.Quantity);
+            products.ForEach(product => totalPrice += product.Variants.First().Price * product.Quantity);
 
             var orderItems = new List<OrderItem>();
             products.ForEach(product => orderItems.Add(new OrderItem
@@ -96,7 +96,7 @@ namespace BlazorECommerce.Server.Services.OrderService
                 ProductId = product.ProductId,
                 ProductTypeId = product.ProductTypeId,
                 Quanity = product.Quantity,
-                TotalPrice = product.Price * product.Quantity
+                TotalPrice = product.Variants.First().Price * product.Quantity
             }));
 
             var order = new Order

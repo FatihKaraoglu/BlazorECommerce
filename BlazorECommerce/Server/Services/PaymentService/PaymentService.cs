@@ -29,7 +29,7 @@ namespace BlazorECommerce.Server.Services.PaymentService
             {
                 PriceData = new SessionLineItemPriceDataOptions
                 {
-                    UnitAmountDecimal = product.Price * 100,
+                    UnitAmountDecimal = product.Variants.First().Price * 100,
                     Currency = "usd",
                     ProductData = new SessionLineItemPriceDataProductDataOptions
                     {

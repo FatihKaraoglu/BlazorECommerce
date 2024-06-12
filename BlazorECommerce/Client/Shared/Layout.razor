@@ -1,5 +1,7 @@
 ﻿@inject ICategoryService CategoryService
 @inherits LayoutComponentBase
+@inject ICartService CartService
+@inject ISyncLocalStorageService LocalStorage
 @using System.Text.RegularExpressions
 @using System.ComponentModel.DataAnnotations
 @using MudBlazor.Utilities;
@@ -16,10 +18,12 @@
 
         <div class="nav-icons">
             <MudIconButton Icon="@Icons.Material.Filled.Favorite" Color="Color.Inherit" Edge="Edge.End" />
-            <CartCounter></CartCounter>
+            <MudBadge Origin=Origin.TopRight Content="@GetCartItemsCount()" Color="Color.Primary" Overlap=true>
+                <MudIconButton Icon="@Icons.Material.Filled.ShoppingBag" Color="Color.Inherit" Edge="Edge.End" OnClick="@((e) => ToggleCartOpen())" />
+            </MudBadge>
+
             <MudIconButton Icon="@Icons.Material.Filled.Person" Color="Color.Inherit" Edge="Edge.End" 
                             OnClick="@((e) => ToggleLoginOpen())" />
-
         </div>
     </MudAppBar>
     <MudDrawer @bind-Open="_drawerOpen" Elevation="2">
@@ -39,7 +43,7 @@
             <MudNavLink Href="/my-orders" Icon="@Icons.Material.Filled.LocalShipping">My Orders</MudNavLink>
             <MudNavLink Href="/favs" Icon="@Icons.Material.Filled.Favorite">Wishlist</MudNavLink>
         </MudNavMenu>
-    </MudDrawer>
+    </MudDrawer> 
 
     <MudDrawer Anchor="Anchor.Right" @bind-Open="_drawerLoginOpen" Elevation="2" Variant="DrawerVariant.Temporary" Width="30rem">
         <MudDrawerHeader Class="drawer-header justify-space-between">
@@ -48,7 +52,7 @@
                 <MudText Typo="Typo.h5" Class="mt-1">@currentMode</MudText>
             </div>
            
-            <MudIconButton Icon="@Icons.Material.Filled.Close" Class="mx-4 my-4">
+            <MudIconButton Icon="@Icons.Material.Filled.Close" OnClick="ToggleLoginOpen" Class="mx-4 my-4">
 
             </MudIconButton>
             <MudDivider></MudDivider>
@@ -99,9 +103,72 @@
         </div>
        
     </MudDrawer>
-    <MudDrawer>
-    </MudDrawer>
+    <MudDrawer Anchor="Anchor.Right" @bind-Open="_drawerCartOpen" Elevation="2" Variant="DrawerVariant.Temporary" Width="50rem">
+        <MudDrawerHeader Class="drawer-header justify-space-between">
+            <div class="d-flex flex-row align-center">
+                <MudIcon Icon="@Icons.Material.Filled.ShoppingCart" Size="Size.Large" Class="mx-4 my-4"></MudIcon>
+                <MudText Typo="Typo.h5" Class="mt-1">Cart</MudText>
+            </div>
 
+            <MudIconButton Icon="@Icons.Material.Filled.Close" OnClick="ToggleCartOpen" Class="mx-4 my-4">
+
+            </MudIconButton>
+            <MudDivider></MudDivider>
+        </MudDrawerHeader>
+
+
+        <div class="mx-4 d-flex flex-column mx-6 gap-6">
+            @foreach(var cartItem in CartService.CartProducts)
+            {
+                <div class="d-flex flex-row justify-space-between flex-grow-1 gap-5 mt-4">
+                    <div>
+                        <MudImage Fluid=true Src=@cartItem.ImageUrl Elevation="3"></MudImage>
+                    </div>
+
+                     <div class="d-flex flex-column justify-start" style="width: 100%">
+                         <MudText Typo="Typo.h6">
+                             @cartItem.Title
+                         </MudText>
+                         <MudText Typo="Typo.subtitle1">
+                             @cartItem.Author
+                         </MudText>
+                        <MudSelect T="int" Label="Format" Variant="Variant.Outlined" @bind-Value="cartItem.Variants.First().ProductType.Id" AnchorOrigin="Origin.BottomCenter">
+                            @foreach(var variant in cartItem.Variants)
+                            {
+                                <MudSelectItem Value="variant.ProductType.Id">
+                                    @variant.ProductType.Name
+                                </MudSelectItem>
+                            }
+                        </MudSelect>
+                        <MudText Typo="Typo.subtitle2">
+                             @cartItem.Quantity x @(cartItem.Quantity * cartItem.Variants.First().Price)$
+                         </MudText>
+                     </div>
+
+                    <MudIconButton Icon="@Icons.Material.Filled.Close" Class="align-self-start mr-4" OnClick="(() => CartService.RemoveProductFromCart(cartItem.ProductId, cartItem.ProductTypeId))"></MudIconButton>
+                    
+                </div>
+                <MudDivider></MudDivider>
+            }
+            <div class="d-flex flex-column">
+                <div class="d-flex flex-row justify-space-between mb-3">
+                    <MudText>
+                        Total:
+                    </MudText>
+                    <MudText>
+                        @GetTotal()$
+                    </MudText>
+                </div>
+                <MudButton Variant="Variant.Outlined" Class="mb-3"> 
+                    View Cart
+                </MudButton>
+                <MudButton Variant="Variant.Filled" Style="background-color: var(--mint); color: var(--mud-palette-primary-text)">
+                    Checkout
+                </MudButton>
+
+            </div>
+        </div>
+    </MudDrawer>
     <MudMainContent>
         @Body
     </MudMainContent>
@@ -114,6 +181,7 @@
 @code {
     bool _drawerOpen = false;
     bool _drawerLoginOpen = false;
+    bool _drawerCartOpen = false;
     public bool _isOpen;
     public string currentMode = "Account";
 
@@ -122,23 +190,23 @@
         currentMode = mode;
     }
 
-    public void ToggleOpen()
-    {
-        if (_isOpen)
-            _isOpen = false;
-        else
-            _isOpen = true;
-    }
-
     public void ToggleLoginOpen()
     {
         _drawerLoginOpen = !_drawerLoginOpen;
     }
 
 
+    public void ToggleCartOpen()
+    {
+        _drawerCartOpen = !_drawerCartOpen;
+    }
+
+
     protected override async Task OnInitializedAsync()
     {
+        await CartService.GetCartProducts();
         await CategoryService.GetCategories();
+
     }
 
     void DrawerToggle()
@@ -190,5 +258,33 @@
         if (pwField1.Value != arg)
             return "Passwords don't match";
         return null;
+    }
+
+    private int GetCartItemsCount()
+    {
+        var count = LocalStorage.GetItem<int>("cartItemsCount");
+        return count;
+    }
+
+    protected override void OnInitialized()
+    {
+        CartService.OnChange += StateHasChanged;
+    }
+
+    public void Dispose()
+    {
+        CartService.OnChange -= StateHasChanged;
+    }
+
+    public string GetTotal()
+    {
+        decimal total = 0;
+        @foreach(var item in CartService.CartProducts)
+        {
+            var subtotal = item.Quantity * item.Variants.First().Price;
+            total += subtotal;
+        }
+
+        return total.ToString();
     }
 }
