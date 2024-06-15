@@ -42,7 +42,8 @@
 .product-preview-container {
     position: sticky;
     top: 5.2rem;
-    align-self: baseline
+    align-self: baseline;
+    border-right: 1px solid #eae8e4;
 }
 
 .form-select {
@@ -110,6 +111,12 @@
 .description > p {
     font-size: 1.4rem;
 }
+
+.border-bottom {
+    border-bottom: 1px solid #eae8e4;
+}
+
+
 
 /*Smaller Desktops*/
 @media(max-width: 84em) {

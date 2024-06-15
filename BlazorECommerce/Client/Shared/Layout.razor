@@ -2,8 +2,14 @@
 @inherits LayoutComponentBase
 @inject ICartService CartService
 @inject ISyncLocalStorageService LocalStorage
+@inject ILocalStorageService LocalStorageService
+@inject AuthenticationStateProvider AuthenticationStateProvider
+@inject IAuthService AuthService
+@inject ISnackbar Snackbar
+
 @using System.Text.RegularExpressions
 @using System.ComponentModel.DataAnnotations
+@using BlazorECommerce.Client.Services.AuthService;
 @using MudBlazor.Utilities;
 
 
@@ -11,7 +17,7 @@
     <MudAppBar Elevation="1" Style="@($"background-color: white; color: var(--main-text-color)")" Class="py-1">
         <MudIconButton Icon="@Icons.Material.Filled.Menu" Color="Color.Inherit" Edge="Edge.Start" OnClick="@((e) => DrawerToggle())" />
         <MudSpacer />
-        <div class="brand-title">
+        <div class="brand-title mx-auto">
             <span style="font-family: Playfair Display; font-size: 3rem">Book<span style="color: var(--mint)">Nook</span></span>
         </div>
         <MudSpacer />
@@ -22,8 +28,8 @@
                 <MudIconButton Icon="@Icons.Material.Filled.ShoppingBag" Color="Color.Inherit" Edge="Edge.End" OnClick="@((e) => ToggleCartOpen())" />
             </MudBadge>
 
-            <MudIconButton Icon="@Icons.Material.Filled.Person" Color="Color.Inherit" Edge="Edge.End" 
-                            OnClick="@((e) => ToggleLoginOpen())" />
+            <MudIconButton Icon="@Icons.Material.Filled.Person" Color="Color.Inherit" Edge="Edge.End"
+                           OnClick="@((e) => ToggleLoginOpen())" />
         </div>
     </MudAppBar>
     <MudDrawer @bind-Open="_drawerOpen" Elevation="2">
@@ -43,7 +49,7 @@
             <MudNavLink Href="/my-orders" Icon="@Icons.Material.Filled.LocalShipping">My Orders</MudNavLink>
             <MudNavLink Href="/favs" Icon="@Icons.Material.Filled.Favorite">Wishlist</MudNavLink>
         </MudNavMenu>
-    </MudDrawer> 
+    </MudDrawer>
 
     <MudDrawer Anchor="Anchor.Right" @bind-Open="_drawerLoginOpen" Elevation="2" Variant="DrawerVariant.Temporary" Width="30rem">
         <MudDrawerHeader Class="drawer-header justify-space-between">
@@ -51,57 +57,48 @@
                 <MudIcon Icon="@Icons.Material.Filled.Person" Size="Size.Large" Class="mx-4 my-4"></MudIcon>
                 <MudText Typo="Typo.h5" Class="mt-1">@currentMode</MudText>
             </div>
-           
+
             <MudIconButton Icon="@Icons.Material.Filled.Close" OnClick="ToggleLoginOpen" Class="mx-4 my-4">
 
             </MudIconButton>
             <MudDivider></MudDivider>
         </MudDrawerHeader>
 
-       
         <div class="mx-4">
             @if (currentMode.Equals("Create Account"))
             {
-                <MudForm @ref="form" @bind-IsValid="@success" @bind-Errors="@errors">
-                    <MudTextField T="string" Label="Username" Required="true" RequiredError="User name is required!" />
-                    <MudTextField T="string" Label="Email" Required="true" RequiredError="Email is required!"
-                              Validation="@(new EmailAddressAttribute() {ErrorMessage = "The email address is invalid"})" />
-                    <MudTextField T="string" Label="Password" HelperText="Choose a strong password" @ref="pwField1"
-                              InputType="InputType.Password"
-                              Validation="@(new Func<string, IEnumerable<string>>(PasswordStrength))" Required="true"
-                              RequiredError="Password is required!" />
-                    <MudTextField T="string"
-                              Label="Password" HelperText="Repeat the password" InputType="InputType.Password"
-                              Validation="@(new Func<string, string>(PasswordMatch))" />
-                    
+                <MudForm @ref="form">
+                    <MudTextField T="string" Label="Email" @bind-Value="registerModel.Email" Required="true" RequiredError="Email is required!"
+                              Validation="@(new EmailAddressAttribute() { ErrorMessage = "The email address is invalid" })" />
+                    <MudTextField T="string" Label="Password" @bind-Value="registerModel.Password" HelperText="Choose a strong password" InputType="InputType.Password"
+                              Required="true" RequiredError="Password is required!" />
+                    <MudTextField T="string" Label="Repeat Password" @bind-Value="registerModel.ConfirmPassword" HelperText="Repeat the password" InputType="InputType.Password"
+                              Required="true" RequiredError="Password is required!" />
                 </MudForm>
                 <div class="d-flex flex-column gap-2 py-8 justify-center">
-                    <MudButton Variant="Variant.Filled" Style="background-color: var(--mint); color: var(--mud-palette-primary-text)" DisableElevation="true" OnClick="@(()=>form.Validate())">Sign Up</MudButton>
+                    <MudButton Variant="Variant.Filled" Style="background-color: var(--mint); color: var(--mud-palette-primary-text)" DisableElevation="true" OnClick="@(()=>HandleRegistration())">Sign Up</MudButton>
                     <span style="text-align: center">
                         Already have an account? <MudLink OnClick="@(() => SetCurrentMode("Account"))">
                             <span class="mx-2" style="color: var(--mint-2)">Login</span>
-                            </MudLink>
+                        </MudLink>
                     </span>
                 </div>
-            } else
+            }
+            else
             {
-                <MudForm @ref="form" @bind-IsValid="@success" @bind-Errors="@errors">
-                    <MudTextField T="string" Label="Email" Required="true" RequiredError="Email is required!"
-                              Validation="@(new EmailAddressAttribute() {ErrorMessage = "The email address is invalid"})" />
-                    <MudTextField T="string" Label="Password" HelperText="Choose a strong password" @ref="pwField1"
-                              InputType="InputType.Password"
-                              Validation="@(new Func<string, IEnumerable<string>>(PasswordStrength))" Required="true"
-                              RequiredError="Password is required!" />
+                <MudForm @ref="form">
+                    <MudTextField T="string" Label="Email" @bind-Value="loginModel.Email" Required="true" RequiredError="Email is required!"
+                              Validation="@(new EmailAddressAttribute() { ErrorMessage = "The email address is invalid" })" />
+                    <MudTextField T="string" Label="Password" @bind-Value="loginModel.Password" HelperText="Choose a strong password" InputType="InputType.Password"
+                              Required="true" RequiredError="Password is required!" />
                 </MudForm>
                 <div class="d-flex flex-column gap-2 py-8">
-                    <MudButton Variant="Variant.Filled" Style="background-color: var(--mint); color: var(--mud-palette-primary-text)" DisableElevation="true" OnClick="@(()=>form.Validate())">Sign In</MudButton>
-                    <MudButton Variant="Variant.Outlined" Style="background-color: var(--mud-palette-white)" DisableElevation="true" OnClick="@(()=> SetCurrentMode("Create Account"))" >Create Account</MudButton>
+                    <MudButton Variant="Variant.Filled" Style="background-color: var(--mint); color: var(--mud-palette-primary-text)" DisableElevation="true" OnClick="@(()=>HandleLogin())">Sign In</MudButton>
+                    <MudButton Variant="Variant.Outlined" Style="background-color: var(--mud-palette-white)" DisableElevation="true" OnClick="@(() => SetCurrentMode("Create Account"))">Create Account</MudButton>
                 </div>
-             
             }
-
         </div>
-       
+
     </MudDrawer>
     <MudDrawer Anchor="Anchor.Right" @bind-Open="_drawerCartOpen" Elevation="2" Variant="DrawerVariant.Temporary" Width="50rem">
         <MudDrawerHeader Class="drawer-header justify-space-between">
@@ -118,22 +115,22 @@
 
 
         <div class="mx-4 d-flex flex-column mx-6 gap-6">
-            @foreach(var cartItem in CartService.CartProducts)
+            @foreach (var cartItem in CartService.CartProducts)
             {
                 <div class="d-flex flex-row justify-space-between flex-grow-1 gap-5 mt-4">
                     <div>
                         <MudImage Fluid=true Src=@cartItem.ImageUrl Elevation="3"></MudImage>
                     </div>
 
-                     <div class="d-flex flex-column justify-start" style="width: 100%">
-                         <MudText Typo="Typo.h6">
-                             @cartItem.Title
-                         </MudText>
-                         <MudText Typo="Typo.subtitle1">
-                             @cartItem.Author
-                         </MudText>
+                    <div class="d-flex flex-column justify-start" style="width: 100%">
+                        <MudText Typo="Typo.h6">
+                            @cartItem.Title
+                        </MudText>
+                        <MudText Typo="Typo.subtitle1">
+                            @cartItem.Author
+                        </MudText>
                         <MudSelect T="int" Label="Format" Variant="Variant.Outlined" @bind-Value="cartItem.Variants.First().ProductType.Id" AnchorOrigin="Origin.BottomCenter">
-                            @foreach(var variant in cartItem.Variants)
+                            @foreach (var variant in cartItem.Variants)
                             {
                                 <MudSelectItem Value="variant.ProductType.Id">
                                     @variant.ProductType.Name
@@ -141,12 +138,12 @@
                             }
                         </MudSelect>
                         <MudText Typo="Typo.subtitle2">
-                             @cartItem.Quantity x @(cartItem.Quantity * cartItem.Variants.First().Price)$
-                         </MudText>
-                     </div>
+                            @cartItem.Quantity x @(cartItem.Quantity * cartItem.Variants.First().Price)$
+                        </MudText>
+                    </div>
 
                     <MudIconButton Icon="@Icons.Material.Filled.Close" Class="align-self-start mr-4" OnClick="(() => CartService.RemoveProductFromCart(cartItem.ProductId, cartItem.ProductTypeId))"></MudIconButton>
-                    
+
                 </div>
                 <MudDivider></MudDivider>
             }
@@ -159,7 +156,7 @@
                         @GetTotal()$
                     </MudText>
                 </div>
-                <MudButton Variant="Variant.Outlined" Class="mb-3"> 
+                <MudButton Variant="Variant.Outlined" Class="mb-3">
                     View Cart
                 </MudButton>
                 <MudButton Variant="Variant.Filled" Style="background-color: var(--mint); color: var(--mud-palette-primary-text)">
@@ -183,7 +180,47 @@
     bool _drawerLoginOpen = false;
     bool _drawerCartOpen = false;
     public bool _isOpen;
-    public string currentMode = "Account";
+
+    public MudForm form { get; set; }
+    private bool success;
+    private IEnumerable<string> errors;
+
+    private string currentMode = "Account";
+
+    private UserLogin loginModel = new UserLogin();
+    private UserRegister registerModel = new UserRegister();
+
+
+    private async Task HandleLogin()
+    {
+        var result = await AuthService.Login(loginModel);
+        if (result.Success)
+        {
+            await LocalStorageService.SetItemAsync("authToken", result.Data);
+            await AuthenticationStateProvider.GetAuthenticationStateAsync();
+            await CartService.StoreCartItems(true);
+            await CartService.GetCartItemsCount();
+            ToggleLoginOpen();
+        }
+        else
+        {
+            Snackbar.Add(result.Message, Severity.Error);
+        }
+    }
+
+    async Task HandleRegistration()
+    {
+        var result = await AuthService.Register(registerModel);
+        if (result.Success)
+        {
+            ToggleLoginOpen();
+        } else
+        {
+            Snackbar.Add(result.Message, Severity.Error);
+        }
+
+    }
+
 
     public void SetCurrentMode(string mode)
     {
@@ -213,6 +250,7 @@
     {
         _drawerOpen = !_drawerOpen;
     }
+
     MudTheme theme = new MudTheme()
         {
             Typography = new Typography()
@@ -231,34 +269,6 @@
             }
         };
 
-    bool success;
-    string[] errors = { };
-    MudTextField<string> pwField1;
-    MudForm form;
-
-    private IEnumerable<string> PasswordStrength(string pw)
-    {
-        if (string.IsNullOrWhiteSpace(pw))
-        {
-            yield return "Password is required!";
-            yield break;
-        }
-        if (pw.Length < 8)
-            yield return "Password must be at least of length 8";
-        if (!Regex.IsMatch(pw, @"[A-Z]"))
-            yield return "Password must contain at least one capital letter";
-        if (!Regex.IsMatch(pw, @"[a-z]"))
-            yield return "Password must contain at least one lowercase letter";
-        if (!Regex.IsMatch(pw, @"[0-9]"))
-            yield return "Password must contain at least one digit";
-    }
-
-    private string PasswordMatch(string arg)
-    {
-        if (pwField1.Value != arg)
-            return "Passwords don't match";
-        return null;
-    }
 
     private int GetCartItemsCount()
     {
@@ -279,7 +289,7 @@
     public string GetTotal()
     {
         decimal total = 0;
-        @foreach(var item in CartService.CartProducts)
+        @foreach (var item in CartService.CartProducts)
         {
             var subtotal = item.Quantity * item.Variants.First().Price;
             total += subtotal;

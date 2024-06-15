@@ -192,5 +192,44 @@ namespace BlazorECommerce.Server.Services.ProductService
                             .Include(p => p.Variants)
                             .ToListAsync();
         }
+
+        public async Task<ServiceResponse<List<Product>>> GetFilteredProducts(ProductFilterCriteria filterCriteria)
+        {
+            var response = new ServiceResponse<List<Product>>();
+            var query = _context.Products.Include(p => p.Variants).Include(p => p.ProductCategories).ThenInclude(pc => pc.Category).AsQueryable();
+
+            if (!string.IsNullOrEmpty(filterCriteria.Category))
+            {
+                query = query.Where(p => p.ProductCategories.Any(pc => pc.Category.Name == filterCriteria.Category));
+            }
+
+            if (!string.IsNullOrEmpty(filterCriteria.Format))
+            {
+                query = query.Where(p => p.Variants.Any(x => x.ProductType.Name == filterCriteria.Format));
+            }
+
+            if (filterCriteria.MinPrice.HasValue)
+            {
+                query = query.Where(p => p.Variants.Any(x => x.Price >= filterCriteria.MinPrice.Value) );
+            }
+
+            if (filterCriteria.MaxPrice.HasValue)
+            {
+                query = query.Where(p => p.Variants.Any(x => x.Price <= filterCriteria.MaxPrice.Value));
+            }
+
+            //if (filterCriteria.MinReview.HasValue)
+            //{
+            //    query = query.Where(p => p.Review >= filterCriteria.MinReview.Value);
+            //}
+
+            //if (filterCriteria.MaxReview.HasValue)
+            //{
+            //    query = query.Where(p => p.Review <= filterCriteria.MaxReview.Value);
+            //}
+
+            response.Data = await query.ToListAsync();
+            return response;
+        }
     }
 }

@@ -4,6 +4,7 @@ using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations.Schema;
 using System.Linq;
 using System.Text;
+using System.Text.Json.Serialization;
 using System.Threading.Tasks;
 
 namespace BlazorECommerce.Shared
@@ -18,8 +19,8 @@ namespace BlazorECommerce.Shared
         public List<ProductVariant> Variants { get; set; } = new List<ProductVariant>();
         public List<ProductCategories> ProductCategories { get; set; } = new List<ProductCategories>();
         public int Views { get; set; } = 0;
-
         public Author? Author { get; set; }
         public int? AuthorId { get; set; }
+        public List<ProductReview>? Reviews { get; set; }
     }
 }

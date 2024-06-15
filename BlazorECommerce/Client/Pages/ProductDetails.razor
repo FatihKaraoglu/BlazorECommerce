@@ -2,135 +2,313 @@
 @inject IProductService ProductService
 @inject ICartService CartService
 
-@if(product == null)
+@if (product == null)
 {
     <span>@message</span>
-} else
+}
+else
 {
-
-   <div class="product-container">
-       <div class="product-preview-container">
-           <div class="media-wrap">
-                <img src="@product.ImageUrl" class="media-img" />
-                <a class="buy-btn"></a>
-
-                <div class="product-info-container">
-
-                    @if (product.Variants != null && product.Variants.Count > 1)
-                    {
-
-                        <div class="mb-3">
-                            <select class="form-select" @bind="currentTypeId">
-                                @foreach (var variant in product.Variants)
-                                {
-                                    <option value="@variant.ProductTypeId">@variant.ProductType.Name $@variant.Price</option>
-                                }
-                            </select>
-                        </div>
-                    }
-
-                    <div class="rating-container-editable">
-                        <div class="stars">
-
-                            @foreach (var rating in Ratings)
-                            {
-                                <i class="bi @(rating.Active ? "bi-star-fill" : "bi-star") rating" @onclick="@(e => SetRating(rating.Index))"></i>
-                            }
-                        </div>
-
-                        <span>
-                            Rate this Product
-                        </span>
-                    </div>
-                    <button class="btn-cart" @onclick="AddToCart">
-                        <i class="oi oi-cart"></i>&nbsp;&nbsp;&nbsp;Add to Cart
-                    </button>
-                </div>
-           </div>
-
+    <div class="container">
+        <div class="d-flex flex-row align-center justify-space-between my-8 border-bottom">
+            <h3 class="shop-heading">
+                Shop
+            </h3>
+            <MudBreadcrumbs Items="BreadCrumbs"></MudBreadcrumbs>
         </div>
 
-       <div class="product-detail-container">
-           <h3 class="product-heading">
-               @product.Title
-           </h3>
-           <h4 class="product-author">
-               Lilly Vanillie
-           </h4>
 
-            <div class="rating-container">
-                    <div class="stars">
+        <div class="product-container">
+            <div class="product-preview-container">
+                <div class="media-wrap">
+                    <img src="@product.ImageUrl" class="media-img" />
+                    <a class="buy-btn"></a>
 
-                        @foreach(var rating in Ratings)
+                    <div class="product-info-container">
+
+                        @if (product.Variants != null && product.Variants.Count > 1)
                         {
-                            <i class="bi @(rating.Active ? "bi-star-fill" : "bi-star") rating"></i>
+
+                            <div class="mb-3">
+                                <select class="form-select" @bind="currentTypeId">
+                                    @foreach (var variant in product.Variants)
+                                    {
+                                        <option value="@variant.ProductTypeId">@variant.ProductType.Name $@variant.Price</option>
+                                    }
+                                </select>
+                            </div>
                         }
                     </div>
-                    <div class="rating-calculation-container">
-                        <span class="rating-calculation">
-                            4.34
-                        </span>
-                    </div>
-                    <div class="rating-count">
-                        427 Ratings
-                    </div>
+                </div>
+
             </div>
 
-            <div class="description">
-                <p>
+            <div class="product-detail-container gap-8">
+                <MudText Typo="Typo.h4">
+                    @product.Title
+                </MudText>
+                <div class="d-flex flex-row gap-6">
+                    <MudRating ReadOnly="true" SelectedValue="2" />
+                    <div class="d-flex flex-row gap-2 align-center">
+                        <MudText Typo="Typo.subtitle1">
+                            By Author:
+                        </MudText>
+                        <MudText Typo="Typo.subtitle1">
+                            Lilly Vanillie
+                        </MudText>
+                    </div>
+
+                </div>
+
+
+
+                <MudText Typo="Typo.body1">
                     @product.Description
-                </p>
+                </MudText>
+
+                <div>
+                    <span>
+                        Choose a Format:
+                    </span>
+
+                    <MudSelect T="int" Label="Format" Variant="Variant.Outlined" @bind-Value="product.Variants.First().ProductType.Id" AnchorOrigin="Origin.BottomCenter" Class="pt-2 flex-grow-0">
+                        @foreach (var variant in product.Variants)
+                        {
+                            <MudSelectItem Value="variant.ProductType.Id">
+                                @variant.ProductType.Name
+                            </MudSelectItem>
+                        }
+                    </MudSelect>
+                </div>
+
+                <div class="d-flex flex-row gap-3 pb-1">
+                    <MudNumericField @bind-Value="Quantity" Label="Quantity" Variant="Variant.Outlined" Min="0" Class="flex-grow-0" />
+                    <MudButton Variant="Variant.Filled" Style="background-color: var(--mint); color: var(--mud-palette-primary-text)">
+                        Add To Cart
+                    </MudButton>
+                </div>
+
+                <MudDivider DividerType="DividerType.FullWidth"></MudDivider>
+
+                <div class="d-flex flex-row gap-4 m2">
+                    <div class="d-flex flex-row gap-2 align-center">
+                        <MudButton Class="mb-6">
+                            <MudIcon Icon="@Icons.Filled.Favorite" Class="mr-2">
+
+                            </MudIcon>
+
+                            Add to Wishlist
+                        </MudButton>
+
+                    </div>
+                    <div class="d-flex flex-row gap-2 align-center">
+                        <MudButton Class="mb-6">
+                            <MudIcon Icon="@Icons.Filled.Share" Class="mr-2">
+
+                            </MudIcon>
+                            Share
+                        </MudButton>
+                    </div>
+                </div>
+
 
             </div>
+        </div>
+        <MudDivider></MudDivider>
 
-            <div class="genre">
-                
-            </div>
-           
-       </div>
-   </div>
+        <MudTabs Rounded="true" ApplyEffectsToContainer="true" PanelClass="pa-6" Centered=true>
+            <MudTabPanel Text="Details">
+                <MudContainer MaxWidth="MaxWidth.Medium">
+                    <div class="d-flex flex-row justify-space-between ">
+                        <MudText Typo="Typo.body1">
+                            Format:
+                        </MudText>
+
+                        <MudText>
+                            @product.Variants.First().ProductType.Name
+                        </MudText>
+                    </div>
+                    <div class="d-flex flex-row justify-space-between ">
+                        <MudText Typo="Typo.body1">
+                            Dimensions:
+                        </MudText>
+
+                        <MudText>
+                            9126 x 194 x 28mm | 301g
+                        </MudText>
+                    </div>
+                    <div class="d-flex flex-row justify-space-between ">
+                        <MudText Typo="Typo.body1">
+                            Publication date:
+                        </MudText>
+
+                        <MudText>
+                            01.01.2022
+                        </MudText>
+                    </div>
+                    <div class="d-flex flex-row justify-space-between ">
+                        <MudText Typo="Typo.body1">
+                            Language:
+                        </MudText>
+
+                        <MudText>
+                            English
+                        </MudText>
+                    </div>
+                </MudContainer>
+            </MudTabPanel>
+            <MudTabPanel Text="Reviews">
+                <MudContainer MaxWidth="MaxWidth.Medium">
+                    <MudText Typo="Typo.h5" Class="mb-3">
+                        Customer Reviews
+                    </MudText>
+                    <div class="d-flex flex-column">
+                        <div class="d-flex flex-row gap-6">
+                            <div class="d-flex flex-column gap-2">
+                                <div class="d-flex flex-row">
+                                    <MudText Typo="Typo.h4" Align="Align.End">
+                                        4.6
+                                    </MudText>
+                                </div>
+
+                                <div class="d-flex flex-row align-center gap-4">
+                                    <MudRating ReadOnly="true" SelectedValue="2" />
+                                    <MudText Typo="Typo.h6" Class="align-self-end">
+                                        512 Reviews
+                                    </MudText>
+                                </div>
+                            </div>
+                            <div class="d-flex flex-column flex-grow-1 gap-1 pl-4">
+                                <div class="d-flex flex-row gap-4 align-center">
+                                    <MudText>5 Stars</MudText>
+                                    <MudProgressLinear Color="Color.Tertiary" Size="Size.Medium" Value="100" />
+                                    <MudText>104</MudText>
+                                </div>
+                                <div class="d-flex flex-row gap-4 align-center">
+                                    <MudText>4 Stars</MudText>
+                                    <MudProgressLinear Color="Color.Tertiary" Size="Size.Medium" Value="80" />
+                                    <MudText>205</MudText>
+                                </div>
+                                <div class="d-flex flex-row gap-4 align-center">
+                                    <MudText>3 Stars</MudText>
+                                    <MudProgressLinear Color="Color.Tertiary" Size="Size.Medium" Value="60" />
+                                    <MudText>205</MudText>
+                                </div>
+                                <div class="d-flex flex-row gap-4 align-center">
+                                    <MudText>2 Stars</MudText>
+                                    <MudProgressLinear Color="Color.Tertiary" Size="Size.Medium" Value="40" />
+                                    <MudText>205</MudText>
+                                </div>
+                                <div class="d-flex flex-row gap-4 align-center">
+                                    <MudText>1 Stars</MudText>
+                                    <MudProgressLinear Color="Color.Tertiary" Size="Size.Medium" Value="20" />
+                                    <MudText>205</MudText>
+                                </div>
+                            </div>
+                        </div>
+                        <div>
+                            <MudText Class="mb-6">
+                                44 Reviews
+                            </MudText>
+                        </div>
+
+                        <div class="d-flex flex-column gap-8">
+                            <div class="d-flex flex-column flex-grow-1 gap-3">
+                                <div class="d-flex flex-row align-center gap-3">
+                                    <MudText Typo="Typo.h5">Great Read!</MudText>
+                                    <MudRating ReadOnly="true" SelectedValue="2" />
+                                </div>
+                                <MudText Typo="Typo.subtitle1">
+                                    Great Story! Great Shipping! Just amazing!
+                                </MudText>
+
+                                <MudText Typo="Typo.subtitle2">
+                                    Mike Russel, June 10, 2023
+                                </MudText>
+
+                                <div class="d-flex flex-row gap-4">
+                                    <MudButton>
+                                        <MudIcon Icon="@Icons.Material.Filled.ThumbUp" Class="mr-2"></MudIcon>
+                                        90
+                                    </MudButton>
+                                    <MudButton>
+                                        <MudIcon Icon="@Icons.Material.Filled.ThumbDown" Class="mr-2"></MudIcon>
+                                        5
+                                    </MudButton>
+                                    <MudButton>
+                                        <MudIcon Icon="@Icons.Material.Filled.Flag">
+
+                                        </MudIcon>
+                                    </MudButton>
+                                </div>
+                                <MudDivider></MudDivider>
+                            </div>
+
+                            <div class="d-flex flex-column flex-grow-1 gap-3">
+                                <div class="d-flex flex-row align-center gap-3">
+                                    <MudText Typo="Typo.h5">Fantastic piece of Work!</MudText>
+                                    <MudRating ReadOnly="true" SelectedValue="2" />
+                                </div>
+                                <MudText Typo="Typo.subtitle1">
+                                    Soooooo Interesting! I just love it.
+                                    Can only recommond to everyone.
+                                </MudText>
+
+                                <MudText Typo="Typo.subtitle2">
+                                    Jennet Livermore, June 12, 2023
+                                </MudText>
+
+                                <div class="d-flex flex-row gap-4">
+                                    <MudButton>
+                                        <MudIcon Icon="@Icons.Material.Filled.ThumbUp" Class="mr-2"></MudIcon>
+                                        55
+                                    </MudButton>
+                                    <MudButton>
+                                        <MudIcon Icon="@Icons.Material.Filled.ThumbDown" Class="mr-2"></MudIcon>
+                                        4
+                                    </MudButton>
+                                    <MudButton>
+                                        <MudIcon Icon="@Icons.Material.Filled.Flag">
+
+                                        </MudIcon>
+                                    </MudButton>
+                                </div>
+                                <MudDivider></MudDivider>
+                            </div>
+                        </div>
+
+                       
+
+
+                    </div>
+
+                    
+                </MudContainer>
+            </MudTabPanel>
+        </MudTabs>
+
+
+
+
+    </div>
+
 }
 
 @code {
     private Product? product = null;
     private string message = string.Empty;
     private int currentTypeId = 1;
+    public List<BreadcrumbItem> BreadCrumbs { get; set; } = new List<BreadcrumbItem>();
+    public int Quantity { get; set; } = 1;
 
     [Parameter]
     public int Id { get; set; }
 
-    private List<Rating> Ratings { get; set; } = new List<Rating>
-{
-    new Rating { Index = 1, Active = false },
-    new Rating { Index = 2, Active = false },
-    new Rating { Index = 3, Active = false },
-    new Rating { Index = 4, Active = false },
-    new Rating { Index = 5, Active = false },
-
-};
 
     public class Rating
     {
         public int Index { get; set; }
         public bool Active { get; set; }
         public bool HoverActive { get; set; } = false;
-    }
-
-    public void SetRating(int index)
-    {
-        // Iterate through each rating in the list
-        foreach (var rating in Ratings)
-        {
-            // Set the Active property to true for ratings with Index less than or equal to the given index
-            if (rating.Index <= index)
-            {
-                rating.Active = true;
-            }
-            else
-            {
-                rating.Active = false;
-            }
-        }
     }
 
     protected override async Task OnParametersSetAsync()
@@ -141,13 +319,18 @@
         if (!result.Success)
         {
             message = result.Message;
-        } else
+        }
+        else
         {
             product = result.Data;
-            if(product.Variants.Count > 0)
+            if (product.Variants.Count > 0)
             {
                 currentTypeId = product.Variants[0].ProductTypeId;
             }
+
+            BreadCrumbs.Clear();
+            BreadCrumbs.Add(new BreadcrumbItem("Home", href: "#"));
+            BreadCrumbs.Add(new BreadcrumbItem(product.Title, href: "/product/" + product.Id));
         }
     }
 
@@ -166,7 +349,7 @@
                 ProductTypeId = productVariant.ProductTypeId
             };
 
-            await CartService.AddToCart(cartItem);
+        await CartService.AddToCart(cartItem);
     }
 
 

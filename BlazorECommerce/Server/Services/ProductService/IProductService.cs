@@ -14,7 +14,7 @@ namespace BlazorECommerce.Server.Services.ProductService
         Task<ServiceResponse<List<Product>>> GetMostViewed();
         Task IncreaseViewCount(int productId);
         Task<ServiceResponse<List<Product>>> GetRangeOfProducts(List<int> productIds);
-
+        Task<ServiceResponse<List<Product>>> GetFilteredProducts(ProductFilterCriteria filterCriteria);
 
 
     }

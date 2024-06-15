@@ -88,6 +88,13 @@ namespace BlazorECommerce.Server.Controllers
             return Ok(result);
         }
 
+        [HttpPost("filtered-products")]
+        public async Task<ActionResult<ServiceResponse<List<Product>>>> GetFilteredProducts([FromBody] ProductFilterCriteria criteria)
+        {
+            var result = await _productService.GetFilteredProducts(criteria);
+            return Ok(result);
+        }
+
 
 
 

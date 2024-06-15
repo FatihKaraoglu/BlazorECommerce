@@ -126,5 +126,14 @@ namespace BlazorECommerce.Client.Services.ProductService
             return result;
             
         }
+
+
+        async Task<ServiceResponse<List<Product>>> IProductService.GetFilteredProducts(ProductFilterCriteria criteria)
+        {
+            var response = await _http.PostAsJsonAsync("api/product/filtered-products", criteria);
+            var result = await response.Content.ReadFromJsonAsync<ServiceResponse<List<Product>>>();
+
+            return result;
+        }
     }   
 }
