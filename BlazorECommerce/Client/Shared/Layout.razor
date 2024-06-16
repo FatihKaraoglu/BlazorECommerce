@@ -1,15 +1,18 @@
 ﻿@inject ICategoryService CategoryService
 @inherits LayoutComponentBase
 @inject ICartService CartService
+@inject ICompanyService CompanyService
 @inject ISyncLocalStorageService LocalStorage
 @inject ILocalStorageService LocalStorageService
 @inject AuthenticationStateProvider AuthenticationStateProvider
 @inject IAuthService AuthService
 @inject ISnackbar Snackbar
+@inject ICompanyService CompanyService
 
 @using System.Text.RegularExpressions
 @using System.ComponentModel.DataAnnotations
 @using BlazorECommerce.Client.Services.AuthService;
+@using BlazorECommerce.Client.Services.CompanyService;
 @using MudBlazor.Utilities;
 
 
@@ -18,7 +21,7 @@
         <MudIconButton Icon="@Icons.Material.Filled.Menu" Color="Color.Inherit" Edge="Edge.Start" OnClick="@((e) => DrawerToggle())" />
         <MudSpacer />
         <div class="brand-title mx-auto">
-            <span style="font-family: Playfair Display; font-size: 3rem">Book<span style="color: var(--mint)">Nook</span></span>
+            <span style="font-family: Playfair Display; font-size: 3rem">@CompanyService.Company.Name</span>
         </div>
         <MudSpacer />
 
@@ -34,16 +37,41 @@
     </MudAppBar>
     <MudDrawer @bind-Open="_drawerOpen" Elevation="2">
         <MudDrawerHeader Class="drawer-header">
-            <MudText Typo="Typo.h5" Class="mt-1" style="font-family: Playfair Display;">Book<span style="color: var(--mint)">Nook</span></MudText>
+            <MudText Typo="Typo.h5" Class="mt-1" style="font-family: Playfair Display;">@CompanyService.Company.Name</MudText>
         </MudDrawerHeader>
 
         <MudNavMenu Class="mud-width-full">
 
             <MudNavGroup Title="Categories" Icon="@Icons.Material.Filled.Settings" Expanded="true">
-                @foreach (var category in CategoryService.Categories)
+                @if(CategoryService.Categories != null)
                 {
-                    <MudNavLink Href="@category.Url" Icon="@category.Icon">@category.Name</MudNavLink>
+                    @foreach (var category in CategoryService.Categories)
+                    {
+                        <MudNavLink Href="@category.Url" Icon="@category.Icon">@category.Name</MudNavLink>
+                    }
+
                 }
+                else
+                {
+                    <MudText>No Categories available</MudText>
+                }
+            </MudNavGroup>
+            <MudNavGroup Title="Admin" Icon="@Icons.Material.Filled.AdminPanelSettings" Expanded="true">
+                <MudNavLink Icon="@Icons.Material.Filled.Dashboard">
+                    Dashboard
+                </MudNavLink>
+                <MudNavLink Icon="@Icons.Material.Filled.AddShoppingCart">
+                    Products
+                </MudNavLink>
+                <MudNavLink Icon="@Icons.Material.Filled.Category">
+                    Category
+                </MudNavLink>
+                <MudNavLink Icon="@Icons.Material.Filled.Info">
+                    Format
+                </MudNavLink>
+                <MudNavLink Icon="@Icons.Material.Filled.AddBusiness" Href="/edit-company">
+                    Company
+                </MudNavLink>
             </MudNavGroup>
             <MudNavLink Href="/sale" Icon="@Icons.Material.Filled.Discount">Sale</MudNavLink>
             <MudNavLink Href="/my-orders" Icon="@Icons.Material.Filled.LocalShipping">My Orders</MudNavLink>
@@ -106,7 +134,6 @@
                 <MudIcon Icon="@Icons.Material.Filled.ShoppingCart" Size="Size.Large" Class="mx-4 my-4"></MudIcon>
                 <MudText Typo="Typo.h5" Class="mt-1">Cart</MudText>
             </div>
-
             <MudIconButton Icon="@Icons.Material.Filled.Close" OnClick="ToggleCartOpen" Class="mx-4 my-4">
 
             </MudIconButton>
@@ -115,38 +142,48 @@
 
 
         <div class="mx-4 d-flex flex-column mx-6 gap-6">
-            @foreach (var cartItem in CartService.CartProducts)
+            @if(CartService.CartProducts != null)
             {
-                <div class="d-flex flex-row justify-space-between flex-grow-1 gap-5 mt-4">
-                    <div>
-                        <MudImage Fluid=true Src=@cartItem.ImageUrl Elevation="3"></MudImage>
+                @foreach (var cartItem in CartService.CartProducts)
+                {
+                    <div class="d-flex flex-row justify-space-between flex-grow-1 gap-5 mt-4">
+                        <div>
+                            <MudImage Fluid=true Src=@cartItem.ImageUrl Elevation="3"></MudImage>
+                        </div>
+
+                        <div class="d-flex flex-column justify-start" style="width: 100%">
+                            <MudText Typo="Typo.h6">
+                                @cartItem.Title
+                            </MudText>
+                            <MudText Typo="Typo.subtitle1">
+                                @cartItem.Author
+                            </MudText>
+                            <MudSelect T="int" Label="Format" Variant="Variant.Outlined" @bind-Value="cartItem.Variants.First().ProductType.Id" AnchorOrigin="Origin.BottomCenter">
+                                @if(cartItem.Variants != null)
+                                {
+                                    @foreach (var variant in cartItem.Variants)
+                                    {
+                                        <MudSelectItem Value="variant.ProductType.Id">
+                                            @variant.ProductType.Name
+                                        </MudSelectItem>
+                                    }
+                                }
+                            </MudSelect>
+                            <MudText Typo="Typo.subtitle2">
+                                @cartItem.Quantity x @(cartItem.Quantity * cartItem.Variants.First().Price)$
+                            </MudText>
+                        </div>
+
+                        <MudIconButton Icon="@Icons.Material.Filled.Close" Class="align-self-start mr-4" OnClick="(() => CartService.RemoveProductFromCart(cartItem.ProductId, cartItem.ProductTypeId))"></MudIconButton>
+
                     </div>
-
-                    <div class="d-flex flex-column justify-start" style="width: 100%">
-                        <MudText Typo="Typo.h6">
-                            @cartItem.Title
-                        </MudText>
-                        <MudText Typo="Typo.subtitle1">
-                            @cartItem.Author
-                        </MudText>
-                        <MudSelect T="int" Label="Format" Variant="Variant.Outlined" @bind-Value="cartItem.Variants.First().ProductType.Id" AnchorOrigin="Origin.BottomCenter">
-                            @foreach (var variant in cartItem.Variants)
-                            {
-                                <MudSelectItem Value="variant.ProductType.Id">
-                                    @variant.ProductType.Name
-                                </MudSelectItem>
-                            }
-                        </MudSelect>
-                        <MudText Typo="Typo.subtitle2">
-                            @cartItem.Quantity x @(cartItem.Quantity * cartItem.Variants.First().Price)$
-                        </MudText>
-                    </div>
-
-                    <MudIconButton Icon="@Icons.Material.Filled.Close" Class="align-self-start mr-4" OnClick="(() => CartService.RemoveProductFromCart(cartItem.ProductId, cartItem.ProductTypeId))"></MudIconButton>
-
-                </div>
-                <MudDivider></MudDivider>
+                    <MudDivider></MudDivider>
+                }
+            } else
+            {
+                <MudText>No items in the cart</MudText>
             }
+
             <div class="d-flex flex-column">
                 <div class="d-flex flex-row justify-space-between mb-3">
                     <MudText>
@@ -189,6 +226,8 @@
 
     private UserLogin loginModel = new UserLogin();
     private UserRegister registerModel = new UserRegister();
+
+    private MudTheme theme = new MudTheme();
 
 
     private async Task HandleLogin()
@@ -243,31 +282,39 @@
     {
         await CartService.GetCartProducts();
         await CategoryService.GetCategories();
+        await CompanyService.GetCompany();
+      
 
+
+        theme = new MudTheme()
+            {
+                Typography = new Typography()
+                {
+                    Default = new Default()
+                    {
+                        FontFamily = new[] { "Lato", "sans-serif", "Playfair Display" },
+                        FontSize = "67.5%",
+                        LineHeight = 1,
+                        FontWeight = 400
+                    },
+                },
+                Palette = new Palette
+                {
+                    Primary = new MudColor(CompanyService.Company.ThemePalette.PrimaryColor),
+                    PrimaryLighten = CompanyService.Company.ThemePalette.PrimaryColorLighten,
+                    PrimaryDarken = CompanyService.Company.ThemePalette.PrimaryColorDarken,
+                    Tertiary = new MudColor(CompanyService.Company.ThemePalette.TertiaryColor),
+                    TertiaryLighten = CompanyService.Company.ThemePalette.TertiaryLighten,
+                    TertiaryDarken = CompanyService.Company.ThemePalette.TertiaryDarken,
+
+                }
+            };
     }
 
     void DrawerToggle()
     {
         _drawerOpen = !_drawerOpen;
     }
-
-    MudTheme theme = new MudTheme()
-        {
-            Typography = new Typography()
-            {
-                Default = new Default()
-                {
-                    FontFamily = new[] { "Lato", "sans-serif", "Playfair Display" },
-                    FontSize = "67.5%",
-                    LineHeight = 1,
-                    FontWeight = 400
-                },
-            },
-            Palette = new Palette
-            {
-                Primary = new MudColor("74c69dff")
-            }
-        };
 
 
     private int GetCartItemsCount()
@@ -289,10 +336,13 @@
     public string GetTotal()
     {
         decimal total = 0;
-        @foreach (var item in CartService.CartProducts)
+        if (CartService.CartProducts != null)
         {
-            var subtotal = item.Quantity * item.Variants.First().Price;
-            total += subtotal;
+            foreach (var item in CartService.CartProducts)
+            {
+                var subtotal = item.Quantity * item.Variants.First().Price;
+                total += subtotal;
+            }
         }
 
         return total.ToString();

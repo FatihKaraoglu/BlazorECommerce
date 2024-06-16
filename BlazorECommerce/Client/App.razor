@@ -1,4 +1,7 @@
-﻿<Microsoft.AspNetCore.Components.Authorization.CascadingAuthenticationState>
+﻿@using BlazorECommerce.Client.Services.CompanyService;
+@inject ICompanyService CompanyService
+
+<Microsoft.AspNetCore.Components.Authorization.CascadingAuthenticationState>
     <Router AppAssembly="@typeof(App).Assembly">
         <Found Context="routeData">
             <Microsoft.AspNetCore.Components.Authorization.AuthorizeRouteView RouteData="@routeData" DefaultLayout="@typeof(Layout)" >
@@ -18,3 +21,11 @@
     </Router>
 
 </Microsoft.AspNetCore.Components.Authorization.CascadingAuthenticationState>
+
+@code {
+    protected override async Task OnInitializedAsync()
+    {
+
+        await CompanyService.GetCompany();
+    }
+}

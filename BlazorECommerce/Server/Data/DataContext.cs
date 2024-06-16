@@ -442,5 +442,7 @@ namespace BlazorECommerce.Server.Data
         public DbSet<Order> Orders { get; set; }
         public DbSet<OrderItem> OrderItems { get; set; }
         public DbSet<Author> Authors { get; set; }
+        public DbSet<Company> Company{ get; set; }
+        public DbSet<ThemePalette> Palettes { get; set; }
     }
 }

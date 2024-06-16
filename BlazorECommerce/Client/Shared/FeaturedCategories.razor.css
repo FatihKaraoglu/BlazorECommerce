@@ -47,25 +47,6 @@
     color: black;
 }
 
-.categories .category:nth-child(1) {
-    background-color: var( --nyanza);
-}
-
-.categories .category:nth-child(2) {
-    background-color: var(--celadon);
-}
-
-.categories .category:nth-child(3) {
-    background-color: var(--celadon-2);
-}
-
-.categories .category:nth-child(4) {
-   background-color: var(--mint);
-}
-
-.categories .category:nth-child(5) {
-    background-color: var(--mint-2);
-}
 
 .header {
     display: flex;

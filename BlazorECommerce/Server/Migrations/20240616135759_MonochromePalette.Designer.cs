@@ -12,8 +12,8 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace BlazorECommerce.Server.Migrations
 {
     [DbContext(typeof(DataContext))]
-    [Migration("20240610193812_ProductCatgoriesAdded")]
-    partial class ProductCatgoriesAdded
+    [Migration("20240616135759_MonochromePalette")]
+    partial class MonochromePalette
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -205,6 +205,28 @@ namespace BlazorECommerce.Server.Migrations
                             Name = "Self-Help",
                             Url = "self-help"
                         });
+                });
+
+            modelBuilder.Entity("BlazorECommerce.Shared.Company", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
+
+                    b.Property<string>("Name")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<int>("ThemePaletteId")
+                        .HasColumnType("int");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("ThemePaletteId");
+
+                    b.ToTable("Company");
                 });
 
             modelBuilder.Entity("BlazorECommerce.Shared.Order", b =>
@@ -753,6 +775,33 @@ namespace BlazorECommerce.Server.Migrations
                         });
                 });
 
+            modelBuilder.Entity("BlazorECommerce.Shared.ProductReview", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
+
+                    b.Property<string>("Comment")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<int?>("ProductId")
+                        .HasColumnType("int");
+
+                    b.Property<int>("Rating")
+                        .HasColumnType("int");
+
+                    b.Property<DateTime>("ReviewDate")
+                        .HasColumnType("datetime2");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("ProductId");
+
+                    b.ToTable("ProductReview");
+                });
+
             modelBuilder.Entity("BlazorECommerce.Shared.ProductType", b =>
                 {
                     b.Property<int>("Id")
@@ -1158,6 +1207,64 @@ namespace BlazorECommerce.Server.Migrations
                         });
                 });
 
+            modelBuilder.Entity("BlazorECommerce.Shared.ThemePalette", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
+
+                    b.Property<string>("Dark")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("Error")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("Info")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("MonoChromeColor1")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("MonoChromeColor2")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("MonoChromeColor3")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("MonoChromeColor4")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("MonoChromeColor5")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("Name")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("SecondaryColor")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("Success")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("TertiaryColor")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("Warning")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("Palettes");
+                });
+
             modelBuilder.Entity("BlazorECommerce.Shared.User", b =>
                 {
                     b.Property<int>("Id")
@@ -1184,6 +1291,17 @@ namespace BlazorECommerce.Server.Migrations
                     b.HasKey("Id");
 
                     b.ToTable("Users");
+                });
+
+            modelBuilder.Entity("BlazorECommerce.Shared.Company", b =>
+                {
+                    b.HasOne("BlazorECommerce.Shared.ThemePalette", "ThemePalette")
+                        .WithMany()
+                        .HasForeignKey("ThemePaletteId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("ThemePalette");
                 });
 
             modelBuilder.Entity("BlazorECommerce.Shared.OrderItem", b =>
@@ -1241,6 +1359,15 @@ namespace BlazorECommerce.Server.Migrations
                     b.Navigation("Product");
                 });
 
+            modelBuilder.Entity("BlazorECommerce.Shared.ProductReview", b =>
+                {
+                    b.HasOne("BlazorECommerce.Shared.Product", "Product")
+                        .WithMany("Reviews")
+                        .HasForeignKey("ProductId");
+
+                    b.Navigation("Product");
+                });
+
             modelBuilder.Entity("BlazorECommerce.Shared.ProductVariant", b =>
                 {
                     b.HasOne("BlazorECommerce.Shared.Product", "Product")
@@ -1278,6 +1405,8 @@ namespace BlazorECommerce.Server.Migrations
             modelBuilder.Entity("BlazorECommerce.Shared.Product", b =>
                 {
                     b.Navigation("ProductCategories");
+
+                    b.Navigation("Reviews");
 
                     b.Navigation("Variants");
                 });

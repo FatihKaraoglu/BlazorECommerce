@@ -31,23 +31,34 @@ namespace BlazorECommerce.Client.Services.ProductService
 
         public async Task GetProducts(string? categoryUrl = null)
         {
-            var result = categoryUrl == null ?
-                await _http.GetFromJsonAsync<ServiceResponse<List<Product>>>("api/product/featured") :
-                await _http.GetFromJsonAsync<ServiceResponse<List<Product>>>($"api/product/category/{categoryUrl}");
+            ServiceResponse<List<Product>> result = null;
+            try
+            {
+                result = categoryUrl == null ?
+                    await _http.GetFromJsonAsync<ServiceResponse<List<Product>>>("api/product/featured") :
+                    await _http.GetFromJsonAsync<ServiceResponse<List<Product>>>($"api/product/category/{categoryUrl}");
+            }
+            catch (Exception ex)
+            {
+                Message = $"An error occurred: {ex.Message}";
+                ProductsChanged?.Invoke();
+                return;
+            }
+
             if (result != null && result.Data != null)
             {
                 Products = result.Data;
+            }
+            else
+            {
+                Products = new List<Product>();
+                Message = "No Products found";
             }
 
             CurrentPage = 1;
             PageCount = 0;
 
-            if(Products.Count == 0)
-            {
-                Message = "No Products found";
-            }
-
-            ProductsChanged.Invoke();
+            ProductsChanged?.Invoke();
         }
 
         public async Task GetFeaturedProducts()

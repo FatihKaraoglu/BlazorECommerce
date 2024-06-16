@@ -1,45 +1,70 @@
-﻿@inject ICategoryService CategoryService
+﻿@using BlazorECommerce.Client.Services.ThemeService
+@inject ICategoryService CategoryService
 @inject NavigationManager NavigationManager
+@inject IThemeService ThemeService
 
-
-<div class="featured-categories">
-    <div class="header">
-        <h2>Featured Categories</h2>
-        <div class="icon-link">
-            <MudLink href="/all-categories" class="all-categories-link" Color="Color.Inherit">All Categories
-                
-            </MudLink>
-            <MudIcon Icon="@Icons.Material.Filled.ChevronRight"></MudIcon>
-        </div>
-
-    </div>
-    <div class="categories">
-        @foreach (var featuredCategory in CategoryService.FeaturedCategories)
-        {
-            <div class="category pointer-cursor" @onclick="() => NavigateToCategory(featuredCategory)">
-                <MudIcon Icon="@featuredCategory.Icon" Title="@featuredCategory.Name" />
-                <div class="category-info">
-                <span>
-                    @featuredCategory.Name
-                </span>
-                <a>Explore Now</a>
-                </div>
+@if (isLoading)
+{
+    <p>Loading...</p>
+}
+else if (CategoryService.FeaturedCategories == null || !CategoryService.FeaturedCategories.Any())
+{
+    <p>No featured categories available.</p>
+}
+else
+{
+    <div class="featured-categories">
+        <div class="header">
+            <h2>Featured Categories</h2>
+            <div class="icon-link">
+                <MudLink href="/all-categories" class="all-categories-link" Color="Color.Inherit">All Categories</MudLink>
+                <MudIcon Icon="@Icons.Material.Filled.ChevronRight"></MudIcon>
             </div>
-        }
+        </div>
+        <div class="categories">
+            @foreach (var featuredCategory in CategoryService.FeaturedCategories)
+            {
+                <div class="category pointer-cursor" @onclick="() => NavigateToCategory(featuredCategory)">
+                    <MudIcon Icon="@featuredCategory.Icon" Title="@featuredCategory.Name" />
+                    <div class="category-info">
+                        <span>@featuredCategory.Name</span>
+                        <a>Explore Now</a>
+                    </div>
+                </div>
+            }
+        </div>
     </div>
-</div>
-
+}
 
 @code {
+    private bool isLoading = true;
+
     protected override async Task OnInitializedAsync()
     {
-        await CategoryService.GetFeaturedCategories();
+        await LoadFeaturedCategories();
     }
 
-    public void NavigateToCategory(Category category)
+    private async Task LoadFeaturedCategories()
     {
-        NavigationManager.NavigateTo(category.Url);
+        try
+        {
+            await CategoryService.GetFeaturedCategories();
+        }
+        catch (Exception ex)
+        {
+            // Handle exceptions as needed, e.g., logging
+        }
+        finally
+        {
+            isLoading = false;
+        }
     }
 
-
+    private void NavigateToCategory(Category category)
+    {
+        if (category != null && !string.IsNullOrEmpty(category.Url))
+        {
+            NavigationManager.NavigateTo(category.Url);
+        }
+    }
 }
