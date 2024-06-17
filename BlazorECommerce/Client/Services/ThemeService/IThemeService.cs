@@ -1,9 +1,12 @@
-﻿using MudBlazor;
+﻿using BlazorECommerce.Client.Themes;
+using MudBlazor;
 
 namespace BlazorECommerce.Client.Services.ThemeService
 {
     public interface IThemeService
     {
-        public MudTheme MudTheme { get; set; }
+        ITheme GetTheme(string themeName);
+        public MudTheme theme { get; set; }
+
     }
 }

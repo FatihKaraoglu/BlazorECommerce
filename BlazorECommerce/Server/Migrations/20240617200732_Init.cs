@@ -58,6 +58,20 @@ namespace BlazorECommerce.Server.Migrations
                 });
 
             migrationBuilder.CreateTable(
+                name: "Company",
+                columns: table => new
+                {
+                    Id = table.Column<int>(type: "int", nullable: false)
+                        .Annotation("SqlServer:Identity", "1, 1"),
+                    Name = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    PrimaryColor = table.Column<string>(type: "nvarchar(max)", nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_Company", x => x.Id);
+                });
+
+            migrationBuilder.CreateTable(
                 name: "Orders",
                 columns: table => new
                 {
@@ -70,27 +84,6 @@ namespace BlazorECommerce.Server.Migrations
                 constraints: table =>
                 {
                     table.PrimaryKey("PK_Orders", x => x.Id);
-                });
-
-            migrationBuilder.CreateTable(
-                name: "Palettes",
-                columns: table => new
-                {
-                    Id = table.Column<int>(type: "int", nullable: false)
-                        .Annotation("SqlServer:Identity", "1, 1"),
-                    Name = table.Column<string>(type: "nvarchar(max)", nullable: false),
-                    PrimaryColor = table.Column<string>(type: "nvarchar(max)", nullable: false),
-                    SecondaryColor = table.Column<string>(type: "nvarchar(max)", nullable: false),
-                    TertiaryColor = table.Column<string>(type: "nvarchar(max)", nullable: false),
-                    Info = table.Column<string>(type: "nvarchar(max)", nullable: false),
-                    Success = table.Column<string>(type: "nvarchar(max)", nullable: false),
-                    Warning = table.Column<string>(type: "nvarchar(max)", nullable: false),
-                    Error = table.Column<string>(type: "nvarchar(max)", nullable: false),
-                    Dark = table.Column<string>(type: "nvarchar(max)", nullable: false)
-                },
-                constraints: table =>
-                {
-                    table.PrimaryKey("PK_Palettes", x => x.Id);
                 });
 
             migrationBuilder.CreateTable(
@@ -143,26 +136,6 @@ namespace BlazorECommerce.Server.Migrations
                         column: x => x.AuthorId,
                         principalTable: "Authors",
                         principalColumn: "Id");
-                });
-
-            migrationBuilder.CreateTable(
-                name: "Company",
-                columns: table => new
-                {
-                    Id = table.Column<int>(type: "int", nullable: false)
-                        .Annotation("SqlServer:Identity", "1, 1"),
-                    Name = table.Column<string>(type: "nvarchar(max)", nullable: false),
-                    ThemePaletteId = table.Column<int>(type: "int", nullable: false)
-                },
-                constraints: table =>
-                {
-                    table.PrimaryKey("PK_Company", x => x.Id);
-                    table.ForeignKey(
-                        name: "FK_Company_Palettes_ThemePaletteId",
-                        column: x => x.ThemePaletteId,
-                        principalTable: "Palettes",
-                        principalColumn: "Id",
-                        onDelete: ReferentialAction.Cascade);
                 });
 
             migrationBuilder.CreateTable(
@@ -289,6 +262,11 @@ namespace BlazorECommerce.Server.Migrations
                     { 13, false, "<path d=\"M0 0h24v24H0V0z\" fill=\"none\"/><circle cx=\"15.5\" cy=\"9.5\" r=\"1.5\"/><circle cx=\"8.5\" cy=\"9.5\" r=\"1.5\"/><path d=\"M11.99 2C6.47 2 2 6.48 2 12s4.47 10 9.99 10C17.52 22 22 17.52 22 12S17.52 2 11.99 2zM12 20c-4.42 0-8-3.58-8-8s3.58-8 8-8 8 3.58 8 8-3.58 8-8 8zm0-6c-2.33 0-4.32 1.45-5.12 3.5h1.67c.69-1.19 1.97-2 3.45-2s2.75.81 3.45 2h1.67c-.8-2.05-2.79-3.5-5.12-3.5z\"/>", "Horror", "horror" },
                     { 14, false, "<path d=\"M0 0h24v24H0z\" fill=\"none\"/><path d=\"M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm-2 15-5-5 1.41-1.41L10 14.17l7.59-7.59L19 8l-9 9z\"/>", "Self-Help", "self-help" }
                 });
+
+            migrationBuilder.InsertData(
+                table: "Company",
+                columns: new[] { "Id", "Name", "PrimaryColor" },
+                values: new object[] { 1, "BookWorld", "Leaf" });
 
             migrationBuilder.InsertData(
                 table: "ProductTypes",
@@ -423,11 +401,6 @@ namespace BlazorECommerce.Server.Migrations
                 });
 
             migrationBuilder.CreateIndex(
-                name: "IX_Company_ThemePaletteId",
-                table: "Company",
-                column: "ThemePaletteId");
-
-            migrationBuilder.CreateIndex(
                 name: "IX_OrderItems_ProductId",
                 table: "OrderItems",
                 column: "ProductId");
@@ -481,9 +454,6 @@ namespace BlazorECommerce.Server.Migrations
 
             migrationBuilder.DropTable(
                 name: "Users");
-
-            migrationBuilder.DropTable(
-                name: "Palettes");
 
             migrationBuilder.DropTable(
                 name: "Orders");

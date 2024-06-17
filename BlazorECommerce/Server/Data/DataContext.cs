@@ -430,17 +430,14 @@ namespace BlazorECommerce.Server.Data
             new ProductCategories { ProductId = 3, CategoryId = 1 },
             new ProductCategories { ProductId = 4, CategoryId = 8 });
 
-            modelBuilder.Entity<ThemePalette>().HasData(
-                new ThemePalette
+            modelBuilder.Entity<Company>().HasData(
+                new Company
                 {
                     Id = 1,
-                    PrimaryColor = "4781BF",
-                    PrimaryColorDarken = "0C3382",
-                    PrimaryColorLighten = "71A5DE",
-                    TertiaryColor = "AECBEB",
-                    TertiaryLighten = "E1ECF7",
-                    TertiaryDarken = "83B0E1"
-                }) ;
+                    Name = "BookWorld",
+                    PrimaryColor = "Leaf"
+                });
+
         }
 
 
@@ -456,6 +453,5 @@ namespace BlazorECommerce.Server.Data
         public DbSet<OrderItem> OrderItems { get; set; }
         public DbSet<Author> Authors { get; set; }
         public DbSet<Company> Company{ get; set; }
-        public DbSet<ThemePalette> Palettes { get; set; }
     }
 }

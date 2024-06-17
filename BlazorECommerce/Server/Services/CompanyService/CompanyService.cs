@@ -1,5 +1,4 @@
-﻿using BlazorECommerce.Server.Services.PaletteService;
-using BlazorECommerce.Shared;
+﻿using BlazorECommerce.Shared;
 using Microsoft.EntityFrameworkCore;
 using System.Threading.Tasks;
 
@@ -8,18 +7,15 @@ namespace BlazorECommerce.Server.Services.CompanyService
     public class CompanyService : ICompanyService
     {
         private readonly DataContext _context;
-        private readonly IPaletteService _paletteService;
 
-        public CompanyService(DataContext context, IPaletteService paletteService)
+        public CompanyService(DataContext context)
         {
             _context = context;
-            _paletteService = paletteService;
         }
 
         public async Task<ServiceResponse<Company>> GetCompany()
         {
             var company = await _context.Company
-                                        .Include(c => c.ThemePalette)  // Include theme palette details
                                         .FirstOrDefaultAsync();
 
             return new ServiceResponse<Company>
@@ -40,8 +36,7 @@ namespace BlazorECommerce.Server.Services.CompanyService
                 {
                     Id = company.Id,
                     Name = company.Name,
-                    ThemePaletteId = company.ThemePaletteId,
-                    ThemePalette = await _paletteService.GetPalette(company.ThemePaletteId)
+                    PrimaryColor = company.PrimaryColor,
                 };
 
                 await _context.Company.AddAsync(companyToUpdate);
@@ -54,7 +49,6 @@ namespace BlazorECommerce.Server.Services.CompanyService
             } else
             {
                 companyToUpdate.Name = company.Name;
-                companyToUpdate.ThemePaletteId = company.ThemePaletteId;
 
                 await _context.SaveChangesAsync();
 

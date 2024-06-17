@@ -1,30 +1,71 @@
 ﻿@using BlazorECommerce.Client.Services.CompanyService;
+@using BlazorECommerce.Client.Services.ThemeService;
+@using MudBlazor
+@using MudBlazor.Utilities;
+@inject IThemeService ThemeService
 @inject ICompanyService CompanyService
 
-<Microsoft.AspNetCore.Components.Authorization.CascadingAuthenticationState>
+
+<MudThemeProvider Theme="@ThemeService.theme" />
+@if (isLoading)
+{
+    <MudProgressCircular Indeterminate="true" Color="Color.Primary" />
+}
+else
+{
     <Router AppAssembly="@typeof(App).Assembly">
         <Found Context="routeData">
-            <Microsoft.AspNetCore.Components.Authorization.AuthorizeRouteView RouteData="@routeData" DefaultLayout="@typeof(Layout)" >
-                <NotAuthorized>
-                    <h3>Whoops! You are not allowed to see this page.</h3>
-                    <h5>Please <a href="login">login</a> or <a href="register">register</a> for a new account.</h5>
-                </NotAuthorized>
-            </Microsoft.AspNetCore.Components.Authorization.AuthorizeRouteView>
-            <FocusOnNavigate RouteData="@routeData" Selector="h1" />
+            <RouteView RouteData="routeData" DefaultLayout="typeof(Layout)" />
+            <FocusOnNavigate RouteData="routeData" Selector="h1" />
         </Found>
         <NotFound>
-            <PageTitle>Not found</PageTitle>
-            <LayoutView Layout="@typeof(Layout)">
-                <p role="alert">Sorry, there's nothing at this address.</p>
+            <LayoutView Layout="typeof(Layout)">
+                <p>Sorry, there's nothing at this address.</p>
             </LayoutView>
         </NotFound>
     </Router>
-
-</Microsoft.AspNetCore.Components.Authorization.CascadingAuthenticationState>
+}
 
 @code {
+    private bool isLoading = true;
+
     protected override async Task OnInitializedAsync()
     {
-        await CompanyService.GetCompany();
+        await LoadThemeAsync();
+    }
+
+    private async Task LoadThemeAsync()
+    {
+        try
+        {
+            await CompanyService.GetCompany();
+            ThemeService.theme = new MudTheme()
+                {
+                    Typography = new Typography()
+                    {
+                        Default = new Default()
+                        {
+                            FontFamily = new[] { "Lato", "sans-serif", "Playfair Display" },
+                            FontSize = "67.5%",
+                            LineHeight = 1,
+                            FontWeight = 400
+                        },
+                    },
+                    Palette = new Palette
+                    {
+                        Primary = new MudColor(ThemeService.GetTheme(CompanyService.Company.PrimaryColor).PrimaryColor)
+                    }
+                };
+        }
+        catch (Exception ex)
+        {
+            // Handle exceptions as needed
+            Console.WriteLine($"Error loading theme: {ex.Message}");
+        }
+        finally
+        {
+            isLoading = false;
+            StateHasChanged();
+        }
     }
 }

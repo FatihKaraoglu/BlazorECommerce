@@ -29,7 +29,7 @@ builder.Services.AddScoped<ICartService, CartService>();
 builder.Services.AddScoped<IAuthService, AuthService>();
 builder.Services.AddScoped<IOrderService, OrderService>();
 builder.Services.AddScoped<ICompanyService, CompanyService>();
-builder.Services.AddScoped<IThemeService, ThemeService>();
+builder.Services.AddSingleton<IThemeService, ThemeService>();
 
 builder.Services.AddOptions();
 builder.Services.AddAuthorizationCore();

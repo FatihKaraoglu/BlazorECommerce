@@ -216,14 +216,21 @@ namespace BlazorECommerce.Server.Migrations
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<int>("ThemePaletteId")
-                        .HasColumnType("int");
+                    b.Property<string>("PrimaryColor")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
 
                     b.HasKey("Id");
 
-                    b.HasIndex("ThemePaletteId");
-
                     b.ToTable("Company");
+
+                    b.HasData(
+                        new
+                        {
+                            Id = 1,
+                            Name = "BookWorld",
+                            PrimaryColor = "Leaf"
+                        });
                 });
 
             modelBuilder.Entity("BlazorECommerce.Shared.Order", b =>
@@ -1204,66 +1211,6 @@ namespace BlazorECommerce.Server.Migrations
                         });
                 });
 
-            modelBuilder.Entity("BlazorECommerce.Shared.ThemePalette", b =>
-                {
-                    b.Property<int>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int");
-
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
-
-                    b.Property<string>("Dark")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("Error")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("Info")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("Name")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("PrimaryColor")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("PrimaryColorDarken")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("PrimaryColorLighten")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("SecondaryColor")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("SecondaryColorDarken")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("SecondaryColorLighten")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("Success")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("TertiaryColor")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("TertiaryDarken")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("TertiaryLighten")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("Warning")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.HasKey("Id");
-
-                    b.ToTable("Palettes");
-                });
-
             modelBuilder.Entity("BlazorECommerce.Shared.User", b =>
                 {
                     b.Property<int>("Id")
@@ -1290,17 +1237,6 @@ namespace BlazorECommerce.Server.Migrations
                     b.HasKey("Id");
 
                     b.ToTable("Users");
-                });
-
-            modelBuilder.Entity("BlazorECommerce.Shared.Company", b =>
-                {
-                    b.HasOne("BlazorECommerce.Shared.ThemePalette", "ThemePalette")
-                        .WithMany()
-                        .HasForeignKey("ThemePaletteId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.Navigation("ThemePalette");
                 });
 
             modelBuilder.Entity("BlazorECommerce.Shared.OrderItem", b =>

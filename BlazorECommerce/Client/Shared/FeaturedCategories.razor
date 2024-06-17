@@ -1,4 +1,5 @@
-﻿@using BlazorECommerce.Client.Services.ThemeService
+﻿@page "/featured-categories"
+@using BlazorECommerce.Client.Services.ThemeService
 @inject ICategoryService CategoryService
 @inject NavigationManager NavigationManager
 @inject IThemeService ThemeService
@@ -7,7 +8,7 @@
 {
     <p>Loading...</p>
 }
-else if (CategoryService.FeaturedCategories == null || !CategoryService.FeaturedCategories.Any())
+else if (CategoryService?.FeaturedCategories == null || !CategoryService.FeaturedCategories.Any())
 {
     <p>No featured categories available.</p>
 }
@@ -24,13 +25,17 @@ else
         <div class="categories">
             @foreach (var featuredCategory in CategoryService.FeaturedCategories)
             {
-                <div class="category pointer-cursor" @onclick="() => NavigateToCategory(featuredCategory)">
-                    <MudIcon Icon="@featuredCategory.Icon" Title="@featuredCategory.Name" />
-                    <div class="category-info">
-                        <span>@featuredCategory.Name</span>
-                        <a>Explore Now</a>
-                    </div>
-                </div>
+                <MudCard Elevation="2">
+                    <MudCardContent>
+                        <MudIcon Icon="@featuredCategory.Icon" Title="@featuredCategory.Name"/>
+                        <MudText>@featuredCategory.Name</MudText>
+                    </MudCardContent>
+                    <MudCardActions>
+                        <MudLink>
+                            Explore Now
+                        </MudLink>
+                    </MudCardActions>
+                </MudCard>
             }
         </div>
     </div>

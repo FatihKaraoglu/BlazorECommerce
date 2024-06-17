@@ -6,11 +6,9 @@ using System.Threading.Tasks;
 
 namespace BlazorECommerce.Shared
 {
-    public class Company
+    public class Theme 
     {
-        public int Id { get; set; }
         public string Name { get; set; }
         public string PrimaryColor { get; set; }
-
     }
 }
