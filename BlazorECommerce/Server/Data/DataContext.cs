@@ -429,7 +429,20 @@ namespace BlazorECommerce.Server.Data
             new ProductCategories { ProductId = 2, CategoryId = 2 },
             new ProductCategories { ProductId = 3, CategoryId = 1 },
             new ProductCategories { ProductId = 4, CategoryId = 8 });
+
+            modelBuilder.Entity<ThemePalette>().HasData(
+                new ThemePalette
+                {
+                    Id = 1,
+                    PrimaryColor = "4781BF",
+                    PrimaryColorDarken = "0C3382",
+                    PrimaryColorLighten = "71A5DE",
+                    TertiaryColor = "AECBEB",
+                    TertiaryLighten = "E1ECF7",
+                    TertiaryDarken = "83B0E1"
+                }) ;
         }
+
 
 
         public DbSet<Product> Products { get; set; }
