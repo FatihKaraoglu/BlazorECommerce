@@ -1,9 +1,6 @@
 ﻿@page "/featured-categories"
-@using BlazorECommerce.Client.Services.ThemeService
 @inject ICategoryService CategoryService
 @inject NavigationManager NavigationManager
-@inject IThemeService ThemeService
-
 @if (isLoading)
 {
     <p>Loading...</p>

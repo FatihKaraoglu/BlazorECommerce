@@ -1,6 +1,4 @@
-﻿@using BlazorECommerce.Client.Services.ThemeService;
-@inject IThemeService ThemeService
-
+﻿
 <div class="hero">
     <div class="container">
         <div class="hero-grid">
@@ -11,13 +9,12 @@
                 <h2 class="hero-description">
                     Featured Books of June
                 </h2>
-                <MudButton Style="@($"background-color:{ThemeService.theme.Palette.PrimaryDarken};")">
+                <button class="mud-button" style="background-color: var(--accent-light);">
                     See More
-                </MudButton>
+                </button>
             </div>
             <div class="hero-img-box">
                 <img class="hero-img" src="/images/shiromani-kant-mo3FOTG62ao-unsplash.jpg" />
-
             </div>
         </div>
     </div>

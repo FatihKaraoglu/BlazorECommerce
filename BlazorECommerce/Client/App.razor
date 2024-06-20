@@ -1,12 +1,12 @@
 ﻿@using BlazorECommerce.Client.Services.CompanyService;
-@using BlazorECommerce.Client.Services.ThemeService;
 @using MudBlazor
 @using MudBlazor.Utilities;
-@inject IThemeService ThemeService
+@using Microsoft.AspNetCore.Components
 @inject ICompanyService CompanyService
+@inject IJSRuntime JS;
 
 
-<MudThemeProvider Theme="@ThemeService.theme" />
+<MudThemeProvider Theme="@this.theme" />
 @if (isLoading)
 {
     <MudProgressCircular Indeterminate="true" Color="Color.Primary" />
@@ -28,6 +28,7 @@ else
 
 @code {
     private bool isLoading = true;
+    public MudTheme theme { get; set; }
 
     protected override async Task OnInitializedAsync()
     {
@@ -39,7 +40,8 @@ else
         try
         {
             await CompanyService.GetCompany();
-            ThemeService.theme = new MudTheme()
+            await JS.InvokeVoidAsync("applyTheme", CompanyService.Company.PrimaryColor.ToLower());
+            theme = new MudTheme()
                 {
                     Typography = new Typography()
                     {
@@ -53,7 +55,6 @@ else
                     },
                     Palette = new Palette
                     {
-                        Primary = new MudColor(ThemeService.GetTheme(CompanyService.Company.PrimaryColor).PrimaryColor)
                     }
                 };
         }

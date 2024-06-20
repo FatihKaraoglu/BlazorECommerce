@@ -24,8 +24,4 @@
     <None Include="wwwroot\images\hero_img.png" />
   </ItemGroup>
 
-  <ItemGroup>
-    <Folder Include="wwwroot\js\" />
-  </ItemGroup>
-
 </Project>
