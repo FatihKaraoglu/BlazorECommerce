@@ -22,16 +22,11 @@ else
         <div class="categories">
             @foreach (var featuredCategory in CategoryService.FeaturedCategories)
             {
-                <MudCard Elevation="2">
-                    <MudCardContent>
-                        <MudIcon Icon="@featuredCategory.Icon" Title="@featuredCategory.Name"/>
-                        <MudText>@featuredCategory.Name</MudText>
+                <MudCard Elevation="2" >
+                    <MudCardContent Class="d-flex justify-content-center flex-column align-center pa-8">
+                        <MudIcon Icon="@featuredCategory.Icon" Title="@featuredCategory.Name" Style="font-size: 2.4rem; color: var(--accent-light)" />
+                        <MudText Style="color: var(--secondary-dark)">@featuredCategory.Name</MudText>
                     </MudCardContent>
-                    <MudCardActions>
-                        <MudLink>
-                            Explore Now
-                        </MudLink>
-                    </MudCardActions>
                 </MudCard>
             }
         </div>

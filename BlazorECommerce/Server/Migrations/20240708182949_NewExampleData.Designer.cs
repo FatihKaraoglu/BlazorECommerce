@@ -4,6 +4,7 @@ using BlazorECommerce.Server.Data;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 #nullable disable
@@ -11,9 +12,11 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace BlazorECommerce.Server.Migrations
 {
     [DbContext(typeof(DataContext))]
-    partial class DataContextModelSnapshot : ModelSnapshot
+    [Migration("20240708182949_NewExampleData")]
+    partial class NewExampleData
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -340,7 +343,7 @@ namespace BlazorECommerce.Server.Migrations
                             Id = 3,
                             Description = "Foundation is a science fiction novel by American writer Isaac Asimov, first published in 1951.",
                             Featured = false,
-                            ImageUrl = "https://upload.wikimedia.org/wikipedia/en/d/d9/Foundation_-_Isaac_Asimov_%28Gnome_1951%29.jpg",
+                            ImageUrl = "https://upload.wikimedia.org/wikipedia/en/2/25/Foundation_gnome.jpg",
                             Title = "Foundation",
                             Views = 0
                         },
@@ -358,7 +361,7 @@ namespace BlazorECommerce.Server.Migrations
                             Id = 5,
                             Description = "Hyperion is a science fiction novel by American author Dan Simmons, published in 1989.",
                             Featured = false,
-                            ImageUrl = "https://upload.wikimedia.org/wikipedia/en/7/73/Hyperion_cover.jpg",
+                            ImageUrl = "https://upload.wikimedia.org/wikipedia/en/a/a1/Hyperion_cover.jpg",
                             Title = "Hyperion",
                             Views = 0
                         },
@@ -367,7 +370,7 @@ namespace BlazorECommerce.Server.Migrations
                             Id = 6,
                             Description = "Ender's Game is a 1985 military science fiction novel by American author Orson Scott Card.",
                             Featured = false,
-                            ImageUrl = "https://upload.wikimedia.org/wikipedia/en/e/e4/Ender%27s_game_cover_ISBN_0312932081.jpg",
+                            ImageUrl = "https://upload.wikimedia.org/wikipedia/en/9/95/Ender%27s_Game_cover_ISBN_0312932081.jpg",
                             Title = "Ender's Game",
                             Views = 0
                         },
@@ -376,7 +379,7 @@ namespace BlazorECommerce.Server.Migrations
                             Id = 7,
                             Description = "The Martian is a 2011 science fiction novel written by Andy Weir.",
                             Featured = false,
-                            ImageUrl = "https://m.media-amazon.com/images/I/6109I16IWpL._SL1057_.jpg",
+                            ImageUrl = "https://upload.wikimedia.org/wikipedia/en/c/c3/The_Martian_2014.jpg",
                             Title = "The Martian",
                             Views = 0
                         },
@@ -385,7 +388,7 @@ namespace BlazorECommerce.Server.Migrations
                             Id = 8,
                             Description = "The Left Hand of Darkness is a science fiction novel by U.S. writer Ursula K. Le Guin, published in 1969.",
                             Featured = false,
-                            ImageUrl = "https://upload.wikimedia.org/wikipedia/en/8/88/TheLeftHandOfDarkness1stEd.jpg",
+                            ImageUrl = "https://upload.wikimedia.org/wikipedia/en/2/29/TheLeftHandOfDarkness1stEd.jpg",
                             Title = "The Left Hand of Darkness",
                             Views = 0
                         },
@@ -394,7 +397,7 @@ namespace BlazorECommerce.Server.Migrations
                             Id = 9,
                             Description = "Stranger in a Strange Land is a 1961 science fiction novel by American author Robert A. Heinlein.",
                             Featured = false,
-                            ImageUrl = "https://upload.wikimedia.org/wikipedia/en/4/40/Stranger_in_a_Strange_Land_Cover.jpg",
+                            ImageUrl = "https://upload.wikimedia.org/wikipedia/en/8/84/StrangerInaStrangeLand_Cover.jpg",
                             Title = "Stranger in a Strange Land",
                             Views = 0
                         },

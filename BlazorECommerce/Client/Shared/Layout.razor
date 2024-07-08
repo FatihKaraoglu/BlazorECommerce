@@ -56,7 +56,7 @@
                     <MudText>No Categories available</MudText>
                 }
             </MudNavGroup>
-            <MudNavGroup Title="Admin" Icon="@Icons.Material.Filled.AdminPanelSettings" Expanded="true">
+            <MudNavGroup Title="Admin" Icon="@Icons.Material.Filled.AdminPanelSettings" Expanded="false">
                 <MudNavLink Icon="@Icons.Material.Filled.Dashboard">
                     Dashboard
                 </MudNavLink>
@@ -104,7 +104,7 @@
                               Required="true" RequiredError="Password is required!" />
                 </MudForm>
                 <div class="d-flex flex-column gap-2 py-8 justify-center">
-                    <MudButton Variant="Variant.Filled" Style="background-color: var(--mint); color: var(--mud-palette-primary-text)" DisableElevation="true" OnClick="@(()=>HandleRegistration())">Sign Up</MudButton>
+                    <MudButton Variant="Variant.Filled" Style="background-color: var(--accent-light); color: var(--mud-palette-primary-text)" DisableElevation="true" OnClick="@(()=>HandleRegistration())">Sign Up</MudButton>
                     <span style="text-align: center">
                         Already have an account? <MudLink OnClick="@(() => SetCurrentMode("Account"))">
                             <span class="mx-2" style="color: var(--mint-2)">Login</span>
@@ -121,7 +121,7 @@
                               Required="true" RequiredError="Password is required!" />
                 </MudForm>
                 <div class="d-flex flex-column gap-2 py-8">
-                    <MudButton Variant="Variant.Filled" Style="background-color: var(--mint); color: var(--mud-palette-primary-text)" DisableElevation="true" OnClick="@(()=>HandleLogin())">Sign In</MudButton>
+                    <MudButton Variant="Variant.Filled" Style="background-color: var(--accent-light); color: var(--mud-palette-primary-text)" DisableElevation="true" OnClick="@(()=>HandleLogin())">Sign In</MudButton>
                     <MudButton Variant="Variant.Outlined" Style="background-color: var(--mud-palette-white)" DisableElevation="true" OnClick="@(() => SetCurrentMode("Create Account"))">Create Account</MudButton>
                 </div>
             }
@@ -196,7 +196,7 @@
                 <MudButton Variant="Variant.Outlined" Class="mb-3">
                     View Cart
                 </MudButton>
-                <MudButton Variant="Variant.Filled" Style="background-color: var(--mint); color: var(--mud-palette-primary-text)">
+                <MudButton Variant="Variant.Filled" Style="background-color: var(--accent-light); color: var(--mud-palette-primary-text)">
                     Checkout
                 </MudButton>
 
